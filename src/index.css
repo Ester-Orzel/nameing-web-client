@@ -49,6 +49,12 @@
       var(--color-blush);
   }
 
+  /* פס עליון דק עם טלפון */
+  body::before {
+    content: "מתנות במיתוג אישי  ·  להזמנות: \2066 053-4166140\2069";
+    @apply block bg-copper-dark py-1.5 text-center text-[0.8rem] tracking-wide text-white/90;
+  }
+
   /* תחתית האתר */
   body::after {
     content: "ameing · מתנות במיתוג אישי  |  להזמנות ושאלות: \2066 053-4166140\2069";
@@ -438,7 +444,7 @@
 
 @layer components {
   #root > header {
-    @apply sticky top-0 z-20 flex min-h-[92px] items-center justify-between gap-4 border-b border-line bg-blush-deep/90 py-2 backdrop-blur-md max-sm:static max-sm:flex-col max-sm:gap-2 max-sm:py-3;
+    @apply sticky top-0 z-20 flex min-h-[92px] items-center justify-between gap-4 border-b border-line bg-white/90 py-2 backdrop-blur-md max-sm:static max-sm:flex-col max-sm:gap-2 max-sm:py-3;
     padding-inline: max(20px, calc((100vw - 1180px) / 2 + 20px));
 
     /* הלוגו */
@@ -451,16 +457,16 @@
     }
 
     & > nav {
-      @apply flex flex-wrap items-center justify-end gap-1.5 max-sm:justify-center max-sm:gap-1;
+      @apply flex flex-wrap items-center justify-end gap-x-6 gap-y-1 max-sm:justify-center max-sm:gap-x-4;
     }
 
     & > nav > a {
-      @apply rounded-full px-3.5 py-1.5 font-semibold text-ink transition hover:bg-copper-tint hover:text-copper-dark max-sm:px-3 max-sm:text-[0.95rem];
+      @apply border-b-2 border-transparent px-1 py-1.5 font-semibold text-ink transition hover:border-copper-light hover:text-copper-dark max-sm:text-[0.95rem];
     }
 
     /* העמוד הנוכחי — NavLink מוסיף לו את הקלאס active לבד */
     & > nav > a.active {
-      @apply bg-white text-copper-dark shadow-sm;
+      @apply border-copper text-copper-dark;
     }
 
     /* כפתור "התנתקות" */
