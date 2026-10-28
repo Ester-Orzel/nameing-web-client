@@ -5,11 +5,16 @@ import { useUser } from "../context/UserContext";
 
 const AllOrders = () => {
   const { token } = useUser();
+
   const { data: orders = [], isLoading, isError } = useQuery({
     queryKey: ["allOrders", token],
     queryFn: () => getAllOrders(token!),
     enabled: !!token,
   });
+
+  if (!token) {
+    return <p>יש להתחבר כדי לצפות בהזמנות</p>;
+  }
 
   if (isLoading) {
     return <p>טוען הזמנות...</p>;

@@ -98,6 +98,7 @@ export interface Order {
   updatedAt: string;
   items: OrderItem[];
 }
+
 export type CreateProductRequest = Omit<Product, "id">;
 
 // ---------- Authentication ----------
@@ -179,12 +180,14 @@ export function createOrder(
   });
 }
 
-export function getMyOrders(token: string) {
-  return api.get<Order[]>("/api/orders/my", {
+export async function getMyOrders(token: string): Promise<Order[]> {
+  const response = await api.get<{ items: Order[] }>("/api/orders/my", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  return response.data.items;
 }
 
 export const addProduct = async (
@@ -200,15 +203,18 @@ export const addProduct = async (
       },
     }
   );
+
+  return response.data;
 };
-export async function getAllOrders(token: string) {
-  const response = await api.get<Order[]>("/api/orders", {
+
+export async function getAllOrders(token: string): Promise<Order[]> {
+  const response = await api.get<{ items: Order[] }>("/api/orders", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  return response.data;
+  return response.data.items;
 }
 
 export const updateOrderStatus = async (
@@ -228,6 +234,7 @@ export const updateOrderStatus = async (
 
   return response.data;
 };
+
 export const updateProduct = async (
   productId: number,
   product: CreateProductRequest,

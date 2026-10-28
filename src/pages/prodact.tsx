@@ -1,12 +1,11 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts, getCategories } from "../api";
-import type { Product, GetProductsParams } from "../api";
+import type { Product, Category } from "../api";
 import { useUser } from "../context/UserContext";
 import ProductCard from "../componenta/ProductCard";
-import { useEffect } from "react";
 type Sort = "newest" | "price_asc" | "price_desc" | "name";
 
 function Products() {

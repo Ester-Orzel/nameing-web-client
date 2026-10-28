@@ -3,33 +3,32 @@ import { useState } from "react";
 import type { CartItem } from "../api";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
-import { Form } from "react-hook-form";
 
 const Cart = () => {
   const [cart, setCart] = useState<CartItem[]>(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
-  const navigate=useNavigate();
-  const {user}=useUser();
+
+  const navigate = useNavigate();
+  const { user } = useUser();
+
   const Checkout = () => {
-  if (!user) {
-    navigate("/login", {
-      state: { from: "/cart" },
-    });
-    return;
-  }
+    if (!user) {
+      navigate("/login", {
+        state: { from: "/cart" },
+      });
+      return;
+    }
 
-  navigate("/checkout");
-};
-
+    navigate("/checkout");
+  };
 
   const removeFromCart = (index: number) => {
-    const updatedCart = cart.filter((item, i) => i !== index);
+    const updatedCart = cart.filter((_item, i) => i !== index);
 
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    
   };
 
   return (
@@ -52,7 +51,7 @@ const Cart = () => {
 
             {item.personalization && (
               <div>
-                <p>צבע: {item.selectedColor}</p>
+                <p>צבע: {item.selectedColor?.name}</p>
                 <p>טקסט: {item.customText}</p>
               </div>
             )}
@@ -60,7 +59,12 @@ const Cart = () => {
             <button onClick={() => removeFromCart(index)}>
               הסרה מהסל
             </button>
-            {cart.length>0 && (<button onClick={Checkout}>סיים הזמנה </button>)}
+
+            {cart.length > 0 && (
+              <button onClick={Checkout}>
+                סיים הזמנה
+              </button>
+            )}
           </div>
         ))
       )}

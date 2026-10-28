@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getProducts } from "../api";
+import { getProducts, getColors, getFonts } from "../api";
 import type { CartItem } from "../api";
 
 function ProductDetails() {
@@ -15,12 +15,31 @@ function ProductDetails() {
     error,
   } = useQuery({
     queryKey: ["products"],
-    queryFn: getProducts,
+    queryFn: () => getProducts(),
+  });
+
+  const {
+    data: colors = [],
+    isLoading: colorsLoading,
+    error: colorsError,
+  } = useQuery({
+    queryKey: ["colors"],
+    queryFn: getColors,
+  });
+
+  const {
+    data: fonts = [],
+    isLoading: fontsLoading,
+    error: fontsError,
+  } = useQuery({
+    queryKey: ["fonts"],
+    queryFn: getFonts,
   });
 
   const [personalization, setPersonalization] = useState(false);
   const [customText, setCustomText] = useState("");
-  const [selectedColor, setSelectedColor] = useState("black");
+  const [selectedColorId, setSelectedColorId] = useState<number | null>(null);
+  const [selectedFontId, setSelectedFontId] = useState<number | null>(null);
   const [added, setAdded] = useState(false);
 
   if (isLoading) {
@@ -38,11 +57,30 @@ function ProductDetails() {
   }
 
   const handleAddToCart = () => {
+    const selectedColor =
+      colors.find((color) => color.id === selectedColorId) ?? null;
+
+    const selectedFont =
+      fonts.find((font) => font.id === selectedFontId) ?? null;
+
+    if (personalization) {
+      if (!customText.trim()) {
+        alert("יש להזין טקסט להתאמה אישית");
+        return;
+      }
+
+      if (!selectedColor || !selectedFont) {
+        alert("יש לבחור צבע וגופן");
+        return;
+      }
+    }
+
     const newItem: CartItem = {
       product,
       personalization,
       customText: personalization ? customText : "",
-      selectedColor: personalization ? selectedColor : "",
+      selectedColor: personalization ? selectedColor : null,
+      selectedFont: personalization ? selectedFont : null,
     };
 
     const savedCart = localStorage.getItem("cart");
@@ -84,18 +122,44 @@ function ProductDetails() {
           <label>
             צבע:
             <select
-              value={selectedColor}
+              value={selectedColorId ?? ""}
               onChange={(e) => {
-                setSelectedColor(e.target.value);
+                setSelectedColorId(Number(e.target.value));
                 setAdded(false);
               }}
             >
-              <option value="black">שחור</option>
-              <option value="white">לבן</option>
-              <option value="blue">כחול</option>
-              <option value="pink">ורוד</option>
+              <option value="">בחרי צבע</option>
+              {colors.map((color) => (
+                <option key={color.id} value={color.id}>
+                  {color.name}
+                </option>
+              ))}
             </select>
           </label>
+
+          {colorsLoading && <p>טוען צבעים...</p>}
+          {colorsError && <p>שגיאה בטעינת הצבעים</p>}
+
+          <label>
+            גופן:
+            <select
+              value={selectedFontId ?? ""}
+              onChange={(e) => {
+                setSelectedFontId(Number(e.target.value));
+                setAdded(false);
+              }}
+            >
+              <option value="">בחרי גופן</option>
+              {fonts.map((font) => (
+                <option key={font.id} value={font.id}>
+                  {font.name}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          {fontsLoading && <p>טוען גופנים...</p>}
+          {fontsError && <p>שגיאה בטעינת הגופנים</p>}
 
           <label>
             טקסט להדפסה:

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import { getMyOrders, type Order } from "../api";
@@ -7,20 +8,27 @@ const MyAccount = () => {
 
   const [orders, setOrders] = useState<Order[]>([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
     getMyOrders(token)
-      .then((res) => setOrders(res.data))
-      .catch(() => setError("לא הצלחנו לטעון את ההזמנות"));
+      .then((res) => setOrders(res))
+      .catch(() => setError("לא הצלחנו לטעון את ההזמנות"))
+      .finally(() => setLoading(false));
   }, [token]);
 
   return (
     <div>
       <h1>האזור האישי של {user?.fullName}</h1>
 
-      {error ? (
+      {loading ? (
+        <p>טוען הזמנות...</p>
+      ) : error ? (
         <p>{error}</p>
       ) : orders.length === 0 ? (
         <p>אין לך הזמנות עדיין</p>

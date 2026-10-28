@@ -17,45 +17,63 @@ const Checkout = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<CheckoutForm>();
+
   const { token } = useUser();
-const createCart = (): CartItem[] => {
-  const cart: CartItem[] = JSON.parse(
-    localStorage.getItem("cart") || "[]"
-  );
 
-  return cart;
-};
+  const createCart = (): CartItem[] => {
+    const cart: CartItem[] = JSON.parse(
+      localStorage.getItem("cart") || "[]"
+    );
 
-const onSubmit = async (data: CheckoutForm) => {
-  const cart = createCart();
-
-  if (!token) {
-    alert("צריך להתחבר כדי לבצע הזמנה");
-    return;
-  }
-
-  if (cart.length === 0) {
-    alert("סל הקניות ריק");
-    return;
-  }
-
-  const orderFull: CreateOrderRequest = {
-    ...data,
-    deliveryMethod: "DELIVERY",
-    items: cart.map((item) => ({
-      productId: item.product.id,
-    })),
+    return cart;
   };
 
-  try {
-    const res = await createOrder(orderFull, token);
-    console.log("ההזמנה נוצרה בהצלחה", res);
-  } catch (error) {
-    console.error("שגיאה ביצירת ההזמנה", error);
-    alert("לא הצלחנו לבצע את ההזמנה");
-  }
-};
+  const onSubmit = async (data: CheckoutForm) => {
+    const cart = createCart();
 
+    if (!token) {
+      alert("צריך להתחבר כדי לבצע הזמנה");
+      return;
+    }
+
+    if (cart.length === 0) {
+      alert("סל הקניות ריק");
+      return;
+    }
+
+    const orderFull: CreateOrderRequest = {
+      ...data,
+      deliveryMethod: "DELIVERY",
+      items: cart.map((item) => ({
+        productId: item.product.id,
+        personalizationKind: !item.personalization
+          ? "NONE"
+          : item.product.personalizationType === "INITIAL_ONLY"
+            ? "INITIAL"
+            : "NAME",
+        personalizationText: item.personalization
+          ? item.customText
+          : null,
+        colorId: item.personalization
+          ? item.selectedColor?.id ?? null
+          : null,
+        fontId: item.personalization
+          ? item.selectedFont?.id ?? null
+          : null,
+      })),
+    };
+
+    try {
+      const res = await createOrder(orderFull, token);
+      console.log("ההזמנה נוצרה בהצלחה", res);
+
+      localStorage.removeItem("cart");
+      alert("ההזמנה בוצעה בהצלחה!");
+    } catch (error) {
+      console.error("שגיאה ביצירת ההזמנה", error);
+      alert("לא הצלחנו לבצע את ההזמנה");
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
