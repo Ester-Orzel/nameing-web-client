@@ -1,32 +1,74 @@
-# React + TypeScript + Vite
+# ameing — חנות מתנות במיתוג אישי
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+אתר לחנות מתנות שמותאמות אישית: הלקוחה בוחרת מוצר, מוסיפה שם או אות ומבצעת הזמנה. המנהלת מוסיפה מוצרים וצופה בכל ההזמנות.
 
-Currently, two official plugins are available:
+- **האתר:** https://nameing-web-client.onrender.com
+- **השרת (API):** https://ameing-gifts-api.onrender.com
+- **קוד השרת:** https://github.com/Ester-Orzel/ameing-gifts-backend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## טכנולוגיות
 
-## React Compiler
+React · TypeScript · Vite · React Router · React Hook Form · React Query · Context API · Axios · Tailwind CSS
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## סוגי משתמשים
 
-## Expanding the Oxlint configuration
+| משתמש | מה הוא יכול לעשות |
+|---|---|
+| אורחת | צפייה במוצרים, חיפוש, סינון ומיון, הוספה לסל |
+| לקוחה (`CUSTOMER`) | כל הנ"ל, ובנוסף ביצוע הזמנה וצפייה בהזמנות שלה באזור האישי |
+| מנהלת (`ADMIN`) | הוספת מוצרים וצפייה בכל ההזמנות של כל הלקוחות |
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## עמודים
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+| נתיב | עמוד |
+|---|---|
+| `/` | עמוד הבית |
+| `/products` | רשימת מוצרים עם חיפוש, סינון לפי קטגוריה ומיון |
+| `/products/:id` | פרטי מוצר והתאמה אישית (צבע וטקסט) |
+| `/cart` | סל הקניות |
+| `/checkout` | פרטי משלוח ואישור הזמנה |
+| `/login`, `/register` | התחברות והרשמה |
+| `/my-account` | ההזמנות שלי |
+| `/admin` | אזור ניהול: הוספת מוצר וכל ההזמנות |
+
+## מבנה הפרויקט
+
+```
+src/
+├── api.tsx            כל הקריאות לשרת והטיפוסים (Axios)
+├── context/           UserContext: המשתמשת המחוברת והטוקן
+├── pages/             עמודי האתר
+├── componenta/        קומפוננטות משותפות (Header, ProductCard, AddProduct, AllOrders...)
+├── assets/            לוגו ותמונות
+└── index.css          ערכת הנושא של Tailwind
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## איך המידע זורם
+
+1. כל קריאה לשרת עוברת דרך פונקציה ב־`api.tsx`.
+2. נתונים מהשרת נטענים עם **React Query** (`useQuery`). כשהנתונים משתנים, למשל אחרי הוספת מוצר, הרשימה מתרעננת עם `invalidateQueries`.
+3. המשתמשת המחוברת והטוקן נשמרים ב־**UserContext**. הטוקן נשלח לשרת בכותרת `Authorization: Bearer`.
+4. סל הקניות נשמר ב־`localStorage`.
+5. הטפסים בנויים עם **React Hook Form**, כולל ולידציה והודעות שגיאה.
+
+## הרצה מקומית
+
+```bash
+npm install
+npm run dev
+```
+
+בפיתוח, בקשות ל־`/api` מועברות לשרת המקומי בכתובת `http://localhost:3000` (מוגדר ב־`vite.config.ts`).
+
+בפרודקשן, כתובת השרת נקבעת במשתנה הסביבה:
+
+```
+VITE_API_URL=https://ameing-gifts-api.onrender.com
+```
+
+## העלאה ל־Render
+
+אתר סטטי (Static Site). ההגדרות נמצאות בקובץ `render.yaml`:
+- פקודת בנייה: `npm install && npm run build`
+- תיקיית פרסום: `dist`
+- כלל Rewrite מכל נתיב (`/*`) ל־`/index.html`, כדי שרענון עמוד פנימי יעבוד.
