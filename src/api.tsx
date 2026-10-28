@@ -200,6 +200,8 @@ export const addProduct = async (
       },
     }
   );
+
+  return response.data;
 };
 export async function getAllOrders(token: string) {
   const response = await api.get<Order[]>("/api/orders", {
