@@ -36,20 +36,20 @@ const Cart = () => {
 
   return (
     <div>
-      <div className="page-head">
+      <div className="mb-6 [&_h1]:mb-1 [&_p]:text-muted">
         <h1>My cart</h1>
       </div>
 
       {cart.length === 0 ? (
-        <div className="card empty-state">
+        <div className="card px-4 py-12 text-center [&_p]:mb-5 [&_p]:text-lg [&_p]:text-muted">
           <p>Your cart is empty</p>
-          <button onClick={() => navigate("/products")}>Browse products</button>
+          <button className="btn" onClick={() => navigate("/products")}>Browse products</button>
         </div>
       ) : (
-        <div className="cart-layout">
-          <div className="cart-list">
+        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <div className="flex flex-col gap-4">
             {cart.map((item, index) => (
-              <div key={index} className="cart-item">
+              <div key={index} className="grid grid-cols-[72px_1fr] items-center gap-4 rounded-2xl border border-line bg-white p-3.5 shadow-sm sm:grid-cols-[96px_1fr_auto] [&_h2]:mb-0.5 [&_h2]:text-lg [&_p]:text-[0.95rem] [&>img]:size-[72px] [&>img]:rounded-[10px] [&>img]:bg-soft [&>img]:object-cover sm:[&>img]:size-24 max-sm:[&>button]:col-span-2 max-sm:[&>button]:justify-self-start">
                 <img
                   src={item.product.imageUrl}
                   alt={item.product.name}
@@ -61,31 +61,31 @@ const Cart = () => {
                   <p className="price">Price: ₪{item.product.price}</p>
 
                   {item.personalization && (
-                    <div className="cart-item-custom">
+                    <div className="mt-1.5 flex flex-wrap gap-1.5">
                       <span className="chip">Color: {item.selectedColor}</span>
                       <span className="chip">Text: {item.customText}</span>
                     </div>
                   )}
                 </div>
 
-                <button className="btn-ghost" onClick={() => removeFromCart(index)}>
+                <button className="btn btn-ghost" onClick={() => removeFromCart(index)}>
                   Remove
                 </button>
               </div>
             ))}
           </div>
 
-          <aside className="card summary">
+          <aside className="card lg:sticky lg:top-6 [&_h2]:mb-3">
             <h2>Order summary</h2>
-            <div className="summary-row">
+            <div className="flex justify-between py-2 text-muted">
               <span>Items</span>
               <span>{cart.length}</span>
             </div>
-            <div className="summary-row summary-total">
+            <div className="flex justify-between py-2 text-muted mt-1.5 border-t border-line pt-3 text-lg font-bold text-ink">
               <span>Total</span>
               <span>₪{total}</span>
             </div>
-            {cart.length>0 && (<button className="btn-block" onClick={Checkout}>Checkout </button>)}
+            {cart.length>0 && (<button className="btn mt-4 w-full" onClick={Checkout}>Checkout </button>)}
           </aside>
         </div>
       )}

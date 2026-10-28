@@ -48,10 +48,10 @@ const UpdateOrderStatus = ({ order }: Props) => {
   }
 
   return (
-    <div className="status-actions">
+    <div className="flex flex-wrap gap-2 [&_button]:min-h-9 [&_button]:px-4 [&_button]:py-1 [&_button]:text-sm">
       {(order.status === "RECEIVED" ||
         order.status === "IN_PROGRESS") && (
-        <button
+        <button className="btn"
           disabled={isUpdating}
           onClick={() => changeStatus(nextStatus)}
         >
@@ -62,7 +62,7 @@ const UpdateOrderStatus = ({ order }: Props) => {
       )}
 
       <button
-        className="btn-outline"
+        className="btn btn-outline"
         disabled={isUpdating}
         onClick={() => {
           if (window.confirm("Cancel this order?")) {

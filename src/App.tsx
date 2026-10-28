@@ -17,8 +17,8 @@ function App() {
     <UserProvider>
       <BrowserRouter>
         <Header />
-        <main className="site-main">
-          <div className="container">
+        <main className="flex-1 pt-9 pb-14 max-sm:pt-5 max-sm:pb-10">
+          <div className="mx-auto w-full max-w-[1180px] px-5 max-sm:px-4">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />

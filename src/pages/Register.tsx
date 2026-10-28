@@ -39,12 +39,12 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-wrap">
-      <div className="card form-card">
+    <div className="flex justify-center pt-4">
+      <div className="card w-full max-w-[460px] [&_h1]:mb-1 [&_h1]:text-center [&_h1]:text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)]">
       <h1>Sign up</h1>
-      <p className="subtitle">Create an account and start designing gifts</p>
+      <p className="mb-6 text-center text-muted">Create an account and start designing gifts</p>
 
-      <form className="form-stack" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-col gap-3.5 [&_button[type=submit]]:mt-2 [&_button[type=submit]]:w-full" onSubmit={handleSubmit(onSubmit)}>
         <input
           placeholder="Full name"
           {...register("fullName", {
@@ -87,14 +87,14 @@ const Register = () => {
         />
         {errors.password && <p className="field-error">{errors.password.message}</p>}
 
-        <button type="submit" disabled={mutation.isPending}>
+        <button className="btn" type="submit" disabled={mutation.isPending}>
           {mutation.isPending ? "Creating account..." : "Sign up"}
         </button>
 
-        {mutation.isError && <p className="msg msg-error">{mutation.error.message}</p>}
+        {mutation.isError && <p className="msg-error">{mutation.error.message}</p>}
       </form>
 
-      <p className="form-foot">
+      <p className="mt-5 text-center text-[0.95rem] text-muted [&_a]:font-bold">
         Already have an account? <Link to="/login">Sign in</Link>
       </p>
       </div>

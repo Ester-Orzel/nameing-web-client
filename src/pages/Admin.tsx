@@ -11,7 +11,7 @@ const Admin = () => {
 
   if (user?.role !== "ADMIN") {
     return (
-      <div className="card empty-state">
+      <div className="card px-4 py-12 text-center [&_p]:mb-5 [&_p]:text-lg [&_p]:text-muted">
         <p>You don't have permission to access the admin area</p>
       </div>
     );
@@ -19,17 +19,17 @@ const Admin = () => {
 
   return (
     <div>
-      <div className="admin-head">
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-4 [&_h1]:m-0">
         <div>
           <span className="eyebrow">Admin</span>
           <h1>Dashboard</h1>
         </div>
 
-        <div className="tabs" role="tablist">
+        <div className="inline-flex gap-1 rounded-full border border-line bg-white p-1 shadow-sm max-sm:w-full" role="tablist">
           <button
             role="tab"
             aria-selected={page === "products"}
-            className={page === "products" ? "active" : ""}
+            className="btn min-h-10 px-5 py-2 hover:translate-y-0 max-sm:flex-1 aria-[selected=false]:bg-none aria-[selected=false]:text-muted aria-[selected=false]:shadow-none aria-[selected=false]:hover:bg-copper-tint aria-[selected=false]:hover:text-copper-dark"
             onClick={() => setPage("products")}
           >
             Add product
@@ -38,7 +38,7 @@ const Admin = () => {
           <button
             role="tab"
             aria-selected={page === "orders"}
-            className={page === "orders" ? "active" : ""}
+            className="btn min-h-10 px-5 py-2 hover:translate-y-0 max-sm:flex-1 aria-[selected=false]:bg-none aria-[selected=false]:text-muted aria-[selected=false]:shadow-none aria-[selected=false]:hover:bg-copper-tint aria-[selected=false]:hover:text-copper-dark"
             onClick={() => setPage("orders")}
           >
             Orders

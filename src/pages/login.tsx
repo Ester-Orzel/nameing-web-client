@@ -36,12 +36,12 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-wrap">
-      <div className="card form-card">
+    <div className="flex justify-center pt-4">
+      <div className="card w-full max-w-[460px] [&_h1]:mb-1 [&_h1]:text-center [&_h1]:text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)]">
         <h1>Sign in</h1>
-        <p className="subtitle">Welcome back</p>
+        <p className="mb-6 text-center text-muted">Welcome back</p>
 
-        <form className="form-stack" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-3.5 [&_button[type=submit]]:mt-2 [&_button[type=submit]]:w-full" onSubmit={handleSubmit(onSubmit)}>
           <input
             type="email"
             placeholder="Email"
@@ -56,12 +56,12 @@ const Login = () => {
             {...register("password", { required: "Please enter a password" })}
           />
 
-          <button type="submit">Sign in</button>
+          <button className="btn" type="submit">Sign in</button>
         </form>
 
-        {error && <p className="msg msg-error">{error}</p>}
+        {error && <p className="msg-error">{error}</p>}
 
-        <p className="form-foot">
+        <p className="mt-5 text-center text-[0.95rem] text-muted [&_a]:font-bold">
           Don't have an account yet? <Link to="/register">Sign up</Link>
         </p>
       </div>

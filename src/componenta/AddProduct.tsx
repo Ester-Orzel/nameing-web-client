@@ -56,8 +56,8 @@ const AddProduct = ({ product }: Props) => {
     <div>
       <h2>{product ? "Edit product" : "Add a new product"}</h2>
 
-      <form className="admin-form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="field">
+      <form className="grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2 [&_button[type=submit]]:mt-1.5 max-sm:[&_button[type=submit]]:w-full sm:[&_button[type=submit]]:col-span-2 sm:[&_button[type=submit]]:justify-self-start" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-1.5">
           <label>Product name</label>
           <input
             type="text"
@@ -65,7 +65,7 @@ const AddProduct = ({ product }: Props) => {
           />
         </div>
 
-        <div className="field">
+        <div className="flex flex-col gap-1.5">
           <label>Price</label>
           <input
             type="number"
@@ -77,7 +77,7 @@ const AddProduct = ({ product }: Props) => {
           />
         </div>
 
-        <div className="field full">
+        <div className="flex flex-col gap-1.5 sm:col-span-2">
           <label>Description</label>
           <input
             type="text"
@@ -85,7 +85,7 @@ const AddProduct = ({ product }: Props) => {
           />
         </div>
 
-        <div className="field full">
+        <div className="flex flex-col gap-1.5 sm:col-span-2">
           <label>Image URL</label>
           <input
             type="url"
@@ -94,7 +94,7 @@ const AddProduct = ({ product }: Props) => {
           />
         </div>
 
-        <div className="field">
+        <div className="flex flex-col gap-1.5">
           <label>Personalization type</label>
           <select {...register("personalizationType")}>
             <option value="NAME_OR_INITIAL">Name or initial</option>
@@ -102,7 +102,7 @@ const AddProduct = ({ product }: Props) => {
           </select>
         </div>
 
-        <div className="field">
+        <div className="flex flex-col gap-1.5">
           <label>Category</label>
           <select
             {...register("categoryId", {
@@ -120,7 +120,7 @@ const AddProduct = ({ product }: Props) => {
           </select>
         </div>
 
-        <button type="submit">
+        <button className="btn" type="submit">
           {product ? "Save changes" : "Add product"}
         </button>
       </form>

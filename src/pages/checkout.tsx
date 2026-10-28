@@ -58,12 +58,12 @@ const onSubmit = async (data: CheckoutForm) => {
 
 
   return (
-    <div className="auth-wrap">
-      <div className="card form-card wide">
+    <div className="flex justify-center pt-4">
+      <div className="card w-full max-w-[460px] [&_h1]:mb-1 [&_h1]:text-center [&_h1]:text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)] max-w-[620px]">
         <h1>Delivery details</h1>
-        <p className="subtitle">Your gift is almost on its way</p>
+        <p className="mb-6 text-center text-muted">Your gift is almost on its way</p>
 
-        <form className="form-stack" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-3.5 [&_button[type=submit]]:mt-2 [&_button[type=submit]]:w-full" onSubmit={handleSubmit(onSubmit)}>
           <input
             placeholder="Full name"
             {...register("contactName", {
@@ -96,7 +96,7 @@ const onSubmit = async (data: CheckoutForm) => {
             {...register("notes")}
           />
 
-          <button type="submit">Place order</button>
+          <button className="btn" type="submit">Place order</button>
         </form>
       </div>
     </div>

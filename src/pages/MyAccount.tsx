@@ -19,38 +19,38 @@ const MyAccount = () => {
 
   return (
     <div>
-      <div className="page-head">
+      <div className="mb-6 [&_h1]:mb-1 [&_p]:text-muted">
         <span className="eyebrow">My account</span>
         <h1>Hi, {user?.fullName}</h1>
         <p>Track all of your orders here</p>
       </div>
 
       {error ? (
-        <p className="msg msg-error">{error}</p>
+        <p className="msg-error">{error}</p>
       ) : orders.length === 0 ? (
-        <div className="card empty-state">
+        <div className="card px-4 py-12 text-center [&_p]:mb-5 [&_p]:text-lg [&_p]:text-muted">
           <p>You don't have any orders yet</p>
         </div>
       ) : (
-        <div className="orders">
+        <div className="flex flex-col gap-5">
           {orders.map((order) => (
-            <div key={order.id} className="order-card">
-              <div className="order-head">
+            <div key={order.id} className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line bg-soft px-5 py-4 [&_h2]:m-0 [&_h2]:text-lg">
                 <h2>Order #{order.id}</h2>
                 <span className={`status status-${order.status}`}>
                   Status: {statusLabel(order.status)}
                 </span>
               </div>
 
-              <div className="order-meta">
+              <div className="flex flex-wrap gap-6 px-5 py-3.5 text-[0.95rem] text-muted [&_strong]:text-ink">
                 <p>Total: <strong>₪{order.totalPrice}</strong></p>
                 <p>Items: <strong>{order.itemsCount}</strong></p>
               </div>
 
-              <div className="order-items">
+              <div className="flex flex-col border-t border-line">
                 {order.items.map((item) => (
-                  <div key={item.id} className="order-item">
-                    <p className="name">{item.productName}</p>
+                  <div key={item.id} className="flex flex-wrap items-center gap-x-5 gap-y-1 border-b border-line px-5 py-3 text-[0.95rem] last:border-b-0">
+                    <p className="flex-[1_1_160px] font-bold text-ink">{item.productName}</p>
                     <p>Price: ₪{item.unitPrice}</p>
                     {item.personalizationText && (
                       <p className="chip">Text: {item.personalizationText}</p>

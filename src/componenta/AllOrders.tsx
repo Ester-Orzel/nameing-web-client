@@ -17,7 +17,7 @@ const AllOrders = () => {
   }
 
   if (isError) {
-    return <p className="msg msg-error">Error loading orders</p>;
+    return <p className="msg-error">Error loading orders</p>;
   }
 
   return (
@@ -27,8 +27,8 @@ const AllOrders = () => {
       {orders.length === 0 && <p className="msg-muted">No orders yet</p>}
 
       {orders.length > 0 && (
-        <div className="table-wrap">
-          <table className="data-table">
+        <div className="overflow-x-auto rounded-[10px] border border-line">
+          <table className="w-full border-collapse bg-white text-[0.95rem] [&_td]:px-4 [&_td]:py-3 [&_td]:whitespace-nowrap [&_th]:bg-soft [&_th]:px-4 [&_th]:py-3 [&_th]:text-start [&_th]:text-sm [&_th]:font-bold [&_th]:text-muted [&_tbody_tr:hover]:bg-[#fdf9f8] [&_tr]:border-b [&_tr]:border-line [&_tbody_tr:last-child]:border-b-0">
             <thead>
               <tr>
                 <th>Order #</th>

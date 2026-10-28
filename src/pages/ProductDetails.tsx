@@ -28,7 +28,7 @@ function ProductDetails() {
   }
 
   if (error) {
-    return <p className="msg msg-error">Error loading products</p>;
+    return <p className="msg-error">Error loading products</p>;
   }
 
   const product = products?.find((p) => p.id === Number(id));
@@ -58,7 +58,7 @@ function ProductDetails() {
     <div>
       <a
         href="/products"
-        className="back-link"
+        className="mb-5 inline-flex items-center gap-1 font-semibold"
         onClick={(e) => {
           e.preventDefault();
           navigate("/products");
@@ -67,8 +67,8 @@ function ProductDetails() {
         ← Back to products
       </a>
 
-      <div className="product-details">
-        <div className="product-details-media">
+      <div className="grid items-start gap-8 md:grid-cols-2 lg:gap-14">
+        <div className="aspect-square overflow-hidden rounded-3xl border border-line bg-white shadow-card [&_img]:size-full [&_img]:object-cover">
           <img
             src={product.imageUrl}
             alt={product.name}
@@ -76,15 +76,15 @@ function ProductDetails() {
           />
         </div>
 
-        <div className="product-details-info">
+        <div className="[&_.price]:mt-1 [&_.price]:mb-4 [&_.price]:text-3xl">
           <span className="eyebrow">Personalized gift</span>
           <h1>{product.name}</h1>
           <p className="price">₪{product.price}</p>
 
-          <p className="product-details-desc">{product.description}</p>
+          <p className="mb-6 text-[1.05rem]">{product.description}</p>
 
-          <div className="personalize-box">
-            <label className="toggle-row">
+          <div className="mb-6 rounded-2xl border border-line bg-white px-5 py-4 shadow-sm">
+            <label className="flex cursor-pointer items-center gap-3 text-[1.05rem]">
               <input
                 type="checkbox"
                 checked={personalization}
@@ -97,7 +97,7 @@ function ProductDetails() {
             </label>
 
             {personalization && (
-              <div className="personalize-fields">
+              <div className="mt-4 grid gap-4 border-t border-dashed border-line-strong pt-4 [&_label]:flex [&_label]:flex-col [&_label]:gap-1.5">
                 <label>
                   Color:
                   <select
@@ -130,17 +130,17 @@ function ProductDetails() {
             )}
           </div>
 
-          <div className="actions">
-            <button onClick={handleAddToCart}>
+          <div className="flex flex-wrap items-center gap-3 max-sm:[&>*]:flex-[1_1_100%]">
+            <button className="btn" onClick={handleAddToCart}>
               Add to cart
             </button>
 
-            <button className="btn-outline" onClick={() => navigate("/cart")}>
+            <button className="btn btn-outline" onClick={() => navigate("/cart")}>
               Go to cart
             </button>
           </div>
 
-          {added && <p className="msg msg-success">Added to your cart!</p>}
+          {added && <p className="msg-success">Added to your cart!</p>}
         </div>
       </div>
     </div>
