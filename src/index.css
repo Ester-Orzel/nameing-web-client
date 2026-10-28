@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 /* ============================================================
-   ameing · personalized gifts
-   Tailwind theme — colors taken from the logo (blush, rose gold, copper)
+   ameing · מתנות במיתוג אישי
+   כל העיצוב נמצא כאן, בלי קלאסים בקוד ה־React:
+   העיצוב פונה לתגיות עצמן ולמבנה של כל עמוד.
    ============================================================ */
 
 @theme {
@@ -21,22 +22,20 @@
   --color-copper-light: #e7c3b3;
   --color-copper-tint: #f6e6df;
 
-  --color-ok: #3f7d5a;
-  --color-ok-bg: #e6f2ea;
   --color-bad: #b2433a;
   --color-bad-bg: #fbe9e7;
-  --color-info: #8a6a2f;
-  --color-info-bg: #f8f0dd;
 
-  --font-sans: "DM Sans", system-ui, "Segoe UI", Arial, sans-serif;
-  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans: "Assistant", "Heebo", system-ui, Arial, sans-serif;
+  --font-serif: "Frank Ruhl Libre", Georgia, serif;
 
   --shadow-card: 0 6px 20px -8px rgb(110 60 40 / 0.18), 0 2px 6px -2px rgb(110 60 40 / 0.08);
   --shadow-lift: 0 18px 40px -16px rgb(110 60 40 / 0.28);
   --shadow-copper: 0 6px 14px -6px rgb(143 79 58 / 0.55);
 }
 
-/* ---------- Base ---------- */
+/* ============================================================
+   בסיס: רקע, גופנים, כותרת עליונה עם לוגו ותחתית
+   ============================================================ */
 
 @layer base {
   html {
@@ -44,47 +43,63 @@
   }
 
   body {
-    @apply min-h-svh;
+    @apply flex min-h-svh flex-col;
     background:
-      radial-gradient(1200px 500px at 15% -10%, #f3dfd8 0%, transparent 60%),
+      radial-gradient(1200px 500px at 85% -10%, #f3dfd8 0%, transparent 60%),
       var(--color-blush);
   }
 
+  /* כותרת עליונה עם הלוגו */
+  body::before {
+    content: "";
+    @apply block h-[92px] shrink-0 border-b border-line bg-blush-deep max-sm:h-[76px];
+    background-image: url("./assets/logo.png");
+    background-repeat: no-repeat;
+    background-size: auto 72px;
+    background-position: right max(20px, calc((100vw - 1180px) / 2 + 20px)) center;
+  }
+
+  /* תחתית האתר */
+  body::after {
+    content: "ameing · מתנות במיתוג אישי  |  להזמנות ושאלות: \2066 053-4166140\2069";
+    @apply block border-t border-line bg-blush-deep px-5 py-5 text-center text-[0.92rem] text-muted;
+  }
+
   #root {
-    @apply flex min-h-svh flex-col;
+    @apply mx-auto w-full max-w-[1180px] flex-1 px-5 pt-9 pb-14 max-sm:px-4 max-sm:pt-5 max-sm:pb-10;
   }
 
   h1,
   h2,
   h3 {
-    @apply font-serif font-semibold leading-tight text-ink;
+    @apply m-0 font-serif font-semibold leading-tight text-ink;
   }
 
   h1 {
-    @apply mb-2 text-[clamp(1.8rem,1.2rem+2.2vw,2.6rem)];
+    @apply mb-6 text-[clamp(1.8rem,1.2rem+2.2vw,2.6rem)];
   }
 
   h2 {
-    @apply mb-2 text-[clamp(1.2rem,1rem+0.8vw,1.5rem)];
+    @apply mb-1 text-[clamp(1.1rem,1rem+0.6vw,1.4rem)];
+  }
+
+  p {
+    @apply m-0;
   }
 
   a {
     @apply text-copper-dark transition-colors hover:text-copper;
   }
 
-  a:focus-visible,
-  button:focus-visible {
-    @apply outline-3 outline-offset-2 outline-copper/45;
-  }
-
   label {
     @apply text-[0.95rem] font-semibold text-ink;
   }
 
+  /* שדות טופס */
   input:not([type="checkbox"]),
   select,
   textarea {
-    @apply w-full rounded-[10px] border-[1.5px] border-line-strong bg-white px-3.5 py-2.5 text-ink transition placeholder:text-[#b8a49d] focus:border-copper focus:ring-4 focus:ring-copper/15 focus:outline-none;
+    @apply w-full rounded-[10px] border-[1.5px] border-line-strong bg-white px-3.5 py-2.5 font-sans text-base text-ink transition placeholder:text-[#b8a49d] focus:border-copper focus:ring-4 focus:ring-copper/15 focus:outline-none;
   }
 
   textarea {
@@ -92,78 +107,332 @@
   }
 
   select {
-    @apply cursor-pointer appearance-none bg-no-repeat pr-10;
+    @apply cursor-pointer appearance-none bg-no-repeat pl-10;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23b56f55' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-position: right 14px center;
+    background-position: left 14px center;
     background-size: 12px 8px;
   }
 
   input[type="checkbox"] {
-    @apply size-5 cursor-pointer accent-copper;
+    @apply size-5 shrink-0 cursor-pointer accent-copper;
+  }
+
+  /* כפתורים */
+  button {
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-linear-135 from-[#d9a088] via-copper to-copper-dark px-6 py-2.5 font-sans text-base font-bold text-white shadow-copper transition hover:-translate-y-px hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-55;
+  }
+
+  button:focus-visible,
+  a:focus-visible {
+    @apply outline-3 outline-offset-2 outline-copper/45;
+  }
+
+  img {
+    @apply block max-w-full;
+  }
+
+  hr {
+    @apply hidden;
   }
 }
 
-/* ---------- Reusable components ---------- */
+/* ============================================================
+   עיצוב לפי עמוד — מזהים כל עמוד לפי המבנה שלו
+   ============================================================ */
 
 @layer components {
-  .btn {
-    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border-[1.5px] border-transparent bg-linear-135 from-[#d9a088] via-copper to-copper-dark px-6 py-2.5 font-bold whitespace-nowrap text-white shadow-copper transition hover:-translate-y-px hover:text-white hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0;
-  }
-
-  .btn-outline {
-    @apply border-copper-light bg-none text-copper-dark shadow-none hover:bg-copper-tint hover:text-copper-dark;
-  }
-
-  .btn-ghost {
-    @apply bg-none px-3.5 text-muted shadow-none hover:bg-bad-bg hover:text-bad;
-  }
-
-  .btn-light {
-    @apply bg-white bg-none text-copper-dark hover:text-copper-dark;
-  }
-
-  .card {
-    @apply rounded-2xl border border-line bg-white p-5 shadow-card sm:p-8;
-  }
-
-  .eyebrow {
-    @apply mb-1.5 inline-block text-xs font-bold tracking-[0.14em] text-copper uppercase;
-  }
-
-  .chip {
-    @apply inline-flex items-center gap-1 rounded-full bg-copper-tint px-3 py-0.5 text-sm font-semibold text-copper-dark;
-  }
-
-  .price {
-    @apply font-serif text-xl font-bold text-copper-dark;
-  }
-
-  .msg-error {
-    @apply my-2 rounded-[10px] bg-bad-bg px-4 py-3 font-semibold text-bad;
-  }
-
-  .msg-success {
-    @apply my-2 rounded-[10px] bg-ok-bg px-4 py-3 font-semibold text-ok;
-  }
-
-  .msg-muted {
-    @apply px-4 py-10 text-center text-muted;
-  }
-
-  .field-error {
+  /* הודעת שגיאה מתחת לשדה בטופס */
+  form > input + p,
+  form > textarea + p {
     @apply -mt-1 text-sm font-semibold text-bad;
   }
 
-  .status {
-    @apply inline-block rounded-full bg-info-bg px-3 py-0.5 text-sm font-bold text-info;
+  /* ---------- עמוד מוצרים (prodact.tsx) ---------- */
+  #root > div:has(> div > label + select) {
+    @apply grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4;
+
+    & > h1,
+    & > p {
+      @apply col-span-full;
+    }
+
+    & > h1 {
+      @apply mb-0;
+    }
+
+    & > a {
+      @apply justify-self-start rounded-full border-[1.5px] border-copper-light bg-white px-4 py-1.5 text-[0.95rem] font-bold hover:bg-copper-tint;
+    }
+
+    /* שדות החיפוש, הקטגוריה והמיון */
+    & > div:has(> label) {
+      @apply flex flex-col gap-1.5 rounded-2xl border border-line bg-white p-4 shadow-sm;
+    }
+
+    /* שדה החיפוש תמיד מתחיל שורה חדשה */
+    & > div:has(> input) {
+      @apply col-span-2 col-start-1;
+    }
+
+    & > div:has(> label) > label {
+      @apply text-sm text-muted;
+    }
+
+    /* כרטיס מוצר */
+    & > div:has(> div > img) {
+      @apply flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lift;
+    }
+
+    & > div:has(> div > img) > div {
+      @apply flex flex-1 flex-col pb-3;
+    }
+
+    & > div:has(> div > img) img {
+      @apply mb-3 aspect-square w-full bg-soft object-cover;
+    }
+
+    & > div:has(> div > img) h2 {
+      @apply mb-1 px-4 text-lg max-sm:px-3 max-sm:text-base;
+    }
+
+    /* תיאור המוצר */
+    & > div:has(> div > img) > div > p:not(:last-child) {
+      @apply line-clamp-2 flex-1 px-4 text-sm text-muted max-sm:px-3;
+    }
+
+    /* מחיר */
+    & > div:has(> div > img) > div > p:last-child {
+      @apply mt-1.5 px-4 font-serif text-xl font-bold text-copper-dark max-sm:px-3 max-sm:text-lg;
+    }
+
+    & > div:has(> div > img) > button {
+      @apply mx-4 mb-4 max-sm:mx-2.5 max-sm:mb-3 max-sm:px-2 max-sm:text-sm;
+    }
+
+    /* כפתור "לסל הקניות" ומספר הפריטים בתחתית */
+    & > button {
+      @apply col-span-2 mt-4 justify-self-start border-[1.5px] border-copper-light bg-white bg-none text-copper-dark shadow-none hover:bg-copper-tint max-sm:col-span-full max-sm:w-full;
+    }
+
+    & > p:last-child {
+      @apply col-span-2 mt-4 self-center justify-self-end font-semibold text-muted max-sm:col-span-full max-sm:mt-0 max-sm:justify-self-center;
+    }
   }
-  .status-IN_PROGRESS {
-    @apply bg-copper-tint text-copper-dark;
+
+  /* ---------- פרטי מוצר (ProductDetails.tsx) ---------- */
+  #root > div:has(> img) {
+    @apply grid items-start gap-x-14 gap-y-4 max-md:grid-cols-1 md:grid-cols-2 md:grid-rows-[repeat(9,auto)_1fr];
+
+    & > * {
+      @apply md:col-start-2;
+    }
+
+    & > img {
+      @apply aspect-square w-full rounded-3xl border border-line bg-white object-cover shadow-card md:col-start-1 md:row-span-full md:row-start-1;
+    }
+
+    & > h1 {
+      @apply mb-0;
+    }
+
+    /* המחיר */
+    & > p:nth-of-type(2) {
+      @apply font-serif text-3xl font-bold text-copper-dark;
+    }
+
+    /* תיבת "התאמה אישית" */
+    & > label {
+      @apply flex cursor-pointer items-center gap-3 rounded-2xl border border-line bg-white px-5 py-4 text-[1.05rem] shadow-sm;
+    }
+
+    & > div {
+      @apply grid gap-4 rounded-2xl border border-dashed border-line-strong bg-white px-5 py-4;
+    }
+
+    & > div > label {
+      @apply flex flex-col gap-1.5;
+    }
+
+    & > button {
+      @apply justify-self-start;
+    }
+
+    & > button:last-child {
+      @apply border-[1.5px] border-copper-light bg-white bg-none text-copper-dark shadow-none hover:bg-copper-tint;
+    }
+
+    /* "המוצר נוסף לסל!" */
+    & > p:last-of-type:not(:nth-of-type(2)) {
+      @apply justify-self-start rounded-[10px] bg-[#e6f2ea] px-4 py-2 font-semibold text-[#3f7d5a];
+    }
   }
-  .status-DELIVERED {
-    @apply bg-ok-bg text-ok;
+
+  /* ---------- סל קניות (cart.tsx) ---------- */
+  #root > div:has(> div > img) {
+    @apply flex flex-col gap-4;
+
+    & > div {
+      @apply grid grid-cols-[96px_1fr_auto] grid-rows-[auto_auto_auto_1fr] items-start gap-x-5 gap-y-1 rounded-2xl border border-line bg-white p-4 shadow-sm max-sm:grid-cols-[72px_1fr];
+    }
+
+    & > div > img {
+      @apply row-span-full size-24 rounded-[10px] bg-soft object-cover max-sm:size-[72px];
+    }
+
+    & > div > :not(img, button) {
+      @apply col-start-2;
+    }
+
+    & > div > h2 {
+      @apply text-lg;
+    }
+
+    & > div > p {
+      @apply font-serif font-bold text-copper-dark;
+    }
+
+    /* צבע וטקסט שנבחרו */
+    & > div > div {
+      @apply mt-1 flex flex-wrap gap-1.5;
+    }
+
+    & > div > div > p {
+      @apply rounded-full bg-copper-tint px-3 py-0.5 text-sm font-semibold text-copper-dark;
+    }
+
+    & > div > button {
+      @apply col-start-3 justify-self-end max-sm:col-span-full max-sm:col-start-1 max-sm:justify-self-stretch;
+    }
+
+    /* "הסרה מהסל" */
+    & > div > button:first-of-type {
+      @apply row-start-1 bg-white bg-none text-muted shadow-none hover:bg-bad-bg hover:text-bad max-sm:row-start-auto;
+    }
+
+    & > div > button:last-of-type {
+      @apply row-start-2 max-sm:row-start-auto;
+    }
+
+    /* "סיים הזמנה" מוצג פעם אחת בלבד — רק במוצר האחרון */
+    & > div:not(:last-of-type) > button:last-of-type {
+      @apply hidden;
+    }
   }
-  .status-CANCELLED {
-    @apply bg-bad-bg text-bad;
+
+  /* סל ריק */
+  #root > div:has(> h1 + p:last-child) > p {
+    @apply rounded-2xl border border-line bg-white px-4 py-12 text-center text-lg text-muted shadow-card;
+  }
+
+  /* ---------- התחברות והרשמה (login.tsx, Register.tsx) ---------- */
+  #root > div:has(> form) {
+    @apply mx-auto w-full max-w-[460px] rounded-2xl border border-line bg-white p-8 shadow-card max-sm:p-5;
+
+    & > h1 {
+      @apply text-center text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)];
+    }
+
+    & > form {
+      @apply flex flex-col gap-3.5;
+    }
+
+    & > form > button {
+      @apply mt-2 w-full;
+    }
+
+    & > p,
+    & > form > button + p {
+      @apply mt-3 rounded-[10px] bg-bad-bg px-4 py-3 font-semibold text-bad;
+    }
+  }
+
+  /* ---------- תשלום ומשלוח (checkout.tsx) ---------- */
+  #root > form {
+    @apply mx-auto flex w-full max-w-[620px] flex-col gap-3.5 rounded-2xl border border-line bg-white p-8 shadow-card max-sm:p-5;
+
+    &::before {
+      content: "פרטי משלוח";
+      @apply mb-2 text-center font-serif text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)] font-semibold text-ink;
+    }
+
+    & > button {
+      @apply mt-2 w-full;
+    }
+  }
+
+  /* ---------- אזור אישי (MyAccount.tsx) ---------- */
+  #root > div:has(> div > h2):not(:has(> h1 + button), :has(> div > img)) {
+    @apply flex flex-col gap-5;
+
+    & > h1 {
+      @apply mb-1;
+    }
+
+    & > div {
+      @apply overflow-hidden rounded-2xl border border-line bg-white shadow-sm;
+    }
+
+    & > div > h2 {
+      @apply border-b border-line bg-soft px-5 py-4 text-lg;
+    }
+
+    & > div > p {
+      @apply inline-block px-5 pt-3 text-[0.95rem] text-muted;
+    }
+
+    & > div > p:first-of-type {
+      @apply font-bold text-copper-dark;
+    }
+
+    /* פריטים בהזמנה */
+    & > div > div {
+      @apply mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-line px-5 py-3 text-[0.95rem];
+    }
+
+    & > div > div > p:first-child {
+      @apply flex-[1_1_160px] font-bold text-ink;
+    }
+  }
+
+  /* ---------- אזור ניהול (Admin.tsx) ---------- */
+  #root > div:has(> h1 + button) {
+    & > h1 {
+      @apply mb-4;
+    }
+
+    /* כפתורי המעבר בין "הוספת מוצר" ו"צפייה בהזמנות" */
+    & > button {
+      @apply mb-5 ml-2 border-[1.5px] border-copper-light bg-white bg-none text-copper-dark shadow-none hover:bg-copper-tint max-sm:mb-3;
+    }
+
+    & > div {
+      @apply rounded-2xl border border-line bg-white p-8 shadow-card max-sm:p-5;
+    }
+
+    & > div > h2 {
+      @apply mb-5;
+    }
+
+    /* טופס הוספת מוצר (AddProduct.tsx): תווית ושדה באותה שורה */
+    & > div > form {
+      @apply grid items-center gap-x-5 gap-y-3.5 sm:grid-cols-[180px_1fr];
+    }
+
+    & > div > form > button {
+      @apply mt-2 justify-self-start sm:col-start-2 max-sm:w-full;
+    }
+
+    /* רשימת ההזמנות (AllOrders.tsx) */
+    & > div > div {
+      @apply flex flex-wrap gap-x-8 gap-y-1 border-b border-line py-3 text-[0.95rem] last:border-b-0;
+    }
+
+    & > div > div > p:first-child {
+      @apply font-bold text-ink;
+    }
+
+    & > div > div > p:last-of-type {
+      @apply rounded-full bg-copper-tint px-3 text-sm font-semibold text-copper-dark;
+    }
   }
 }
