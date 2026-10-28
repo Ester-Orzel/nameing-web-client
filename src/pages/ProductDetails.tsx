@@ -15,7 +15,7 @@ function ProductDetails() {
     error,
   } = useQuery({
     queryKey: ["products"],
-    queryFn: getProducts,
+    queryFn: () => getProducts(),
   });
 
   const [personalization, setPersonalization] = useState(false);

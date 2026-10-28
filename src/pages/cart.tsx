@@ -3,7 +3,6 @@ import { useState } from "react";
 import type { CartItem } from "../api";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
-import { Form } from "react-hook-form";
 
 const Cart = () => {
   const [cart, setCart] = useState<CartItem[]>(() => {
@@ -25,7 +24,7 @@ const Cart = () => {
 
 
   const removeFromCart = (index: number) => {
-    const updatedCart = cart.filter((item, i) => i !== index);
+    const updatedCart = cart.filter((_item, i) => i !== index);
 
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));

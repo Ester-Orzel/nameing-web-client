@@ -1,0 +1,19 @@
+# הגדרות העלאה ל־Render (Blueprint)
+services:
+  - type: web
+    name: nameing-web-client
+    runtime: static
+    branch: design/ui-refresh
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      # כתובת השרת ב־Render, בלי "/" בסוף. Render יבקש להזין אותה ביצירה
+      - key: VITE_API_URL
+        sync: false
+      - key: NODE_VERSION
+        value: "22"
+    # כל נתיב (למשל /cart או /products/3) מחזיר את index.html, כדי שרענון עמוד לא ייתן 404
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
