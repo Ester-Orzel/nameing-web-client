@@ -23,7 +23,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         <p className="product-card-desc">{product.description}</p>
 
-        <p className="price">{product.price} ₪</p>
+        <p className="price">₪{product.price}</p>
       </div>
 
       

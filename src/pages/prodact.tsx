@@ -44,15 +44,15 @@ const [categories, setCategories] = useState<Category[]>([]);
   return (
     <div>
       <section className="hero">
-        <span className="eyebrow">מתנות במיתוג אישי</span>
-        <h1>המוצרים שלנו</h1>
-        <p>שם, אות או מילה אהובה — אנחנו הופכים כל מתנה למשהו אישי ומיוחד.</p>
+        <span className="eyebrow">Personalized gifts</span>
+        <h1>Our products</h1>
+        <p>A name, an initial or a word you love — we turn every gift into something personal.</p>
 
         {(token || user?.role === "ADMIN") && (
           <div className="hero-links">
-            {token && <Link to="/my-account">האזור האישי שלי</Link>}
+            {token && <Link to="/my-account">My account</Link>}
             {user?.role === "ADMIN" && (
-              <Link to="/admin">כניסה לניהול</Link>
+              <Link to="/admin">Admin area</Link>
             )}
           </div>
         )}
@@ -60,18 +60,18 @@ const [categories, setCategories] = useState<Category[]>([]);
 
       <div className="filters">
         <div className="filter-field">
-          <label htmlFor="product-search">חיפוש מוצר:</label>
+          <label htmlFor="product-search">Search</label>
           <input
             id="product-search"
             type="search"
-            placeholder="חפשי מוצר..."
+            placeholder="Search products..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
 
         <div className="filter-field">
-          <label htmlFor="product-category">קטגוריה:</label>
+          <label htmlFor="product-category">Category</label>
           <select
             id="product-category"
             value={categoryId ?? ""}
@@ -81,7 +81,7 @@ const [categories, setCategories] = useState<Category[]>([]);
               )
             }
           >
-            <option value="">כל הקטגוריות</option>
+            <option value="">All categories</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -91,7 +91,7 @@ const [categories, setCategories] = useState<Category[]>([]);
         </div>
 
         <div className="filter-field">
-          <label htmlFor="product-sort">מיון לפי:</label>
+          <label htmlFor="product-sort">Sort by</label>
           <select
             id="product-sort"
             value={sort}
@@ -99,20 +99,20 @@ const [categories, setCategories] = useState<Category[]>([]);
               setSort(e.target.value as Sort)
             }
           >
-            <option value="newest">החדשים ביותר</option>
-            <option value="price_asc">מחיר: מהנמוך לגבוה</option>
-            <option value="price_desc">מחיר: מהגבוה לנמוך</option>
-            <option value="name">לפי שם המוצר</option>
+            <option value="newest">Newest</option>
+            <option value="price_asc">Price: low to high</option>
+            <option value="price_desc">Price: high to low</option>
+            <option value="name">Name</option>
           </select>
         </div>
       </div>
 
       {isLoading ? (
-        <p className="msg-muted">טוען מוצרים...</p>
+        <p className="msg-muted">Loading products...</p>
       ) : error ? (
-        <p className="msg msg-error">שגיאה בטעינת המוצרים</p>
+        <p className="msg msg-error">Error loading products</p>
       ) : products.length === 0 ? (
-        <p className="msg-muted">לא נמצאו מוצרים מתאימים</p>
+        <p className="msg-muted">No matching products found</p>
       ) : (
         <div className="product-grid">
           {products.map((product) => (
@@ -120,7 +120,7 @@ const [categories, setCategories] = useState<Category[]>([]);
               <ProductCard product={product} onAddToCart={addToCart} />
 
               <button onClick={() => navigate(`/products/${product.id}`)}>
-                לפרטי המוצר
+                View details
               </button>
             </div>
           ))}
@@ -128,10 +128,10 @@ const [categories, setCategories] = useState<Category[]>([]);
       )}
 
       <div className="cart-bar">
-        <p>מספר פריטים בסל: {cart.length}</p>
+        <p>Items in cart: {cart.length}</p>
 
         <button className="btn-outline" onClick={() => navigate("/cart")}>
-          לסל הקניות
+          Go to cart
         </button>
       </div>
     </div>

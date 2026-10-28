@@ -41,25 +41,25 @@ const Register = () => {
   return (
     <div className="auth-wrap">
       <div className="card form-card">
-      <h1>הרשמה</h1>
-      <p className="subtitle">פותחים חשבון ומתחילים לעצב מתנות</p>
+      <h1>Sign up</h1>
+      <p className="subtitle">Create an account and start designing gifts</p>
 
       <form className="form-stack" onSubmit={handleSubmit(onSubmit)}>
         <input
-          placeholder="שם מלא"
+          placeholder="Full name"
           {...register("fullName", {
-            required: "יש להזין שם מלא",
+            required: "Please enter your full name",
           })}
         />
         {errors.fullName && <p className="field-error">{errors.fullName.message}</p>}
 
         <input
-          placeholder="אימייל"
+          placeholder="Email"
           {...register("email", {
-            required: "יש להזין אימייל",
+            required: "Please enter your email",
             pattern: {
               value: /^\S+@\S+\.\S+$/,
-              message: "כתובת האימייל אינה תקינה",
+              message: "Please enter a valid email address",
             },
           })}
         />
@@ -67,35 +67,35 @@ const Register = () => {
 
         <input
           type="tel"
-          placeholder="טלפון"
+          placeholder="Phone"
           {...register("phone", {
-            required: "יש להזין מספר טלפון",
+            required: "Please enter a phone number",
           })}
         />
         {errors.phone && <p className="field-error">{errors.phone.message}</p>}
 
         <input
           type="password"
-          placeholder="סיסמה"
+          placeholder="Password"
           {...register("password", {
-            required: "יש להזין סיסמה",
+            required: "Please enter a password",
             minLength: {
               value: 6,
-              message: "הסיסמה חייבת להכיל לפחות 6 תווים",
+              message: "Password must be at least 6 characters",
             },
           })}
         />
         {errors.password && <p className="field-error">{errors.password.message}</p>}
 
         <button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "נרשמת..." : "הרשמה"}
+          {mutation.isPending ? "Creating account..." : "Sign up"}
         </button>
 
         {mutation.isError && <p className="msg msg-error">{mutation.error.message}</p>}
       </form>
 
       <p className="form-foot">
-        כבר יש לך חשבון? <Link to="/login">להתחברות</Link>
+        Already have an account? <Link to="/login">Sign in</Link>
       </p>
       </div>
     </div>

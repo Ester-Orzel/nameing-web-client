@@ -35,16 +35,16 @@ const UpdateOrderStatus = ({ order }: Props) => {
         queryKey: ["allOrders"],
       });
 
-      alert("הסטטוס עודכן בהצלחה");
+      alert("Status updated successfully");
     } catch {
-      alert("שגיאה בעדכון הסטטוס");
+      alert("Error updating status");
     } finally {
       setIsUpdating(false);
     }
   };
 
   if (isFinal) {
-    return <p className="chip">ההזמנה הסתיימה</p>;
+    return <p className="chip">Order completed</p>;
   }
 
   return (
@@ -56,8 +56,8 @@ const UpdateOrderStatus = ({ order }: Props) => {
           onClick={() => changeStatus(nextStatus)}
         >
           {order.status === "RECEIVED"
-            ? "העבר לטיפול"
-            : "סמן כנמסרה"}
+            ? "Mark in progress"
+            : "Mark delivered"}
         </button>
       )}
 
@@ -65,12 +65,12 @@ const UpdateOrderStatus = ({ order }: Props) => {
         className="btn-outline"
         disabled={isUpdating}
         onClick={() => {
-          if (window.confirm("האם לבטל את ההזמנה?")) {
+          if (window.confirm("Cancel this order?")) {
             changeStatus("CANCELLED");
           }
         }}
       >
-        בטל הזמנה
+        Cancel order
       </button>
     </div>
   );

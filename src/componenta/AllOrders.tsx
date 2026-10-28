@@ -13,28 +13,28 @@ const AllOrders = () => {
   });
 
   if (isLoading) {
-    return <p className="msg-muted">טוען הזמנות...</p>;
+    return <p className="msg-muted">Loading orders...</p>;
   }
 
   if (isError) {
-    return <p className="msg msg-error">שגיאה בטעינת ההזמנות</p>;
+    return <p className="msg msg-error">Error loading orders</p>;
   }
 
   return (
     <div>
-      <h2>כל ההזמנות</h2>
+      <h2>All orders</h2>
 
-      {orders.length === 0 && <p className="msg-muted">אין הזמנות כרגע</p>}
+      {orders.length === 0 && <p className="msg-muted">No orders yet</p>}
 
       {orders.length > 0 && (
         <div className="table-wrap">
           <table className="data-table">
             <thead>
               <tr>
-                <th>מספר הזמנה</th>
-                <th>שם לקוח</th>
-                <th>מחיר</th>
-                <th>סטטוס</th>
+                <th>Order #</th>
+                <th>Customer</th>
+                <th>Price</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -42,7 +42,7 @@ const AllOrders = () => {
                 <tr key={order.id}>
                   <td>#{order.id}</td>
                   <td>{order.contactName}</td>
-                  <td>{order.totalPrice} ₪</td>
+                  <td>₪{order.totalPrice}</td>
                   <td>
                     <span className={`status status-${order.status}`}>
                       {statusLabel(order.status)}

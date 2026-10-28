@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/Register";
 import Products from "./pages/prodact";
@@ -8,6 +8,7 @@ import Cart from "./pages/cart";
 import Admin from "./pages/Admin";
 import Checkout from "./pages/checkout";
 import MyAccount from "./pages/MyAccount";
+import Home from "./pages/Home";
 import Header from "./componenta/Header";
 import Footer from "./componenta/Footer";
 
@@ -19,7 +20,7 @@ function App() {
         <main className="site-main">
           <div className="container">
             <Routes>
-              <Route path="/" element={<Navigate to="/products" replace />} />
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/products" element={<Products />} />

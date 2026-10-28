@@ -2,20 +2,24 @@ import { Link, NavLink } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import logo from "../assets/logo.png";
 
-// כותרת עליונה משותפת לכל העמודים — מציגה רק קישורים לפי המשתמש המחובר
+// Shared site header — only shows links based on the signed-in user
 const Header = () => {
   const { user, token } = useUser();
 
   return (
     <header className="site-header">
       <div className="container">
-        <Link to="/products" className="site-logo" aria-label="ameing — לעמוד הבית">
-          <img src={logo} alt="ameing — מתנות במיתוג אישי" />
+        <Link to="/" className="site-logo" aria-label="ameing — home">
+          <img src={logo} alt="ameing — personalized gifts" />
         </Link>
 
-        <nav className="site-nav" aria-label="ניווט ראשי">
+        <nav className="site-nav" aria-label="Main navigation">
+          <NavLink to="/" end>
+            Home
+          </NavLink>
+
           <NavLink to="/products" end>
-            מוצרים
+            Shop
           </NavLink>
 
           <NavLink to="/cart">
@@ -23,23 +27,23 @@ const Header = () => {
               <path d="M6 7h12l-1 13H7L6 7Z" />
               <path d="M9 7a3 3 0 0 1 6 0" />
             </svg>
-            סל קניות
+            Cart
           </NavLink>
 
-          {token && <NavLink to="/my-account">האזור האישי</NavLink>}
+          {token && <NavLink to="/my-account">My account</NavLink>}
 
-          {user?.role === "ADMIN" && <NavLink to="/admin">ניהול</NavLink>}
+          {user?.role === "ADMIN" && <NavLink to="/admin">Admin</NavLink>}
 
           {!user && (
             <>
-              <NavLink to="/login">התחברות</NavLink>
+              <NavLink to="/login">Sign in</NavLink>
               <NavLink to="/register" className="nav-cta">
-                הרשמה
+                Sign up
               </NavLink>
             </>
           )}
 
-          {user && <span className="chip">שלום, {user.fullName}</span>}
+          {user && <span className="chip">Hi, {user.fullName}</span>}
         </nav>
       </div>
     </header>

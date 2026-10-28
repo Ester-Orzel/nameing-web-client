@@ -24,17 +24,17 @@ function ProductDetails() {
   const [added, setAdded] = useState(false);
 
   if (isLoading) {
-    return <p className="msg-muted">טוען מוצר...</p>;
+    return <p className="msg-muted">Loading product...</p>;
   }
 
   if (error) {
-    return <p className="msg msg-error">שגיאה בטעינת המוצרים</p>;
+    return <p className="msg msg-error">Error loading products</p>;
   }
 
   const product = products?.find((p) => p.id === Number(id));
 
   if (!product) {
-    return <p className="msg-muted">המוצר לא נמצא</p>;
+    return <p className="msg-muted">Product not found</p>;
   }
 
   const handleAddToCart = () => {
@@ -64,7 +64,7 @@ function ProductDetails() {
           navigate("/products");
         }}
       >
-        → חזרה למוצרים
+        ← Back to products
       </a>
 
       <div className="product-details">
@@ -77,9 +77,9 @@ function ProductDetails() {
         </div>
 
         <div className="product-details-info">
-          <span className="eyebrow">מתנה במיתוג אישי</span>
+          <span className="eyebrow">Personalized gift</span>
           <h1>{product.name}</h1>
-          <p className="price">{product.price} ₪</p>
+          <p className="price">₪{product.price}</p>
 
           <p className="product-details-desc">{product.description}</p>
 
@@ -93,13 +93,13 @@ function ProductDetails() {
                   setAdded(false);
                 }}
               />
-              התאמה אישית
+              Personalize it
             </label>
 
             {personalization && (
               <div className="personalize-fields">
                 <label>
-                  צבע:
+                  Color:
                   <select
                     value={selectedColor}
                     onChange={(e) => {
@@ -107,15 +107,15 @@ function ProductDetails() {
                       setAdded(false);
                     }}
                   >
-                    <option value="black">שחור</option>
-                    <option value="white">לבן</option>
-                    <option value="blue">כחול</option>
-                    <option value="pink">ורוד</option>
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                    <option value="blue">Blue</option>
+                    <option value="pink">Pink</option>
                   </select>
                 </label>
 
                 <label>
-                  טקסט להדפסה:
+                  Text to print
                   <input
                     type="text"
                     value={customText}
@@ -123,7 +123,7 @@ function ProductDetails() {
                       setCustomText(e.target.value);
                       setAdded(false);
                     }}
-                    placeholder="כתבי את הטקסט"
+                    placeholder="Type your text"
                   />
                 </label>
               </div>
@@ -132,15 +132,15 @@ function ProductDetails() {
 
           <div className="actions">
             <button onClick={handleAddToCart}>
-              הוספה לסל
+              Add to cart
             </button>
 
             <button className="btn-outline" onClick={() => navigate("/cart")}>
-              לסל הקניות
+              Go to cart
             </button>
           </div>
 
-          {added && <p className="msg msg-success">המוצר נוסף לסל!</p>}
+          {added && <p className="msg msg-success">Added to your cart!</p>}
         </div>
       </div>
     </div>

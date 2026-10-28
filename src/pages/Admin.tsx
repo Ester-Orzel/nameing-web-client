@@ -12,7 +12,7 @@ const Admin = () => {
   if (user?.role !== "ADMIN") {
     return (
       <div className="card empty-state">
-        <p>אין לך הרשאה להיכנס לעמוד הניהול</p>
+        <p>You don't have permission to access the admin area</p>
       </div>
     );
   }
@@ -21,8 +21,8 @@ const Admin = () => {
     <div>
       <div className="admin-head">
         <div>
-          <span className="eyebrow">אזור ניהול</span>
-          <h1>מערכת ניהול</h1>
+          <span className="eyebrow">Admin</span>
+          <h1>Dashboard</h1>
         </div>
 
         <div className="tabs" role="tablist">
@@ -32,7 +32,7 @@ const Admin = () => {
             className={page === "products" ? "active" : ""}
             onClick={() => setPage("products")}
           >
-            הוספת מוצר
+            Add product
           </button>
 
           <button
@@ -41,7 +41,7 @@ const Admin = () => {
             className={page === "orders" ? "active" : ""}
             onClick={() => setPage("orders")}
           >
-            צפייה בהזמנות
+            Orders
           </button>
         </div>
       </div>

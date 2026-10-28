@@ -30,12 +30,12 @@ const onSubmit = async (data: CheckoutForm) => {
   const cart = createCart();
 
   if (!token) {
-    alert("צריך להתחבר כדי לבצע הזמנה");
+    alert("Please sign in to place an order");
     return;
   }
 
   if (cart.length === 0) {
-    alert("סל הקניות ריק");
+    alert("Your cart is empty");
     return;
   }
 
@@ -49,10 +49,10 @@ const onSubmit = async (data: CheckoutForm) => {
 
   try {
     const res = await createOrder(orderFull, token);
-    console.log("ההזמנה נוצרה בהצלחה", res);
+    console.log("Order created successfully", res);
   } catch (error) {
-    console.error("שגיאה ביצירת ההזמנה", error);
-    alert("לא הצלחנו לבצע את ההזמנה");
+    console.error("Error creating order", error);
+    alert("We couldn't place your order");
   }
 };
 
@@ -60,31 +60,31 @@ const onSubmit = async (data: CheckoutForm) => {
   return (
     <div className="auth-wrap">
       <div className="card form-card wide">
-        <h1>פרטי משלוח</h1>
-        <p className="subtitle">עוד רגע והמתנה שלך בדרך</p>
+        <h1>Delivery details</h1>
+        <p className="subtitle">Your gift is almost on its way</p>
 
         <form className="form-stack" onSubmit={handleSubmit(onSubmit)}>
           <input
-            placeholder="שם מלא"
+            placeholder="Full name"
             {...register("contactName", {
-              required: "יש להזין שם מלא",
+              required: "Please enter your full name",
             })}
           />
           {errors.contactName && <p className="field-error">{errors.contactName.message}</p>}
 
           <input
             type="tel"
-            placeholder="טלפון"
+            placeholder="Phone"
             {...register("contactPhone", {
-              required: "יש להזין טלפון",
+              required: "Please enter a phone number",
             })}
           />
           {errors.contactPhone && <p className="field-error">{errors.contactPhone.message}</p>}
 
           <input
-            placeholder="כתובת למשלוח"
+            placeholder="Delivery address"
             {...register("deliveryAddress", {
-              required: "יש להזין כתובת למשלוח",
+              required: "Please enter a delivery address",
             })}
           />
           {errors.deliveryAddress && (
@@ -92,11 +92,11 @@ const onSubmit = async (data: CheckoutForm) => {
           )}
 
           <textarea
-            placeholder="הערות להזמנה"
+            placeholder="Order notes"
             {...register("notes")}
           />
 
-          <button type="submit">אישור הזמנה</button>
+          <button type="submit">Place order</button>
         </form>
       </div>
     </div>

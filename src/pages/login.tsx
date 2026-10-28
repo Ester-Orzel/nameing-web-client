@@ -31,38 +31,38 @@ const Login = () => {
 
       navigate(from, { replace: true });
     } catch {
-      setError("ההתחברות נכשלה. בדקי את האימייל והסיסמה.");
+      setError("Sign in failed. Please check your email and password.");
     }
   };
 
   return (
     <div className="auth-wrap">
       <div className="card form-card">
-        <h1>התחברות</h1>
-        <p className="subtitle">שמחים לראות אותך שוב</p>
+        <h1>Sign in</h1>
+        <p className="subtitle">Welcome back</p>
 
         <form className="form-stack" onSubmit={handleSubmit(onSubmit)}>
           <input
             type="email"
-            placeholder="אימייל"
+            placeholder="Email"
             autoComplete="email"
-            {...register("email", { required: "יש להזין אימייל" })}
+            {...register("email", { required: "Please enter your email" })}
           />
 
           <input
             type="password"
-            placeholder="סיסמה"
+            placeholder="Password"
             autoComplete="current-password"
-            {...register("password", { required: "יש להזין סיסמה" })}
+            {...register("password", { required: "Please enter a password" })}
           />
 
-          <button type="submit">התחברות</button>
+          <button type="submit">Sign in</button>
         </form>
 
         {error && <p className="msg msg-error">{error}</p>}
 
         <p className="form-foot">
-          עדיין אין לך חשבון? <Link to="/register">להרשמה</Link>
+          Don't have an account yet? <Link to="/register">Sign up</Link>
         </p>
       </div>
     </div>

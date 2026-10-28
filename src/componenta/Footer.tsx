@@ -1,13 +1,13 @@
-// תחתית האתר
+// Site footer
 const Footer = () => {
   return (
     <footer className="site-footer">
       <div className="container">
         <p>
-          <strong>ameing</strong> · מתנות במיתוג אישי
+          <strong>ameing</strong> · Personalized gifts
         </p>
         <p>
-          להזמנות ושאלות: <a href="tel:0534166140">053-4166140</a>
+          Orders & questions: <a href="tel:0534166140">053-4166140</a>
         </p>
       </div>
     </footer>

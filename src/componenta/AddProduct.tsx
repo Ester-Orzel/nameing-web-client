@@ -37,10 +37,10 @@ const AddProduct = ({ product }: Props) => {
     try {
       if (product) {
         await updateProduct(product.id, data, token);
-        alert("המוצר עודכן בהצלחה");
+        alert("Product updated successfully");
       } else {
         await addProduct(data, token);
-        alert("המוצר נוסף בהצלחה");
+        alert("Product added successfully");
         reset();
       }
 
@@ -48,17 +48,17 @@ const AddProduct = ({ product }: Props) => {
         queryKey: ["products"],
       });
     } catch {
-      alert("שגיאה בשמירת המוצר");
+      alert("Error saving product");
     }
   };
 
   return (
     <div>
-      <h2>{product ? "עריכת מוצר" : "הוספת מוצר חדש"}</h2>
+      <h2>{product ? "Edit product" : "Add a new product"}</h2>
 
       <form className="admin-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
-          <label>שם המוצר</label>
+          <label>Product name</label>
           <input
             type="text"
             {...register("name", { required: true })}
@@ -66,7 +66,7 @@ const AddProduct = ({ product }: Props) => {
         </div>
 
         <div className="field">
-          <label>מחיר</label>
+          <label>Price</label>
           <input
             type="number"
             step="0.01"
@@ -78,7 +78,7 @@ const AddProduct = ({ product }: Props) => {
         </div>
 
         <div className="field full">
-          <label>תיאור המוצר</label>
+          <label>Description</label>
           <input
             type="text"
             {...register("description", { required: true })}
@@ -86,7 +86,7 @@ const AddProduct = ({ product }: Props) => {
         </div>
 
         <div className="field full">
-          <label>קישור לתמונה</label>
+          <label>Image URL</label>
           <input
             type="url"
             dir="ltr"
@@ -95,22 +95,22 @@ const AddProduct = ({ product }: Props) => {
         </div>
 
         <div className="field">
-          <label>סוג התאמה אישית</label>
+          <label>Personalization type</label>
           <select {...register("personalizationType")}>
-            <option value="NAME_OR_INITIAL">שם או אות</option>
-            <option value="INITIAL_ONLY">אות בלבד</option>
+            <option value="NAME_OR_INITIAL">Name or initial</option>
+            <option value="INITIAL_ONLY">Initial only</option>
           </select>
         </div>
 
         <div className="field">
-          <label>קטגוריה</label>
+          <label>Category</label>
           <select
             {...register("categoryId", {
               required: true,
               valueAsNumber: true,
             })}
           >
-            <option value="">בחר קטגוריה</option>
+            <option value="">Select a category</option>
 
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
@@ -121,7 +121,7 @@ const AddProduct = ({ product }: Props) => {
         </div>
 
         <button type="submit">
-          {product ? "שמור שינויים" : "הוסף מוצר"}
+          {product ? "Save changes" : "Add product"}
         </button>
       </form>
     </div>

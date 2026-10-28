@@ -1,9 +1,9 @@
-// תרגום סטטוס הזמנה לתצוגה בלבד
+// Order status labels, for display only
 const STATUS_LABELS: Record<string, string> = {
-  RECEIVED: "התקבלה",
-  IN_PROGRESS: "בטיפול",
-  DELIVERED: "נמסרה",
-  CANCELLED: "בוטלה",
+  RECEIVED: "Received",
+  IN_PROGRESS: "In progress",
+  DELIVERED: "Delivered",
+  CANCELLED: "Cancelled",
 };
 
 export const statusLabel = (status: string) => STATUS_LABELS[status] ?? status;

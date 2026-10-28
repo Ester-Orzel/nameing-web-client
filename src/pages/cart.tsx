@@ -31,19 +31,19 @@ const Cart = () => {
     
   };
 
-  // סכום לתצוגה בלבד
+  // Total, for display only
   const total = cart.reduce((sum, item) => sum + Number(item.product.price), 0);
 
   return (
     <div>
       <div className="page-head">
-        <h1>סל הקניות שלי</h1>
+        <h1>My cart</h1>
       </div>
 
       {cart.length === 0 ? (
         <div className="card empty-state">
-          <p>סל הקניות ריק</p>
-          <button onClick={() => navigate("/products")}>למוצרים שלנו</button>
+          <p>Your cart is empty</p>
+          <button onClick={() => navigate("/products")}>Browse products</button>
         </div>
       ) : (
         <div className="cart-layout">
@@ -58,34 +58,34 @@ const Cart = () => {
 
                 <div>
                   <h2>{item.product.name}</h2>
-                  <p className="price">מחיר: {item.product.price} ₪</p>
+                  <p className="price">Price: ₪{item.product.price}</p>
 
                   {item.personalization && (
                     <div className="cart-item-custom">
-                      <span className="chip">צבע: {item.selectedColor}</span>
-                      <span className="chip">טקסט: {item.customText}</span>
+                      <span className="chip">Color: {item.selectedColor}</span>
+                      <span className="chip">Text: {item.customText}</span>
                     </div>
                   )}
                 </div>
 
                 <button className="btn-ghost" onClick={() => removeFromCart(index)}>
-                  הסרה מהסל
+                  Remove
                 </button>
               </div>
             ))}
           </div>
 
           <aside className="card summary">
-            <h2>סיכום הזמנה</h2>
+            <h2>Order summary</h2>
             <div className="summary-row">
-              <span>מספר פריטים</span>
+              <span>Items</span>
               <span>{cart.length}</span>
             </div>
             <div className="summary-row summary-total">
-              <span>סה״כ</span>
-              <span>{total} ₪</span>
+              <span>Total</span>
+              <span>₪{total}</span>
             </div>
-            {cart.length>0 && (<button className="btn-block" onClick={Checkout}>סיים הזמנה </button>)}
+            {cart.length>0 && (<button className="btn-block" onClick={Checkout}>Checkout </button>)}
           </aside>
         </div>
       )}
