@@ -52,8 +52,8 @@ export interface CartItem {
   product: Product;
   personalization: boolean;
   customText: string;
-  selectedColor: string;
-  selectedFont?: Font | null;
+  selectedColor: Color | null;
+  selectedFont: Font | null;
 }
 
 export interface CreateOrderRequest {
@@ -64,10 +64,10 @@ export interface CreateOrderRequest {
   notes: string;
   items: {
     productId: number;
-    personalizationKind?: "NAME" | "INITIAL" | "NONE";
-    personalizationText?: string | null;
-    fontId?: number | null;
-    colorId?: number | null;
+    personalizationKind: "NAME" | "INITIAL" | "NONE";
+    personalizationText: string | null;
+    fontId: number | null;
+    colorId: number | null;
   }[];
 }
 
@@ -200,8 +200,6 @@ export const addProduct = async (
       },
     }
   );
-
-  return response.data;
 };
 export async function getAllOrders(token: string) {
   const response = await api.get<Order[]>("/api/orders", {

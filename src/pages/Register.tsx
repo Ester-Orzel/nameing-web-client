@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../api";
 import { useUser } from "../context/UserContext";
-import { Link } from "react-router-dom";
 
 interface RegisterForm {
   fullName: string;
@@ -39,65 +38,57 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center pt-4">
-      <div className="card w-full max-w-[460px] [&_h1]:mb-1 [&_h1]:text-center [&_h1]:text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)]">
-      <h1>Sign up</h1>
-      <p className="mb-6 text-center text-muted">Create an account and start designing gifts</p>
+    <div>
+      <h1>הרשמה</h1>
 
-      <form className="flex flex-col gap-3.5 [&_button[type=submit]]:mt-2 [&_button[type=submit]]:w-full" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <input
-          placeholder="Full name"
+          placeholder="שם מלא"
           {...register("fullName", {
-            required: "Please enter your full name",
+            required: "יש להזין שם מלא",
           })}
         />
-        {errors.fullName && <p className="field-error">{errors.fullName.message}</p>}
+        {errors.fullName && <p>{errors.fullName.message}</p>}
 
         <input
-          placeholder="Email"
+          placeholder="אימייל"
           {...register("email", {
-            required: "Please enter your email",
+            required: "יש להזין אימייל",
             pattern: {
               value: /^\S+@\S+\.\S+$/,
-              message: "Please enter a valid email address",
+              message: "כתובת האימייל אינה תקינה",
             },
           })}
         />
-        {errors.email && <p className="field-error">{errors.email.message}</p>}
+        {errors.email && <p>{errors.email.message}</p>}
 
         <input
-          type="tel"
-          placeholder="Phone"
+          placeholder="טלפון"
           {...register("phone", {
-            required: "Please enter a phone number",
+            required: "יש להזין מספר טלפון",
           })}
         />
-        {errors.phone && <p className="field-error">{errors.phone.message}</p>}
+        {errors.phone && <p>{errors.phone.message}</p>}
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="סיסמה"
           {...register("password", {
-            required: "Please enter a password",
+            required: "יש להזין סיסמה",
             minLength: {
               value: 6,
-              message: "Password must be at least 6 characters",
+              message: "הסיסמה חייבת להכיל לפחות 6 תווים",
             },
           })}
         />
-        {errors.password && <p className="field-error">{errors.password.message}</p>}
+        {errors.password && <p>{errors.password.message}</p>}
 
-        <button className="btn" type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Creating account..." : "Sign up"}
+        <button type="submit" disabled={mutation.isPending}>
+          {mutation.isPending ? "נרשמת..." : "הרשמה"}
         </button>
 
-        {mutation.isError && <p className="msg-error">{mutation.error.message}</p>}
+        {mutation.isError && <p>{mutation.error.message}</p>}
       </form>
-
-      <p className="mt-5 text-center text-[0.95rem] text-muted [&_a]:font-bold">
-        Already have an account? <Link to="/login">Sign in</Link>
-      </p>
-      </div>
     </div>
   );
 };

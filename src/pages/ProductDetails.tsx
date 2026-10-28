@@ -15,7 +15,7 @@ function ProductDetails() {
     error,
   } = useQuery({
     queryKey: ["products"],
-    queryFn: () => getProducts(),
+    queryFn: getProducts,
   });
 
   const [personalization, setPersonalization] = useState(false);
@@ -24,17 +24,17 @@ function ProductDetails() {
   const [added, setAdded] = useState(false);
 
   if (isLoading) {
-    return <p className="msg-muted">Loading product...</p>;
+    return <p>טוען מוצר...</p>;
   }
 
   if (error) {
-    return <p className="msg-error">Error loading products</p>;
+    return <p>שגיאה בטעינת המוצרים</p>;
   }
 
   const product = products?.find((p) => p.id === Number(id));
 
   if (!product) {
-    return <p className="msg-muted">Product not found</p>;
+    return <p>המוצר לא נמצא</p>;
   }
 
   const handleAddToCart = () => {
@@ -56,93 +56,71 @@ function ProductDetails() {
 
   return (
     <div>
-      <a
-        href="/products"
-        className="mb-5 inline-flex items-center gap-1 font-semibold"
-        onClick={(e) => {
-          e.preventDefault();
-          navigate("/products");
-        }}
-      >
-        ← Back to products
-      </a>
+      <h1>{product.name}</h1>
 
-      <div className="grid items-start gap-8 md:grid-cols-2 lg:gap-14">
-        <div className="aspect-square overflow-hidden rounded-3xl border border-line bg-white shadow-card [&_img]:size-full [&_img]:object-cover">
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            width="200"
-          />
+      <img
+        src={product.imageUrl}
+        alt={product.name}
+        width="200"
+      />
+
+      <p>{product.description}</p>
+      <p>{product.price} ₪</p>
+
+      <label>
+        <input
+          type="checkbox"
+          checked={personalization}
+          onChange={(e) => {
+            setPersonalization(e.target.checked);
+            setAdded(false);
+          }}
+        />
+        התאמה אישית
+      </label>
+
+      {personalization && (
+        <div>
+          <label>
+            צבע:
+            <select
+              value={selectedColor}
+              onChange={(e) => {
+                setSelectedColor(e.target.value);
+                setAdded(false);
+              }}
+            >
+              <option value="black">שחור</option>
+              <option value="white">לבן</option>
+              <option value="blue">כחול</option>
+              <option value="pink">ורוד</option>
+            </select>
+          </label>
+
+          <label>
+            טקסט להדפסה:
+            <input
+              type="text"
+              value={customText}
+              onChange={(e) => {
+                setCustomText(e.target.value);
+                setAdded(false);
+              }}
+              placeholder="כתבי את הטקסט"
+            />
+          </label>
         </div>
+      )}
 
-        <div className="[&_.price]:mt-1 [&_.price]:mb-4 [&_.price]:text-3xl">
-          <span className="eyebrow">Personalized gift</span>
-          <h1>{product.name}</h1>
-          <p className="price">₪{product.price}</p>
+      <button onClick={handleAddToCart}>
+        הוספה לסל
+      </button>
 
-          <p className="mb-6 text-[1.05rem]">{product.description}</p>
+      {added && <p>המוצר נוסף לסל!</p>}
 
-          <div className="mb-6 rounded-2xl border border-line bg-white px-5 py-4 shadow-sm">
-            <label className="flex cursor-pointer items-center gap-3 text-[1.05rem]">
-              <input
-                type="checkbox"
-                checked={personalization}
-                onChange={(e) => {
-                  setPersonalization(e.target.checked);
-                  setAdded(false);
-                }}
-              />
-              Personalize it
-            </label>
-
-            {personalization && (
-              <div className="mt-4 grid gap-4 border-t border-dashed border-line-strong pt-4 [&_label]:flex [&_label]:flex-col [&_label]:gap-1.5">
-                <label>
-                  Color:
-                  <select
-                    value={selectedColor}
-                    onChange={(e) => {
-                      setSelectedColor(e.target.value);
-                      setAdded(false);
-                    }}
-                  >
-                    <option value="black">Black</option>
-                    <option value="white">White</option>
-                    <option value="blue">Blue</option>
-                    <option value="pink">Pink</option>
-                  </select>
-                </label>
-
-                <label>
-                  Text to print
-                  <input
-                    type="text"
-                    value={customText}
-                    onChange={(e) => {
-                      setCustomText(e.target.value);
-                      setAdded(false);
-                    }}
-                    placeholder="Type your text"
-                  />
-                </label>
-              </div>
-            )}
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3 max-sm:[&>*]:flex-[1_1_100%]">
-            <button className="btn" onClick={handleAddToCart}>
-              Add to cart
-            </button>
-
-            <button className="btn btn-outline" onClick={() => navigate("/cart")}>
-              Go to cart
-            </button>
-          </div>
-
-          {added && <p className="msg-success">Added to your cart!</p>}
-        </div>
-      </div>
+      <button onClick={() => navigate("/cart")}>
+        לסל הקניות
+      </button>
     </div>
   );
 }

@@ -35,42 +35,41 @@ const UpdateOrderStatus = ({ order }: Props) => {
         queryKey: ["allOrders"],
       });
 
-      alert("Status updated successfully");
+      alert("הסטטוס עודכן בהצלחה");
     } catch {
-      alert("Error updating status");
+      alert("שגיאה בעדכון הסטטוס");
     } finally {
       setIsUpdating(false);
     }
   };
 
   if (isFinal) {
-    return <p className="chip">Order completed</p>;
+    return <p>ההזמנה הסתיימה</p>;
   }
 
   return (
-    <div className="flex flex-wrap gap-2 [&_button]:min-h-9 [&_button]:px-4 [&_button]:py-1 [&_button]:text-sm">
+    <div>
       {(order.status === "RECEIVED" ||
         order.status === "IN_PROGRESS") && (
-        <button className="btn"
+        <button
           disabled={isUpdating}
           onClick={() => changeStatus(nextStatus)}
         >
           {order.status === "RECEIVED"
-            ? "Mark in progress"
-            : "Mark delivered"}
+            ? "העבר לטיפול"
+            : "סמן כנמסרה"}
         </button>
       )}
 
       <button
-        className="btn btn-outline"
         disabled={isUpdating}
         onClick={() => {
-          if (window.confirm("Cancel this order?")) {
+          if (window.confirm("האם לבטל את ההזמנה?")) {
             changeStatus("CANCELLED");
           }
         }}
       >
-        Cancel order
+        בטל הזמנה
       </button>
     </div>
   );

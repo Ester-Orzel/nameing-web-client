@@ -30,12 +30,12 @@ const onSubmit = async (data: CheckoutForm) => {
   const cart = createCart();
 
   if (!token) {
-    alert("Please sign in to place an order");
+    alert("צריך להתחבר כדי לבצע הזמנה");
     return;
   }
 
   if (cart.length === 0) {
-    alert("Your cart is empty");
+    alert("סל הקניות ריק");
     return;
   }
 
@@ -49,57 +49,49 @@ const onSubmit = async (data: CheckoutForm) => {
 
   try {
     const res = await createOrder(orderFull, token);
-    console.log("Order created successfully", res);
+    console.log("ההזמנה נוצרה בהצלחה", res);
   } catch (error) {
-    console.error("Error creating order", error);
-    alert("We couldn't place your order");
+    console.error("שגיאה ביצירת ההזמנה", error);
+    alert("לא הצלחנו לבצע את ההזמנה");
   }
 };
 
 
   return (
-    <div className="flex justify-center pt-4">
-      <div className="card w-full max-w-[460px] [&_h1]:mb-1 [&_h1]:text-center [&_h1]:text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)] max-w-[620px]">
-        <h1>Delivery details</h1>
-        <p className="mb-6 text-center text-muted">Your gift is almost on its way</p>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input
+        placeholder="שם מלא"
+        {...register("contactName", {
+          required: "יש להזין שם מלא",
+        })}
+      />
+      {errors.contactName && <p>{errors.contactName.message}</p>}
 
-        <form className="flex flex-col gap-3.5 [&_button[type=submit]]:mt-2 [&_button[type=submit]]:w-full" onSubmit={handleSubmit(onSubmit)}>
-          <input
-            placeholder="Full name"
-            {...register("contactName", {
-              required: "Please enter your full name",
-            })}
-          />
-          {errors.contactName && <p className="field-error">{errors.contactName.message}</p>}
+      <input
+        placeholder="טלפון"
+        {...register("contactPhone", {
+          required: "יש להזין טלפון",
+        })}
+      />
+      {errors.contactPhone && <p>{errors.contactPhone.message}</p>}
 
-          <input
-            type="tel"
-            placeholder="Phone"
-            {...register("contactPhone", {
-              required: "Please enter a phone number",
-            })}
-          />
-          {errors.contactPhone && <p className="field-error">{errors.contactPhone.message}</p>}
+      <input
+        placeholder="כתובת למשלוח"
+        {...register("deliveryAddress", {
+          required: "יש להזין כתובת למשלוח",
+        })}
+      />
+      {errors.deliveryAddress && (
+        <p>{errors.deliveryAddress.message}</p>
+      )}
 
-          <input
-            placeholder="Delivery address"
-            {...register("deliveryAddress", {
-              required: "Please enter a delivery address",
-            })}
-          />
-          {errors.deliveryAddress && (
-            <p className="field-error">{errors.deliveryAddress.message}</p>
-          )}
+      <textarea
+        placeholder="הערות להזמנה"
+        {...register("notes")}
+      />
 
-          <textarea
-            placeholder="Order notes"
-            {...register("notes")}
-          />
-
-          <button className="btn" type="submit">Place order</button>
-        </form>
-      </div>
-    </div>
+      <button type="submit">אישור הזמנה</button>
+    </form>
   );
 };
 

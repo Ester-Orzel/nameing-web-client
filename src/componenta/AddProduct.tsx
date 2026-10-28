@@ -37,10 +37,10 @@ const AddProduct = ({ product }: Props) => {
     try {
       if (product) {
         await updateProduct(product.id, data, token);
-        alert("Product updated successfully");
+        alert("המוצר עודכן בהצלחה");
       } else {
         await addProduct(data, token);
-        alert("Product added successfully");
+        alert("המוצר נוסף בהצלחה");
         reset();
       }
 
@@ -48,80 +48,67 @@ const AddProduct = ({ product }: Props) => {
         queryKey: ["products"],
       });
     } catch {
-      alert("Error saving product");
+      alert("שגיאה בשמירת המוצר");
     }
   };
 
   return (
     <div>
-      <h2>{product ? "Edit product" : "Add a new product"}</h2>
+      <h2>{product ? "עריכת מוצר" : "הוספת מוצר חדש"}</h2>
 
-      <form className="grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2 [&_button[type=submit]]:mt-1.5 max-sm:[&_button[type=submit]]:w-full sm:[&_button[type=submit]]:col-span-2 sm:[&_button[type=submit]]:justify-self-start" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-1.5">
-          <label>Product name</label>
-          <input
-            type="text"
-            {...register("name", { required: true })}
-          />
-        </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>שם המוצר</label>
+        <input
+          type="text"
+          {...register("name", { required: true })}
+        />
 
-        <div className="flex flex-col gap-1.5">
-          <label>Price</label>
-          <input
-            type="number"
-            step="0.01"
-            {...register("price", {
-              required: true,
-              valueAsNumber: true,
-            })}
-          />
-        </div>
+        <label>תיאור המוצר</label>
+        <input
+          type="text"
+          {...register("description", { required: true })}
+        />
 
-        <div className="flex flex-col gap-1.5 sm:col-span-2">
-          <label>Description</label>
-          <input
-            type="text"
-            {...register("description", { required: true })}
-          />
-        </div>
+        <label>מחיר</label>
+        <input
+          type="number"
+          step="0.01"
+          {...register("price", {
+            required: true,
+            valueAsNumber: true,
+          })}
+        />
 
-        <div className="flex flex-col gap-1.5 sm:col-span-2">
-          <label>Image URL</label>
-          <input
-            type="url"
-            dir="ltr"
-            {...register("imageUrl", { required: true })}
-          />
-        </div>
+        <label>קישור לתמונה</label>
+        <input
+          type="url"
+          {...register("imageUrl", { required: true })}
+        />
 
-        <div className="flex flex-col gap-1.5">
-          <label>Personalization type</label>
-          <select {...register("personalizationType")}>
-            <option value="NAME_OR_INITIAL">Name or initial</option>
-            <option value="INITIAL_ONLY">Initial only</option>
-          </select>
-        </div>
+        <label>סוג התאמה אישית</label>
+        <select {...register("personalizationType")}>
+          <option value="NAME_OR_INITIAL">שם או אות</option>
+          <option value="INITIAL_ONLY">אות בלבד</option>
+        </select>
 
-        <div className="flex flex-col gap-1.5">
-          <label>Category</label>
-          <select
-            {...register("categoryId", {
-              required: true,
-              valueAsNumber: true,
-            })}
-          >
-            <option value="">Select a category</option>
+        <label>קטגוריה</label>
+        <select
+          {...register("categoryId", {
+            required: true,
+            valueAsNumber: true,
+          })}
+        >
+          <option value="">בחר קטגוריה</option>
 
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
 
-        <button className="btn" type="submit">
-          {product ? "Save changes" : "Add product"}
+        <button type="submit">
+          {product ? "שמור שינויים" : "הוסף מוצר"}
         </button>
       </form>
     </div>
