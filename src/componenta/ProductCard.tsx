@@ -6,8 +6,7 @@ interface ProductCardProps {
   onAddToCart: (product: Product) => void;
 }
 
-const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
-  return (
+const ProductCard = ({ product }: ProductCardProps) => {  return (
     <div>
       <img
         src={product.imageUrl}

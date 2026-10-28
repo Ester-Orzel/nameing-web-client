@@ -6,7 +6,7 @@ import ProductDetails from "./pages/ProductDetails";
 import { UserProvider } from "./context/UserContext";
 import Cart from "./pages/cart";
 import Admin from "./pages/Admin";
-import Home from "./pages/Home";
+
 import Header from "./componenta/Header";
 import Checkout from "./pages/checkout";
 import MyAccount from "./pages/MyAccount";
@@ -18,7 +18,7 @@ function App() {
         <Header />
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Products />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/products" element={<Products />} />
