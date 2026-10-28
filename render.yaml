@@ -7,9 +7,9 @@ services:
     buildCommand: npm ci && npm run build
     staticPublishPath: ./dist
     envVars:
-      # כתובת השרת ב־Render, בלי "/" בסוף. Render יבקש להזין אותה ביצירה
+      # כתובת השרת ב־Render, בלי "/" בסוף
       - key: VITE_API_URL
-        sync: false
+        value: https://ameing-gifts-api.onrender.com
       - key: NODE_VERSION
         value: "22"
     # כל נתיב (למשל /cart או /products/3) מחזיר את index.html, כדי שרענון עמוד לא ייתן 404
