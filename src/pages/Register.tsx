@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../api";
 import { useUser } from "../context/UserContext";
+import { Link } from "react-router-dom";
 
 interface RegisterForm {
   fullName: string;
@@ -38,17 +39,19 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="auth-wrap">
+      <div className="card form-card">
       <h1>הרשמה</h1>
+      <p className="subtitle">פותחים חשבון ומתחילים לעצב מתנות</p>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="form-stack" onSubmit={handleSubmit(onSubmit)}>
         <input
           placeholder="שם מלא"
           {...register("fullName", {
             required: "יש להזין שם מלא",
           })}
         />
-        {errors.fullName && <p>{errors.fullName.message}</p>}
+        {errors.fullName && <p className="field-error">{errors.fullName.message}</p>}
 
         <input
           placeholder="אימייל"
@@ -60,15 +63,16 @@ const Register = () => {
             },
           })}
         />
-        {errors.email && <p>{errors.email.message}</p>}
+        {errors.email && <p className="field-error">{errors.email.message}</p>}
 
         <input
+          type="tel"
           placeholder="טלפון"
           {...register("phone", {
             required: "יש להזין מספר טלפון",
           })}
         />
-        {errors.phone && <p>{errors.phone.message}</p>}
+        {errors.phone && <p className="field-error">{errors.phone.message}</p>}
 
         <input
           type="password"
@@ -81,14 +85,19 @@ const Register = () => {
             },
           })}
         />
-        {errors.password && <p>{errors.password.message}</p>}
+        {errors.password && <p className="field-error">{errors.password.message}</p>}
 
         <button type="submit" disabled={mutation.isPending}>
           {mutation.isPending ? "נרשמת..." : "הרשמה"}
         </button>
 
-        {mutation.isError && <p>{mutation.error.message}</p>}
+        {mutation.isError && <p className="msg msg-error">{mutation.error.message}</p>}
       </form>
+
+      <p className="form-foot">
+        כבר יש לך חשבון? <Link to="/login">להתחברות</Link>
+      </p>
+      </div>
     </div>
   );
 };

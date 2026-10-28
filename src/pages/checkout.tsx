@@ -58,40 +58,48 @@ const onSubmit = async (data: CheckoutForm) => {
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        placeholder="שם מלא"
-        {...register("contactName", {
-          required: "יש להזין שם מלא",
-        })}
-      />
-      {errors.contactName && <p>{errors.contactName.message}</p>}
+    <div className="auth-wrap">
+      <div className="card form-card wide">
+        <h1>פרטי משלוח</h1>
+        <p className="subtitle">עוד רגע והמתנה שלך בדרך</p>
 
-      <input
-        placeholder="טלפון"
-        {...register("contactPhone", {
-          required: "יש להזין טלפון",
-        })}
-      />
-      {errors.contactPhone && <p>{errors.contactPhone.message}</p>}
+        <form className="form-stack" onSubmit={handleSubmit(onSubmit)}>
+          <input
+            placeholder="שם מלא"
+            {...register("contactName", {
+              required: "יש להזין שם מלא",
+            })}
+          />
+          {errors.contactName && <p className="field-error">{errors.contactName.message}</p>}
 
-      <input
-        placeholder="כתובת למשלוח"
-        {...register("deliveryAddress", {
-          required: "יש להזין כתובת למשלוח",
-        })}
-      />
-      {errors.deliveryAddress && (
-        <p>{errors.deliveryAddress.message}</p>
-      )}
+          <input
+            type="tel"
+            placeholder="טלפון"
+            {...register("contactPhone", {
+              required: "יש להזין טלפון",
+            })}
+          />
+          {errors.contactPhone && <p className="field-error">{errors.contactPhone.message}</p>}
 
-      <textarea
-        placeholder="הערות להזמנה"
-        {...register("notes")}
-      />
+          <input
+            placeholder="כתובת למשלוח"
+            {...register("deliveryAddress", {
+              required: "יש להזין כתובת למשלוח",
+            })}
+          />
+          {errors.deliveryAddress && (
+            <p className="field-error">{errors.deliveryAddress.message}</p>
+          )}
 
-      <button type="submit">אישור הזמנה</button>
-    </form>
+          <textarea
+            placeholder="הערות להזמנה"
+            {...register("notes")}
+          />
+
+          <button type="submit">אישור הזמנה</button>
+        </form>
+      </div>
+    </div>
   );
 };
 

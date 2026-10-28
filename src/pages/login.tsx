@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { loginUser } from "../api";
 import { useUser } from "../context/UserContext";
 
@@ -36,26 +36,35 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>התחברות</h1>
+    <div className="auth-wrap">
+      <div className="card form-card">
+        <h1>התחברות</h1>
+        <p className="subtitle">שמחים לראות אותך שוב</p>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="email"
-          placeholder="אימייל"
-          {...register("email", { required: "יש להזין אימייל" })}
-        />
+        <form className="form-stack" onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="email"
+            placeholder="אימייל"
+            autoComplete="email"
+            {...register("email", { required: "יש להזין אימייל" })}
+          />
 
-        <input
-          type="password"
-          placeholder="סיסמה"
-          {...register("password", { required: "יש להזין סיסמה" })}
-        />
+          <input
+            type="password"
+            placeholder="סיסמה"
+            autoComplete="current-password"
+            {...register("password", { required: "יש להזין סיסמה" })}
+          />
 
-        <button type="submit">התחברות</button>
-      </form>
+          <button type="submit">התחברות</button>
+        </form>
 
-      {error && <p>{error}</p>}
+        {error && <p className="msg msg-error">{error}</p>}
+
+        <p className="form-foot">
+          עדיין אין לך חשבון? <Link to="/register">להרשמה</Link>
+        </p>
+      </div>
     </div>
   );
 };

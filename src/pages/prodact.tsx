@@ -43,82 +43,97 @@ const [categories, setCategories] = useState<Category[]>([]);
 
   return (
     <div>
-      <h1>המוצרים שלנו</h1>
+      <section className="hero">
+        <span className="eyebrow">מתנות במיתוג אישי</span>
+        <h1>המוצרים שלנו</h1>
+        <p>שם, אות או מילה אהובה — אנחנו הופכים כל מתנה למשהו אישי ומיוחד.</p>
 
-      {token && <Link to="/my-account">האזור האישי שלי</Link>}
-      {user?.role === "ADMIN" && (
-  <Link to="/admin">כניסה לניהול</Link>
-)}
+        {(token || user?.role === "ADMIN") && (
+          <div className="hero-links">
+            {token && <Link to="/my-account">האזור האישי שלי</Link>}
+            {user?.role === "ADMIN" && (
+              <Link to="/admin">כניסה לניהול</Link>
+            )}
+          </div>
+        )}
+      </section>
 
-      <div>
-        <label >חיפוש מוצר:</label>
-        <input
-          type="text"
-          placeholder="חפשי מוצר..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
+      <div className="filters">
+        <div className="filter-field">
+          <label htmlFor="product-search">חיפוש מוצר:</label>
+          <input
+            id="product-search"
+            type="search"
+            placeholder="חפשי מוצר..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
 
-      <div>
-        <label >קטגוריה:</label>
-        <select
-          
-          value={categoryId ?? ""}
-          onChange={(e) =>
-            setCategoryId(
-              e.target.value === "" ? undefined : Number(e.target.value)
-            )
-          }
-        >
-          <option value="">כל הקטגוריות</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div className="filter-field">
+          <label htmlFor="product-category">קטגוריה:</label>
+          <select
+            id="product-category"
+            value={categoryId ?? ""}
+            onChange={(e) =>
+              setCategoryId(
+                e.target.value === "" ? undefined : Number(e.target.value)
+              )
+            }
+          >
+            <option value="">כל הקטגוריות</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div>
-        <label >מיון לפי:</label>
-        <select
-          
-          value={sort}
-          onChange={(e) =>
-            setSort(e.target.value as Sort)
-          }
-        >
-          <option value="newest">החדשים ביותר</option>
-          <option value="price_asc">מחיר: מהנמוך לגבוה</option>
-          <option value="price_desc">מחיר: מהגבוה לנמוך</option>
-          <option value="name">לפי שם המוצר</option>
-        </select>
+        <div className="filter-field">
+          <label htmlFor="product-sort">מיון לפי:</label>
+          <select
+            id="product-sort"
+            value={sort}
+            onChange={(e) =>
+              setSort(e.target.value as Sort)
+            }
+          >
+            <option value="newest">החדשים ביותר</option>
+            <option value="price_asc">מחיר: מהנמוך לגבוה</option>
+            <option value="price_desc">מחיר: מהגבוה לנמוך</option>
+            <option value="name">לפי שם המוצר</option>
+          </select>
+        </div>
       </div>
 
       {isLoading ? (
-        <p>טוען מוצרים...</p>
+        <p className="msg-muted">טוען מוצרים...</p>
       ) : error ? (
-        <p>שגיאה בטעינת המוצרים</p>
+        <p className="msg msg-error">שגיאה בטעינת המוצרים</p>
       ) : products.length === 0 ? (
-        <p>לא נמצאו מוצרים מתאימים</p>
+        <p className="msg-muted">לא נמצאו מוצרים מתאימים</p>
       ) : (
-        products.map((product) => (
-          <div key={product.id}>
-            <ProductCard product={product} onAddToCart={addToCart} />
+        <div className="product-grid">
+          {products.map((product) => (
+            <div key={product.id} className="product-tile">
+              <ProductCard product={product} onAddToCart={addToCart} />
 
-            <button onClick={() => navigate(`/products/${product.id}`)}>
-              לפרטי המוצר
-            </button>
-          </div>
-        ))
+              <button onClick={() => navigate(`/products/${product.id}`)}>
+                לפרטי המוצר
+              </button>
+            </div>
+          ))}
+        </div>
       )}
 
-      <button onClick={() => navigate("/cart")}>
-        לסל הקניות
-      </button>
+      <div className="cart-bar">
+        <p>מספר פריטים בסל: {cart.length}</p>
 
-      <p>מספר פריטים בסל: {cart.length}</p>
+        <button className="btn-outline" onClick={() => navigate("/cart")}>
+          לסל הקניות
+        </button>
+      </div>
     </div>
   );
 }

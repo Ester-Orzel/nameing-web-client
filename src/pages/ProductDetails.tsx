@@ -24,17 +24,17 @@ function ProductDetails() {
   const [added, setAdded] = useState(false);
 
   if (isLoading) {
-    return <p>טוען מוצר...</p>;
+    return <p className="msg-muted">טוען מוצר...</p>;
   }
 
   if (error) {
-    return <p>שגיאה בטעינת המוצרים</p>;
+    return <p className="msg msg-error">שגיאה בטעינת המוצרים</p>;
   }
 
   const product = products?.find((p) => p.id === Number(id));
 
   if (!product) {
-    return <p>המוצר לא נמצא</p>;
+    return <p className="msg-muted">המוצר לא נמצא</p>;
   }
 
   const handleAddToCart = () => {
@@ -56,71 +56,93 @@ function ProductDetails() {
 
   return (
     <div>
-      <h1>{product.name}</h1>
+      <a
+        href="/products"
+        className="back-link"
+        onClick={(e) => {
+          e.preventDefault();
+          navigate("/products");
+        }}
+      >
+        → חזרה למוצרים
+      </a>
 
-      <img
-        src={product.imageUrl}
-        alt={product.name}
-        width="200"
-      />
-
-      <p>{product.description}</p>
-      <p>{product.price} ₪</p>
-
-      <label>
-        <input
-          type="checkbox"
-          checked={personalization}
-          onChange={(e) => {
-            setPersonalization(e.target.checked);
-            setAdded(false);
-          }}
-        />
-        התאמה אישית
-      </label>
-
-      {personalization && (
-        <div>
-          <label>
-            צבע:
-            <select
-              value={selectedColor}
-              onChange={(e) => {
-                setSelectedColor(e.target.value);
-                setAdded(false);
-              }}
-            >
-              <option value="black">שחור</option>
-              <option value="white">לבן</option>
-              <option value="blue">כחול</option>
-              <option value="pink">ורוד</option>
-            </select>
-          </label>
-
-          <label>
-            טקסט להדפסה:
-            <input
-              type="text"
-              value={customText}
-              onChange={(e) => {
-                setCustomText(e.target.value);
-                setAdded(false);
-              }}
-              placeholder="כתבי את הטקסט"
-            />
-          </label>
+      <div className="product-details">
+        <div className="product-details-media">
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            width="200"
+          />
         </div>
-      )}
 
-      <button onClick={handleAddToCart}>
-        הוספה לסל
-      </button>
+        <div className="product-details-info">
+          <span className="eyebrow">מתנה במיתוג אישי</span>
+          <h1>{product.name}</h1>
+          <p className="price">{product.price} ₪</p>
 
-      {added && <p>המוצר נוסף לסל!</p>}
+          <p className="product-details-desc">{product.description}</p>
 
-      <button onClick={() => navigate("/cart")}>
-        לסל הקניות
-      </button>
+          <div className="personalize-box">
+            <label className="toggle-row">
+              <input
+                type="checkbox"
+                checked={personalization}
+                onChange={(e) => {
+                  setPersonalization(e.target.checked);
+                  setAdded(false);
+                }}
+              />
+              התאמה אישית
+            </label>
+
+            {personalization && (
+              <div className="personalize-fields">
+                <label>
+                  צבע:
+                  <select
+                    value={selectedColor}
+                    onChange={(e) => {
+                      setSelectedColor(e.target.value);
+                      setAdded(false);
+                    }}
+                  >
+                    <option value="black">שחור</option>
+                    <option value="white">לבן</option>
+                    <option value="blue">כחול</option>
+                    <option value="pink">ורוד</option>
+                  </select>
+                </label>
+
+                <label>
+                  טקסט להדפסה:
+                  <input
+                    type="text"
+                    value={customText}
+                    onChange={(e) => {
+                      setCustomText(e.target.value);
+                      setAdded(false);
+                    }}
+                    placeholder="כתבי את הטקסט"
+                  />
+                </label>
+              </div>
+            )}
+          </div>
+
+          <div className="actions">
+            <button onClick={handleAddToCart}>
+              הוספה לסל
+            </button>
+
+            <button className="btn-outline" onClick={() => navigate("/cart")}>
+              לסל הקניות
+            </button>
+          </div>
+
+          {added && <p className="msg msg-success">המוצר נוסף לסל!</p>}
+        </div>
+      </div>
     </div>
   );
 }

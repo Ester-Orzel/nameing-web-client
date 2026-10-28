@@ -10,24 +10,47 @@ const Admin = () => {
   const [page, setPage] = useState("products");
 
   if (user?.role !== "ADMIN") {
-    return <p>אין לך הרשאה להיכנס לעמוד הניהול</p>;
+    return (
+      <div className="card empty-state">
+        <p>אין לך הרשאה להיכנס לעמוד הניהול</p>
+      </div>
+    );
   }
 
   return (
     <div>
-      <h1>מערכת ניהול</h1>
+      <div className="admin-head">
+        <div>
+          <span className="eyebrow">אזור ניהול</span>
+          <h1>מערכת ניהול</h1>
+        </div>
 
-      <button onClick={() => setPage("products")}>
-        הוספת מוצר
-      </button>
+        <div className="tabs" role="tablist">
+          <button
+            role="tab"
+            aria-selected={page === "products"}
+            className={page === "products" ? "active" : ""}
+            onClick={() => setPage("products")}
+          >
+            הוספת מוצר
+          </button>
 
-      <button onClick={() => setPage("orders")}>
-        צפייה בהזמנות
-      </button>
+          <button
+            role="tab"
+            aria-selected={page === "orders"}
+            className={page === "orders" ? "active" : ""}
+            onClick={() => setPage("orders")}
+          >
+            צפייה בהזמנות
+          </button>
+        </div>
+      </div>
 
-      {page === "products" && <AddProduct />}
+      <div className="card">
+        {page === "products" && <AddProduct />}
 
-      {page === "orders" && <AllOrders />}
+        {page === "orders" && <AllOrders />}
+      </div>
     </div>
   );
 };

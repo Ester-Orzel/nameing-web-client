@@ -32,37 +32,63 @@ const Cart = () => {
     
   };
 
+  // סכום לתצוגה בלבד
+  const total = cart.reduce((sum, item) => sum + Number(item.product.price), 0);
+
   return (
     <div>
-      <h1>סל הקניות שלי</h1>
+      <div className="page-head">
+        <h1>סל הקניות שלי</h1>
+      </div>
 
       {cart.length === 0 ? (
-        <p>סל הקניות ריק</p>
+        <div className="card empty-state">
+          <p>סל הקניות ריק</p>
+          <button onClick={() => navigate("/products")}>למוצרים שלנו</button>
+        </div>
       ) : (
-        cart.map((item, index) => (
-          <div key={index}>
-            <img
-              src={item.product.imageUrl}
-              alt={item.product.name}
-              width="100"
-            />
+        <div className="cart-layout">
+          <div className="cart-list">
+            {cart.map((item, index) => (
+              <div key={index} className="cart-item">
+                <img
+                  src={item.product.imageUrl}
+                  alt={item.product.name}
+                  width="100"
+                />
 
-            <h2>{item.product.name}</h2>
-            <p>מחיר: {item.product.price} ₪</p>
+                <div>
+                  <h2>{item.product.name}</h2>
+                  <p className="price">מחיר: {item.product.price} ₪</p>
 
-            {item.personalization && (
-              <div>
-                <p>צבע: {item.selectedColor}</p>
-                <p>טקסט: {item.customText}</p>
+                  {item.personalization && (
+                    <div className="cart-item-custom">
+                      <span className="chip">צבע: {item.selectedColor}</span>
+                      <span className="chip">טקסט: {item.customText}</span>
+                    </div>
+                  )}
+                </div>
+
+                <button className="btn-ghost" onClick={() => removeFromCart(index)}>
+                  הסרה מהסל
+                </button>
               </div>
-            )}
-
-            <button onClick={() => removeFromCart(index)}>
-              הסרה מהסל
-            </button>
-            {cart.length>0 && (<button onClick={Checkout}>סיים הזמנה </button>)}
+            ))}
           </div>
-        ))
+
+          <aside className="card summary">
+            <h2>סיכום הזמנה</h2>
+            <div className="summary-row">
+              <span>מספר פריטים</span>
+              <span>{cart.length}</span>
+            </div>
+            <div className="summary-row summary-total">
+              <span>סה״כ</span>
+              <span>{total} ₪</span>
+            </div>
+            {cart.length>0 && (<button className="btn-block" onClick={Checkout}>סיים הזמנה </button>)}
+          </aside>
+        </div>
       )}
     </div>
   );

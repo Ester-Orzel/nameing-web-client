@@ -8,18 +8,23 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
   return (
-    <div>
-      <img
-        src={product.imageUrl}
-        alt={product.name}
-        width="200"
-      />
+    <div className="product-card">
+      <div className="product-card-media">
+        <img
+          src={product.imageUrl}
+          alt={product.name}
+          width="200"
+          loading="lazy"
+        />
+      </div>
 
-      <h2>{product.name}</h2>
+      <div className="product-card-body">
+        <h2>{product.name}</h2>
 
-      <p>{product.description}</p>
+        <p className="product-card-desc">{product.description}</p>
 
-      <p>{product.price} ₪</p>
+        <p className="price">{product.price} ₪</p>
+      </div>
 
       
     </div>

@@ -56,56 +56,69 @@ const AddProduct = ({ product }: Props) => {
     <div>
       <h2>{product ? "עריכת מוצר" : "הוספת מוצר חדש"}</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>שם המוצר</label>
-        <input
-          type="text"
-          {...register("name", { required: true })}
-        />
+      <form className="admin-form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="field">
+          <label>שם המוצר</label>
+          <input
+            type="text"
+            {...register("name", { required: true })}
+          />
+        </div>
 
-        <label>תיאור המוצר</label>
-        <input
-          type="text"
-          {...register("description", { required: true })}
-        />
+        <div className="field">
+          <label>מחיר</label>
+          <input
+            type="number"
+            step="0.01"
+            {...register("price", {
+              required: true,
+              valueAsNumber: true,
+            })}
+          />
+        </div>
 
-        <label>מחיר</label>
-        <input
-          type="number"
-          step="0.01"
-          {...register("price", {
-            required: true,
-            valueAsNumber: true,
-          })}
-        />
+        <div className="field full">
+          <label>תיאור המוצר</label>
+          <input
+            type="text"
+            {...register("description", { required: true })}
+          />
+        </div>
 
-        <label>קישור לתמונה</label>
-        <input
-          type="url"
-          {...register("imageUrl", { required: true })}
-        />
+        <div className="field full">
+          <label>קישור לתמונה</label>
+          <input
+            type="url"
+            dir="ltr"
+            {...register("imageUrl", { required: true })}
+          />
+        </div>
 
-        <label>סוג התאמה אישית</label>
-        <select {...register("personalizationType")}>
-          <option value="NAME_OR_INITIAL">שם או אות</option>
-          <option value="INITIAL_ONLY">אות בלבד</option>
-        </select>
+        <div className="field">
+          <label>סוג התאמה אישית</label>
+          <select {...register("personalizationType")}>
+            <option value="NAME_OR_INITIAL">שם או אות</option>
+            <option value="INITIAL_ONLY">אות בלבד</option>
+          </select>
+        </div>
 
-        <label>קטגוריה</label>
-        <select
-          {...register("categoryId", {
-            required: true,
-            valueAsNumber: true,
-          })}
-        >
-          <option value="">בחר קטגוריה</option>
+        <div className="field">
+          <label>קטגוריה</label>
+          <select
+            {...register("categoryId", {
+              required: true,
+              valueAsNumber: true,
+            })}
+          >
+            <option value="">בחר קטגוריה</option>
 
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <button type="submit">
           {product ? "שמור שינויים" : "הוסף מוצר"}

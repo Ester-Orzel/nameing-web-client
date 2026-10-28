@@ -44,11 +44,11 @@ const UpdateOrderStatus = ({ order }: Props) => {
   };
 
   if (isFinal) {
-    return <p>ההזמנה הסתיימה</p>;
+    return <p className="chip">ההזמנה הסתיימה</p>;
   }
 
   return (
-    <div>
+    <div className="status-actions">
       {(order.status === "RECEIVED" ||
         order.status === "IN_PROGRESS") && (
         <button
@@ -62,6 +62,7 @@ const UpdateOrderStatus = ({ order }: Props) => {
       )}
 
       <button
+        className="btn-outline"
         disabled={isUpdating}
         onClick={() => {
           if (window.confirm("האם לבטל את ההזמנה?")) {
