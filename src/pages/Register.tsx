@@ -1,8 +1,9 @@
 
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { registerUser } from "../api";
+import { registerUser, getErrorMessage } from "../api";
 import { useUser } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 interface RegisterForm {
   fullName: string;
@@ -12,7 +13,8 @@ interface RegisterForm {
 }
 
 const Register = () => {
-  const { setUser } = useUser();
+  const { setUser, setToken } = useUser();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -28,8 +30,11 @@ const Register = () => {
         data.phone,
         data.password
       ),
+    // אחרי הרשמה מוצלחת המשתמשת מחוברת מיד (שומרים גם את הטוקן) ועוברת לדף הבית
     onSuccess: (result) => {
       setUser(result.user);
+      setToken(result.token);
+      navigate("/");
     },
   });
 
@@ -66,6 +71,10 @@ const Register = () => {
           placeholder="טלפון"
           {...register("phone", {
             required: "יש להזין מספר טלפון",
+            // כמו בשרת: 9-10 ספרות שמתחילות ב־0 (מקפים ורווחים מותרים)
+            validate: (value) =>
+              /^0\d{8,9}$/.test(value.replace(/[\s-]/g, "")) ||
+              "מספר טלפון לא תקין (למשל 0501234567)",
           })}
         />
         {errors.phone && <p>{errors.phone.message}</p>}
@@ -75,10 +84,14 @@ const Register = () => {
           placeholder="סיסמה"
           {...register("password", {
             required: "יש להזין סיסמה",
+            // כמו בשרת: לפחות 8 תווים, אות אחת וספרה אחת
             minLength: {
-              value: 6,
-              message: "הסיסמה חייבת להכיל לפחות 6 תווים",
+              value: 8,
+              message: "הסיסמה חייבת להכיל לפחות 8 תווים",
             },
+            validate: (value) =>
+              (/[A-Za-zא-ת]/.test(value) && /\d/.test(value)) ||
+              "הסיסמה חייבת להכיל לפחות אות אחת וספרה אחת",
           })}
         />
         {errors.password && <p>{errors.password.message}</p>}
@@ -87,7 +100,7 @@ const Register = () => {
           {mutation.isPending ? "נרשמת..." : "הרשמה"}
         </button>
 
-        {mutation.isError && <p>{mutation.error.message}</p>}
+        {mutation.isError && <p>{getErrorMessage(mutation.error)}</p>}
       </form>
     </div>
   );

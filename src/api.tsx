@@ -7,6 +7,19 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
+// הודעת השגיאה שהשרת שלח (למשל "סיסמה חייבת להכיל לפחות 8 תווים"),
+// במקום ההודעה הכללית "Request failed with status code 400"
+export function getErrorMessage(error: unknown, fallback = "משהו השתבש, נסי שוב"): string {
+  if (axios.isAxiosError(error)) {
+    const serverError = error.response?.data?.error;
+    const details: { message: string }[] | undefined = serverError?.details;
+    if (details?.length) return details.map((d) => d.message).join(" · ");
+    if (serverError?.message) return serverError.message;
+    if (!error.response) return "אין חיבור לשרת. נסי שוב בעוד רגע";
+  }
+  return fallback;
+}
+
 // ---------- Types ----------
 
 export interface User {

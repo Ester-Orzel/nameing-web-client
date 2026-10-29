@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { getCart, saveCart } from "../cartStorage";
-import { createOrder } from "../api";
+import { createOrder, getErrorMessage } from "../api";
 import type { CreateOrderRequest } from "../api";
 
 interface CheckoutForm {
@@ -67,7 +67,7 @@ const Checkout = () => {
       navigate("/my-account");
     } catch (error) {
       console.error("שגיאה ביצירת ההזמנה", error);
-      alert("לא הצלחנו לבצע את ההזמנה");
+      alert(getErrorMessage(error, "לא הצלחנו לבצע את ההזמנה"));
     }
   };
 

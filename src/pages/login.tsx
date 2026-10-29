@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
-import { loginUser } from "../api";
+import { loginUser, getErrorMessage } from "../api";
 import { useUser } from "../context/UserContext";
 
 interface LoginForm {
@@ -30,8 +30,8 @@ const Login = () => {
       setToken(res.token);
 
       navigate(from, { replace: true });
-    } catch {
-      setError("ההתחברות נכשלה. בדקי את האימייל והסיסמה.");
+    } catch (err) {
+      setError(getErrorMessage(err, "ההתחברות נכשלה. בדקי את האימייל והסיסמה."));
     }
   };
 
