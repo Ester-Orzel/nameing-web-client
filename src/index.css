@@ -199,15 +199,6 @@
     & > div:has(> div > img) > button {
       @apply mx-4 mb-4 max-sm:mx-2.5 max-sm:mb-3 max-sm:px-2 max-sm:text-sm;
     }
-
-    /* כפתור "לסל הקניות" ומספר הפריטים בתחתית */
-    & > button {
-      @apply col-span-2 mt-4 justify-self-start border-[1.5px] border-copper-light bg-white bg-none text-copper-dark shadow-none hover:bg-copper-tint max-sm:col-span-full max-sm:w-full;
-    }
-
-    & > p:last-child {
-      @apply col-span-2 mt-4 self-center justify-self-end font-semibold text-muted max-sm:col-span-full max-sm:mt-0 max-sm:justify-self-center;
-    }
   }
 
   /* ---------- פרטי מוצר (ProductDetails.tsx) ---------- */
@@ -246,10 +237,6 @@
 
     & > button {
       @apply justify-self-start;
-    }
-
-    & > button:last-child {
-      @apply border-[1.5px] border-copper-light bg-white bg-none text-copper-dark shadow-none hover:bg-copper-tint;
     }
 
     /* "המוצר נוסף לסל!" */

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts, getColors, getFonts } from "../api";
 import type { CartItem } from "../api";
@@ -8,7 +8,6 @@ import { addToCart } from "../cartStorage";
 
 function ProductDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const {
     data: products,
@@ -177,10 +176,6 @@ function ProductDetails() {
       </button>
 
       {added && <p>המוצר נוסף לסל!</p>}
-
-      <button onClick={() => navigate("/cart")}>
-        לסל הקניות
-      </button>
     </div>
   );
 }

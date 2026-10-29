@@ -6,7 +6,6 @@ import { getProducts, getCategories } from "../api";
 import type { Product } from "../api";
 import { useUser } from "../context/UserContext";
 import ProductCard from "../componenta/ProductCard";
-import { getCart } from "../cartStorage";
 type Sort = "newest" | "price_asc" | "price_desc" | "name";
 
 function Products() {
@@ -121,11 +120,6 @@ function Products() {
         ))
       )}
 
-      <button onClick={() => navigate("/cart")}>
-        לסל הקניות
-      </button>
-
-      <p>מספר פריטים בסל: {getCart().length}</p>
     </div>
   );
 }
