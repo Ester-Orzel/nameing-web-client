@@ -62,7 +62,7 @@ const Home = () => {
 
       <section id="categories" aria-label={categoriesTitle}>
         {categories.map((category) => (
-          <Link key={category.label} to="/products">
+          <Link key={category.label} to={`/products?category=${encodeURIComponent(category.category)}`}>
             <img src={category.image} alt="" />
             <span>{category.label}</span>
           </Link>

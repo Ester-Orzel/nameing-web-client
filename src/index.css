@@ -265,60 +265,102 @@
   }
 
   /* ---------- סל קניות (cart.tsx) ---------- */
-  #root > div:has(> div > img) {
-    @apply flex flex-col gap-4;
+  #root > div:has(> aside) {
+    @apply grid items-start gap-x-8 gap-y-4 lg:grid-cols-[minmax(0,1fr)_340px];
 
-    & > div {
-      @apply grid grid-cols-[96px_1fr_auto] grid-rows-[auto_auto_auto_1fr] items-start gap-x-5 gap-y-1 rounded-2xl border border-line bg-white p-4 shadow-sm max-sm:grid-cols-[72px_1fr];
+    & > h1 {
+      @apply lg:col-span-2;
     }
 
-    & > div > img {
-      @apply row-span-full size-24 rounded-[10px] bg-soft object-cover max-sm:size-[72px];
+    & > ul {
+      @apply m-0 flex list-none flex-col gap-4 p-0;
     }
 
-    & > div > :not(img, button) {
-      @apply col-start-2;
+    /* שורה בסל: תמונה, פרטים, כמות, מחיר והסרה */
+    & li {
+      @apply grid grid-cols-[96px_1fr_auto_auto_auto] items-center gap-x-5 gap-y-3 rounded-[20px] border border-line bg-white p-4 max-sm:grid-cols-[72px_1fr_auto];
     }
 
-    & > div > h2 {
-      @apply text-lg;
+    & li > img {
+      @apply size-24 rounded-[14px] bg-photo object-cover max-sm:row-span-2 max-sm:size-[72px];
     }
 
-    & > div > p {
-      @apply font-serif font-bold text-copper-dark;
+    & li h2 {
+      @apply mb-0.5 text-lg;
     }
 
-    /* צבע וטקסט שנבחרו */
-    & > div > div {
-      @apply mt-1 flex flex-wrap gap-1.5;
+    & li p {
+      @apply text-sm text-muted;
     }
 
-    & > div > div > p {
-      @apply rounded-full bg-copper-tint px-3 py-0.5 text-sm font-semibold text-copper-dark;
+    /* התאמה אישית שנבחרה */
+    & li > div > div {
+      @apply mt-1.5 flex flex-wrap gap-1.5;
     }
 
-    & > div > button {
-      @apply col-start-3 justify-self-end max-sm:col-span-full max-sm:col-start-1 max-sm:justify-self-stretch;
+    & li > div > div > span {
+      @apply rounded-full bg-copper-tint px-3 py-0.5 text-xs font-medium text-copper-dark;
     }
 
-    /* "הסרה מהסל" */
-    & > div > button:first-of-type {
-      @apply row-start-1 bg-white bg-none text-muted shadow-none hover:bg-bad-bg hover:text-bad max-sm:row-start-auto;
+    /* בורר כמות */
+    & li > div[aria-label] {
+      @apply flex items-center overflow-hidden rounded-full border border-line-strong max-sm:col-start-2 max-sm:justify-self-start;
     }
 
-    & > div > button:last-of-type {
-      @apply row-start-2 max-sm:row-start-auto;
+    & li > div[aria-label] > button {
+      @apply min-h-9 w-9 rounded-none bg-transparent p-0 text-lg font-normal text-ink shadow-none hover:translate-y-0 hover:bg-copper-tint;
     }
 
-    /* "סיים הזמנה" מוצג פעם אחת בלבד — רק במוצר האחרון */
-    & > div:not(:last-of-type) > button:last-of-type {
-      @apply hidden;
+    & li > div[aria-label] > span {
+      @apply w-8 text-center font-medium;
+    }
+
+    & li > strong {
+      @apply min-w-16 text-center font-serif text-xl text-copper-dark max-sm:col-start-3 max-sm:row-start-1;
+    }
+
+    /* "הסרה" */
+    & li > button {
+      @apply min-h-0 bg-transparent px-2 py-1 text-sm font-normal text-muted shadow-none hover:translate-y-0 hover:bg-transparent hover:text-bad max-sm:col-start-3 max-sm:row-start-2;
+    }
+
+    /* סיכום הזמנה */
+    & > aside {
+      @apply flex flex-col gap-3 rounded-[20px] border border-line bg-white p-6 shadow-card lg:sticky lg:top-28;
+    }
+
+    & > aside > h2 {
+      @apply mb-1 text-xl;
+    }
+
+    & > aside > p {
+      @apply flex justify-between text-muted;
+    }
+
+    & > aside > p:last-of-type {
+      @apply border-t border-line pt-3 text-lg font-medium text-ink;
+    }
+
+    & > aside > p strong {
+      @apply font-serif text-2xl text-copper-dark;
+    }
+
+    & > aside > button {
+      @apply mt-2 w-full;
     }
   }
 
   /* סל ריק */
-  #root > div:has(> h1 + p:last-child) > p {
-    @apply rounded-2xl border border-line bg-white px-4 py-12 text-center text-lg text-muted shadow-card;
+  #root > div:has(> h1 + p + a:last-child) {
+    @apply flex flex-col items-center gap-5 rounded-[20px] border border-line bg-white px-4 py-14 text-center;
+
+    & > p {
+      @apply text-lg text-muted;
+    }
+
+    & > a {
+      @apply inline-flex min-h-11 items-center rounded-full bg-copper px-7 font-medium text-white hover:bg-copper-dark hover:text-white;
+    }
   }
 
   /* ---------- התחברות והרשמה (login.tsx, Register.tsx) ---------- */
@@ -502,6 +544,15 @@
 
     & > div > a.active {
       @apply text-copper-dark;
+    }
+
+    /* מספר הפריטים בסל */
+    & > div > a {
+      @apply relative;
+    }
+
+    & > div > a > b {
+      @apply absolute -top-1.5 left-1/2 grid h-[18px] min-w-[18px] -translate-x-[90%] place-items-center rounded-full bg-copper px-1 text-[0.68rem] leading-none font-bold text-white;
     }
 
     & > div span {

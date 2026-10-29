@@ -19,6 +19,7 @@ export interface Benefit extends InfoItem {
 
 export interface Category {
   label: string;
+  category: string; // שם הקטגוריה בשרת — לפיו מסננים בעמוד המוצרים
   image: string;
 }
 
@@ -33,11 +34,11 @@ export const hero = {
 export const categoriesTitle = "קטגוריות";
 
 export const categories: Category[] = [
-  { label: "אביזרים אישיים", image: catAccessories },
-  { label: "מוצרי בית", image: catHome },
-  { label: "מוצרי טכנולוגיה", image: catTech },
-  { label: "ארנקים וכיסויים", image: catWallets },
-  { label: "מחזיקי מפתחות", image: catKeychains },
+  { label: "בקבוקים ותרמוסים", category: "בקבוקים ותרמוסים", image: catAccessories },
+  { label: "מוצרי בית", category: "מוצרים לבית", image: catHome },
+  { label: "מוצרי טכנולוגיה", category: "גאדג'טים", image: catTech },
+  { label: "ארנקים ותיקים", category: "תיקים וארנקים", image: catWallets },
+  { label: "אביזרים אישיים", category: "אביזרים אישיים", image: catKeychains },
 ];
 
 export const benefits: Benefit[] = [

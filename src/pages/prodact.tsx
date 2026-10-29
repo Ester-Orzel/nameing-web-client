@@ -1,27 +1,34 @@
 
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts, getCategories } from "../api";
-import type { Product, Category } from "../api";
+import type { Product } from "../api";
 import { useUser } from "../context/UserContext";
 import ProductCard from "../componenta/ProductCard";
+import { getCart } from "../cartStorage";
 type Sort = "newest" | "price_asc" | "price_desc" | "name";
 
 function Products() {
     
-  const [cart, setCart] = useState<Product[]>([]);
-  const [search, setSearch] = useState("");
+  // חיפוש וקטגוריה יכולים להגיע מהכתובת, למשל /products?category=מוצרים לבית
+  const [searchParams] = useSearchParams();
+
+  const [search, setSearch] = useState(searchParams.get("search") ?? "");
   const [categoryId, setCategoryId] = useState<number | undefined>(undefined);
+  const [sort, setSort] = useState<Sort>("newest");
 
-const [sort, setSort] = useState<Sort>("newest");
-const [categories, setCategories] = useState<Category[]>([]);
-
-    useEffect(() => {
-  getCategories().then((data) => {
-    setCategories(data);
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: getCategories,
   });
-}, []);
+
+  // כשמגיעים מכרטיס קטגוריה בעמוד הבית — בוחרים את הקטגוריה לפי השם שבכתובת
+  useEffect(() => {
+    const categoryName = searchParams.get("category");
+    const match = categories.find((category) => category.name === categoryName);
+    setCategoryId(match?.id);
+  }, [categories, searchParams]);
   const navigate = useNavigate();
   const { token ,user} = useUser();
 
@@ -36,8 +43,9 @@ const [categories, setCategories] = useState<Category[]>([]);
 
   
 
+  // ProductCard מצפה לפונקציה הזו; ההוספה לסל עצמה נעשית בעמוד פרטי המוצר
   const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
+    navigate(`/products/${product.id}`);
   };
 
   return (
@@ -117,7 +125,7 @@ const [categories, setCategories] = useState<Category[]>([]);
         לסל הקניות
       </button>
 
-      <p>מספר פריטים בסל: {cart.length}</p>
+      <p>מספר פריטים בסל: {getCart().length}</p>
     </div>
   );
 }

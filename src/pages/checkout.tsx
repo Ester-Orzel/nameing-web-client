@@ -1,8 +1,10 @@
 
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
+import { getCart, saveCart } from "../cartStorage";
 import { createOrder } from "../api";
-import type { CreateOrderRequest, CartItem } from "../api";
+import type { CreateOrderRequest } from "../api";
 
 interface CheckoutForm {
   contactName: string;
@@ -19,17 +21,10 @@ const Checkout = () => {
   } = useForm<CheckoutForm>();
 
   const { token } = useUser();
-
-  const createCart = (): CartItem[] => {
-    const cart: CartItem[] = JSON.parse(
-      localStorage.getItem("cart") || "[]"
-    );
-
-    return cart;
-  };
+  const navigate = useNavigate();
 
   const onSubmit = async (data: CheckoutForm) => {
-    const cart = createCart();
+    const cart = getCart();
 
     if (!token) {
       alert("צריך להתחבר כדי לבצע הזמנה");
@@ -67,8 +62,9 @@ const Checkout = () => {
       const res = await createOrder(orderFull, token);
       console.log("ההזמנה נוצרה בהצלחה", res);
 
-      localStorage.removeItem("cart");
+      saveCart([]);
       alert("ההזמנה בוצעה בהצלחה!");
+      navigate("/my-account");
     } catch (error) {
       console.error("שגיאה ביצירת ההזמנה", error);
       alert("לא הצלחנו לבצע את ההזמנה");

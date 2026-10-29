@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { brand } from "../data/siteContent";
 import Icon from "./Icon";
 import nMark from "../assets/n-mark.png";
+import { getCart, CART_CHANGE_EVENT } from "../cartStorage";
 
 function Header() {
   const { user, setUser, setToken } = useUser();
@@ -11,6 +12,19 @@ function Header() {
 
   // תפריט הניווט בטלפון: פתוח או סגור
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // מספר הפריטים בסל — מתעדכן בכל פעם שהסל משתנה
+  const [cartCount, setCartCount] = useState(() => getCart().length);
+
+  useEffect(() => {
+    const update = () => setCartCount(getCart().length);
+    window.addEventListener(CART_CHANGE_EVENT, update);
+    window.addEventListener("storage", update); // שינוי בלשונית אחרת
+    return () => {
+      window.removeEventListener(CART_CHANGE_EVENT, update);
+      window.removeEventListener("storage", update);
+    };
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -73,6 +87,7 @@ function Header() {
         <NavLink to="/cart">
           <Icon name="cart" />
           <span>סל קניות</span>
+          {cartCount > 0 && <b aria-label={`${cartCount} פריטים בסל`}>{cartCount}</b>}
         </NavLink>
       </div>
     </header>

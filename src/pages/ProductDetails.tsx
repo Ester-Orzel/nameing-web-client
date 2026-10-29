@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts, getColors, getFonts } from "../api";
 import type { CartItem } from "../api";
+import { addToCart } from "../cartStorage";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -83,12 +84,7 @@ function ProductDetails() {
       selectedFont: personalization ? selectedFont : null,
     };
 
-    const savedCart = localStorage.getItem("cart");
-    const cart: CartItem[] = savedCart ? JSON.parse(savedCart) : [];
-
-    cart.push(newItem);
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+    addToCart(newItem);
     setAdded(true);
   };
 
