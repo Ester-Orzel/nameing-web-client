@@ -8,6 +8,7 @@ import Cart from "./pages/cart";
 import Admin from "./pages/Admin";
 
 import Header from "./componenta/Header";
+import Footer from "./componenta/Footer";
 import Home from "./pages/Home";
 import Checkout from "./pages/checkout";
 import MyAccount from "./pages/MyAccount";
@@ -29,6 +30,8 @@ function App() {
           <Route path="/my-account" element={<MyAccount />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
+
+        <Footer />
       </BrowserRouter>
     </UserProvider>
   );

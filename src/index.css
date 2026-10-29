@@ -7,31 +7,33 @@
    ============================================================ */
 
 @theme {
-  --color-blush: #f7f0ee;
-  --color-blush-deep: #f0e5e3;
-  --color-soft: #fbf6f5;
-  --color-line: #eadbd6;
-  --color-line-strong: #dcc4bc;
+  /* צבעי המותג: שנהב חם, ורוד עדין, ורוד מעושן וטרקוטה */
+  --color-blush: #fff8f3;
+  --color-blush-deep: #f5dfd7;
+  --color-photo: #f0e5e3; /* צבע הרקע של תמונות המוצרים */
+  --color-soft: #fbf1ec;
+  --color-line: #efddd4;
+  --color-line-strong: #e2c6b9;
 
-  --color-ink: #3d241b;
-  --color-body: #5b4139;
-  --color-muted: #937a72;
+  --color-ink: #45251b;
+  --color-body: #5e3e33;
+  --color-muted: #9a7b70;
 
-  --color-copper: #b56f55;
-  --color-copper-dark: #8f4f3a;
-  --color-copper-light: #e7c3b3;
-  --color-copper-tint: #f6e6df;
+  --color-copper: #b5735d;
+  --color-copper-dark: #93503b;
+  --color-copper-light: #d7a18d;
+  --color-copper-tint: #f5dfd7;
 
   --color-bad: #b2433a;
   --color-bad-bg: #fbe9e7;
 
-  --font-sans: "Assistant", "Heebo", system-ui, Arial, sans-serif;
-  --font-serif: "Frank Ruhl Libre", Georgia, serif;
-  --font-script: "Dancing Script", cursive;
+  --font-sans: "Heebo", "Assistant", system-ui, Arial, sans-serif;
+  --font-serif: "Cormorant Garamond", "Heebo", Georgia, serif;
+  --font-script: "Dancing Script", "Amatic SC", cursive;
 
-  --shadow-card: 0 6px 20px -8px rgb(110 60 40 / 0.18), 0 2px 6px -2px rgb(110 60 40 / 0.08);
-  --shadow-lift: 0 18px 40px -16px rgb(110 60 40 / 0.28);
-  --shadow-copper: 0 6px 14px -6px rgb(143 79 58 / 0.55);
+  --shadow-card: 0 10px 30px -18px rgb(69 37 27 / 0.28);
+  --shadow-lift: 0 24px 50px -28px rgb(69 37 27 / 0.4);
+  --shadow-copper: 0 8px 18px -10px rgb(147 80 59 / 0.6);
 }
 
 /* ============================================================
@@ -45,21 +47,14 @@
 
   body {
     @apply flex min-h-svh flex-col;
-    background:
-      radial-gradient(1200px 500px at 85% -10%, #f3dfd8 0%, transparent 60%),
-      var(--color-blush);
+    background: var(--color-blush);
+    overflow-x: clip;
   }
 
   /* פס עליון דק עם טלפון */
   body::before {
-    content: "מתנות במיתוג אישי  ·  להזמנות: \2066 053-4166140\2069";
-    @apply block bg-copper-dark py-1.5 text-center text-[0.8rem] tracking-wide text-white/90;
-  }
-
-  /* תחתית האתר */
-  body::after {
-    content: "ameing · מתנות במיתוג אישי  |  להזמנות ושאלות: \2066 053-4166140\2069";
-    @apply block border-t border-line bg-blush-deep px-5 py-5 text-center text-[0.92rem] text-muted;
+    content: "משלוחים עד הבית  ·  להזמנות: \2066 053-4166140\2069";
+    @apply block bg-blush-deep py-1.5 text-center text-[0.8rem] tracking-wide text-copper-dark;
   }
 
   #root {
@@ -67,14 +62,14 @@
   }
 
   /* כל עמוד (כל מה שמתחת ל־Header) ממורכז ברוחב קבוע */
-  #root > :not(header) {
+  #root > :not(header, footer) {
     @apply mx-auto mt-9 mb-14 w-full max-w-[1180px] px-5 max-sm:mt-5 max-sm:mb-10 max-sm:px-4;
   }
 
   h1,
   h2,
   h3 {
-    @apply m-0 font-serif font-semibold leading-tight text-ink;
+    @apply m-0 font-sans font-medium leading-tight text-ink;
   }
 
   h1 {
@@ -110,7 +105,7 @@
 
   select {
     @apply cursor-pointer appearance-none bg-no-repeat pl-10;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23b56f55' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23b5735d' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-position: left 14px center;
     background-size: 12px 8px;
   }
@@ -121,7 +116,7 @@
 
   /* כפתורים */
   button {
-    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-linear-135 from-[#d9a088] via-copper to-copper-dark px-6 py-2.5 font-sans text-base font-bold text-white shadow-copper transition hover:-translate-y-px hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-55;
+    @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-copper px-6 py-2.5 font-sans text-base font-bold text-white shadow-copper transition hover:-translate-y-px hover:bg-copper-dark disabled:cursor-not-allowed disabled:opacity-55;
   }
 
   button:focus-visible,
@@ -440,52 +435,153 @@
 }
 
 /* ============================================================
-   כותרת עליונה (Header.tsx): לוגו ותפריט ניווט
+   כותרת עליונה (Header.tsx)
+   תפריט מימין · לוגו במרכז · אייקונים משמאל
    ============================================================ */
 
 @layer components {
   #root > header {
-    @apply sticky top-0 z-20 flex min-h-[92px] items-center justify-between gap-4 border-b border-line bg-white/90 py-2 backdrop-blur-md max-sm:static max-sm:flex-col max-sm:gap-2 max-sm:py-3;
-    padding-inline: max(20px, calc((100vw - 1180px) / 2 + 20px));
+    @apply sticky top-0 z-30 grid min-h-24 grid-cols-[1fr_auto_1fr] items-center gap-4 border-b border-line bg-blush/95 py-3 backdrop-blur-md max-lg:min-h-[72px] max-lg:grid-cols-[auto_1fr_auto] max-lg:py-2;
+    padding-inline: max(20px, calc((100vw - 1240px) / 2 + 20px));
 
-    /* הלוגו */
-    & > a {
-      @apply shrink-0;
+    /* כפתור התפריט — רק בטלפון ובטאבלט */
+    & > button {
+      @apply hidden size-11 min-h-0 rounded-full bg-transparent p-2 text-ink shadow-none hover:translate-y-0 hover:bg-copper-tint max-lg:inline-flex;
     }
 
-    & > a > img {
-      @apply h-[72px] w-auto max-sm:h-[60px];
+    & svg {
+      @apply size-6;
     }
 
+    /* תפריט הניווט */
     & > nav {
-      @apply flex flex-wrap items-center justify-end gap-x-6 gap-y-1 max-sm:justify-center max-sm:gap-x-4;
+      @apply flex items-center gap-7 max-lg:absolute max-lg:inset-x-0 max-lg:top-full max-lg:hidden max-lg:flex-col max-lg:items-stretch max-lg:gap-0 max-lg:border-b max-lg:border-line max-lg:bg-blush max-lg:px-5 max-lg:py-2 max-lg:shadow-card;
     }
 
     & > nav > a {
-      @apply border-b-2 border-transparent px-1 py-1.5 font-semibold text-ink transition hover:border-copper-light hover:text-copper-dark max-sm:text-[0.95rem];
+      @apply border-b-[1.5px] border-transparent py-1 text-[0.95rem] font-medium text-ink transition hover:text-copper-dark max-lg:border-b max-lg:border-line max-lg:py-3.5 max-lg:last:border-b-0;
     }
 
-    /* העמוד הנוכחי — NavLink מוסיף לו את הקלאס active לבד */
     & > nav > a.active {
-      @apply border-copper text-copper-dark;
+      @apply border-copper text-copper-dark max-lg:border-line;
     }
 
-    /* כפתור "התנתקות" */
-    & > nav > button {
-      @apply min-h-0 border-[1.5px] border-copper-light bg-white bg-none px-3.5 py-1 text-[0.95rem] text-copper-dark shadow-none hover:bg-copper-tint max-sm:px-3;
+    /* כשהתפריט פתוח (בטלפון) */
+    &:has(> button[aria-expanded="true"]) > nav {
+      @apply max-lg:flex;
+    }
+
+    /* הלוגו: סמל ה־N, שם המותג ושורת תיאור */
+    & > a {
+      @apply grid grid-cols-[auto_auto] items-center gap-x-3 text-ink hover:text-ink max-lg:justify-self-center;
+      direction: ltr;
+    }
+
+    & > a > img {
+      @apply row-span-2 h-14 w-auto max-lg:h-10;
+    }
+
+    & > a > span {
+      @apply self-end font-serif text-[2rem] leading-none font-semibold tracking-[0.12em] text-copper-dark max-lg:text-[1.45rem];
+    }
+
+    & > a > small {
+      @apply self-start text-center text-[0.8rem] tracking-wide text-body max-lg:text-[0.68rem];
+      direction: rtl;
+    }
+
+    /* אייקונים: חיפוש, חשבון, יציאה וסל */
+    & > div {
+      @apply flex items-center justify-self-end gap-5 max-sm:gap-2;
+    }
+
+    & > div > a,
+    & > div > button {
+      @apply flex min-h-0 flex-col items-center gap-0.5 rounded-none bg-transparent p-0 text-[0.75rem] font-normal text-ink shadow-none hover:translate-y-0 hover:bg-transparent hover:text-copper-dark;
+    }
+
+    & > div > a.active {
+      @apply text-copper-dark;
+    }
+
+    & > div span {
+      @apply max-sm:hidden;
+    }
+
+    /* בטלפון מספיק אייקון החיפוש בתפריט — מסתירים אותו כאן */
+    & > div > a:first-child {
+      @apply max-sm:hidden;
     }
   }
 }
 
 /* ============================================================
-   עמוד הבית — דף נחיתה (Home.tsx)
-   הוא העמוד היחיד שמשתמש בתגית <main>
+   תחתית האתר (Footer.tsx)
    ============================================================ */
 
-/* תנועות */
+@layer components {
+  #root > footer {
+    @apply mt-auto border-t border-line bg-blush-deep/60 text-[0.95rem];
+
+    & > div {
+      @apply mx-auto grid max-w-[1240px] gap-8 px-5 pt-14 pb-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr];
+    }
+
+    & h3 {
+      @apply mb-3 text-[0.8rem] font-bold tracking-[0.12em] text-copper-dark;
+    }
+
+    & section,
+    & nav {
+      @apply flex flex-col gap-2;
+    }
+
+    & a {
+      @apply flex items-center gap-2 text-body hover:text-copper-dark;
+    }
+
+    & svg {
+      @apply size-5 text-copper;
+    }
+
+    /* המותג */
+    & > div > section:first-child > a {
+      @apply mb-2 gap-3 text-ink;
+      direction: ltr;
+      justify-content: flex-end;
+    }
+
+    & > div > section:first-child img {
+      @apply h-11 w-auto;
+    }
+
+    & > div > section:first-child span {
+      @apply font-serif text-[1.7rem] font-semibold tracking-[0.12em] text-copper-dark;
+    }
+
+    & > div > section:first-child p {
+      @apply max-w-[30ch] text-muted;
+    }
+
+    & ul {
+      @apply m-0 flex list-none flex-col gap-2 p-0 text-muted;
+    }
+
+    /* זכויות יוצרים */
+    & > p {
+      @apply border-t border-line px-5 py-5 text-center text-[0.85rem] text-muted;
+    }
+  }
+}
+
+/* ============================================================
+   עמוד הבית (Home.tsx)
+   כל חלק מזוהה לפי ה־id שלו
+   ============================================================ */
+
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(-3deg); }
-  50% { transform: translateY(-14px) rotate(2deg); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 @keyframes caret {
@@ -493,180 +589,279 @@
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(28px); }
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: none; }
 }
 
 @layer components {
   #root > main {
-    @apply flex flex-col gap-20 sm:gap-28;
+    @apply mt-0 flex flex-col gap-20 max-sm:gap-14;
 
     & h2 {
-      @apply mb-7 text-[clamp(1.7rem,1.2rem+1.6vw,2.4rem)];
+      @apply text-center text-[clamp(1.7rem,1.2rem+1.6vw,2.4rem)] font-normal;
     }
 
-    /* קו קישוט קטן מתחת לכותרות */
-    & h2::after {
-      content: "";
-      @apply mt-3 block h-[3px] w-14 rounded-full bg-copper;
-    }
-
-    /* כל חלק "נכנס" בעדינות כשגוללים אליו (בדפדפנים שתומכים) */
+    /* כל חלק "נכנס" בעדינות כשגוללים אליו */
     @supports (animation-timeline: view()) {
-      & > section:not(:first-child) {
+      & > :not(#hero) {
         animation: fade-up linear both;
         animation-timeline: view();
-        animation-range: entry 0% cover 25%;
+        animation-range: entry 0% cover 22%;
       }
     }
+  }
 
-    /* ---------- פתיחה: טקסט + בקבוק עם שם שמוקלד ---------- */
-    & > section:first-child {
-      @apply grid items-center gap-10 pt-4 md:grid-cols-[1.1fr_0.9fr];
-      animation: fade-up 0.8s ease-out both;
+  /* כפתור ראשי ומשני בעמוד הבית */
+  #hero > div > a,
+  #featured > a {
+    @apply inline-flex min-h-12 items-center justify-center rounded-full bg-copper px-8 py-3 font-medium text-white shadow-copper transition hover:-translate-y-px hover:bg-copper-dark hover:text-white;
+  }
 
-      & > div > span {
-        @apply mb-3 inline-block rounded-full bg-copper-tint px-4 py-1 text-sm font-bold text-copper-dark;
-      }
+  /* ---------- פתיחה ---------- */
+  #hero {
+    @apply grid items-center gap-8 bg-linear-to-l from-blush-deep/70 via-blush to-blush py-14 md:grid-cols-[0.85fr_1.15fr] max-md:py-8;
+    margin-inline: calc(50% - 50vw);
+    padding-inline: max(20px, calc((100vw - 1240px) / 2 + 20px));
+    animation: fade-up 0.8s ease-out both;
 
-      & h1 {
-        @apply mb-5 text-[clamp(2.4rem,1.4rem+3.6vw,4rem)] leading-[1.05];
-      }
-
-      & > div > p {
-        @apply mb-7 max-w-[44ch] text-[1.15rem] text-muted;
-      }
-
-      & > div > div {
-        @apply flex flex-wrap gap-3;
-      }
-
-      & > div > div > a {
-        @apply inline-flex min-h-12 items-center justify-center rounded-full px-7 py-3 font-bold transition max-sm:flex-[1_1_100%];
-      }
-
-      & > div > div > a:first-child {
-        @apply bg-linear-135 from-[#d9a088] via-copper to-copper-dark text-white shadow-copper hover:-translate-y-px hover:text-white hover:brightness-105;
-      }
-
-      & > div > div > a:last-child {
-        @apply border-[1.5px] border-copper-light bg-white hover:bg-copper-tint;
-      }
+    & h1 {
+      @apply mb-5 text-[clamp(2.5rem,1.4rem+3.8vw,4.3rem)] leading-[1.1] font-light tracking-tight;
     }
 
-    /* ההדגמה: בקבוק שעליו "מודפס" השם */
-    & figure {
-      @apply relative m-0 grid min-h-[420px] place-items-center;
+    & h1 > em {
+      @apply block font-normal text-copper not-italic;
     }
 
-    /* כתם צבע רך מאחורי הבקבוק */
-    & figure::before {
-      content: "";
-      @apply absolute size-[340px] rounded-full opacity-70 blur-2xl max-sm:size-[260px];
-      background: radial-gradient(circle, var(--color-copper-tint) 0%, #f3dcd3 45%, transparent 70%);
+    & > div > p {
+      @apply mb-8 max-w-[30ch] text-[1.2rem] text-body;
     }
 
-    /* הבקבוק — הצבע מגיע מהמשתנה --bottle שהקומפוננטה מעבירה */
-    & figure > div {
-      @apply relative grid h-[330px] w-[170px] place-items-center rounded-[46px_46px_38px_38px] shadow-lift;
-      background:
-        linear-gradient(90deg, rgb(255 255 255 / 0.45) 0%, transparent 22%, transparent 78%, rgb(0 0 0 / 0.08) 100%),
-        linear-gradient(180deg, color-mix(in srgb, var(--bottle) 55%, white), var(--bottle));
-      transition: background 0.6s ease;
-      animation: float 5s ease-in-out infinite;
+    & > img {
+      @apply aspect-[539/368] w-full rounded-[28px] object-cover shadow-lift max-md:order-first;
+    }
+  }
+
+  /* ---------- קטגוריות ---------- */
+  #categories {
+    @apply grid scroll-mt-28 grid-cols-5 gap-4 max-lg:grid-cols-3 max-sm:-mx-4 max-sm:snap-x max-sm:auto-cols-[44%] max-sm:grid-flow-col max-sm:grid-cols-none max-sm:overflow-x-auto max-sm:px-4 max-sm:pb-2;
+
+    & > a {
+      @apply flex snap-start flex-col overflow-hidden rounded-[20px] border border-line bg-white text-ink transition duration-300 hover:-translate-y-1 hover:text-copper-dark hover:shadow-lift;
     }
 
-    /* מכסה הבקבוק */
-    & figure > div::before {
-      content: "";
-      @apply absolute -top-9 left-1/2 h-12 w-[88px] -translate-x-1/2 rounded-[12px_12px_6px_6px] bg-ink;
+    & img {
+      @apply aspect-square w-full bg-photo object-cover transition duration-500;
     }
 
-    /* השם המוקלד */
-    & figure > div > span {
-      @apply min-h-[1.2em] font-script text-[2.7rem] font-bold text-copper-dark;
-      direction: ltr;
+    & > a:hover img {
+      @apply scale-105;
+    }
+
+    & span {
+      @apply relative bg-white py-3.5 text-center font-medium;
+    }
+  }
+
+  /* ---------- יתרונות ---------- */
+  #benefits {
+    @apply m-0 grid list-none grid-cols-4 rounded-[20px] bg-blush-deep/50 p-0 py-6 max-lg:grid-cols-2 max-lg:gap-y-6;
+
+    & > li {
+      @apply grid grid-cols-[auto_1fr] items-center gap-x-4 px-6 not-last:border-l not-last:border-line-strong max-lg:even:border-l-0 max-sm:flex max-sm:flex-col max-sm:gap-1 max-sm:px-3 max-sm:text-center;
+    }
+
+    & svg {
+      @apply row-span-2 size-9 text-copper-dark;
+    }
+
+    & strong {
+      @apply font-medium text-ink;
+    }
+
+    & span {
+      @apply text-sm text-muted;
+    }
+  }
+
+  /* ---------- נסו בעצמכם: בקבוק עם השם ---------- */
+  #personalize {
+    @apply grid items-center gap-12 md:grid-cols-[0.8fr_1.2fr];
+
+    /* הבקבוק — תמונה אמיתית של המוצר, והשם מוצב מעליו */
+    & > figure {
+      @apply relative m-0 w-full overflow-hidden rounded-[28px] bg-photo shadow-card max-md:mx-auto max-md:max-w-[300px];
+      container-type: inline-size;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    & > figure > img {
+      @apply w-full;
+    }
+
+    & > figure > span {
+      @apply absolute top-[41%] left-[79%] font-script text-[14cqw] leading-none font-bold whitespace-nowrap text-[#1f1a1a];
+      transform: translate(-50%, -50%) rotate(-69deg);
     }
 
     /* סמן ההקלדה המהבהב */
-    & figure > div > span::after {
+    & > figure > span::after {
       content: "";
-      @apply ml-0.5 inline-block h-[0.9em] w-[3px] translate-y-[0.1em] bg-copper-dark;
+      @apply ml-1 inline-block h-[0.8em] w-[2px] bg-current;
       animation: caret 1s steps(1) infinite;
     }
 
-    & figcaption {
-      @apply relative mt-4 text-sm font-semibold text-muted;
+    & > div > span {
+      @apply mb-3 inline-block rounded-full bg-copper-tint px-4 py-1 text-sm font-medium text-copper-dark;
     }
 
-    /* ---------- מה זה מיתוג אישי + המודעה ---------- */
-    & > section:nth-child(2) {
-      @apply grid items-center gap-10 md:grid-cols-2;
-
-      & > div > p {
-        @apply max-w-[52ch] text-[1.1rem] leading-relaxed;
-      }
-
-      & > img {
-        @apply w-full rounded-3xl border border-line bg-blush-deep shadow-lift md:-rotate-1;
-      }
+    & h2 {
+      @apply mb-4 text-start;
     }
 
-    /* ---------- איך זה עובד: שלבים ממוספרים ---------- */
+    & > div > p {
+      @apply mb-6 max-w-[56ch] text-[1.05rem];
+    }
+
+    & label {
+      @apply mb-8 flex max-w-sm flex-col gap-2;
+    }
+
+    & h3 {
+      @apply mb-4 text-xl font-medium;
+    }
+
     & ol {
-      @apply m-0 grid list-none gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4;
+      @apply m-0 grid list-none gap-3 p-0 sm:grid-cols-2;
+      counter-reset: step;
     }
 
     & ol > li {
-      @apply relative rounded-2xl border border-line bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-card;
+      @apply grid grid-cols-[auto_1fr] items-center gap-x-3 rounded-[14px] border border-line bg-white px-4 py-3;
+      counter-increment: step;
     }
 
     & ol > li::before {
-      content: counter(list-item);
-      @apply mb-4 grid size-11 place-items-center rounded-full bg-linear-135 from-[#d9a088] via-copper to-copper-dark font-serif text-lg font-bold text-white shadow-copper;
+      content: counter(step);
+      @apply row-span-2 grid size-9 place-items-center rounded-full bg-copper-tint font-serif text-lg font-bold text-copper-dark;
     }
 
-    /* ---------- למה ameing ---------- */
-    & ul {
-      @apply m-0 grid list-none gap-5 p-0 md:grid-cols-3;
+    & ol strong {
+      @apply font-medium text-ink;
     }
 
-    & ul > li {
-      @apply rounded-2xl border border-dashed border-line-strong bg-linear-160 from-white to-soft p-6;
+    & ol span {
+      @apply text-sm text-muted;
+    }
+  }
+
+  /* ---------- מוצרים נבחרים ---------- */
+  #featured {
+    @apply flex flex-col items-center;
+
+    /* כותרת עם קווים דקים משני הצדדים */
+    & > h2 {
+      @apply mb-8 flex w-full items-center gap-5;
     }
 
-    & ul > li::before {
-      content: "✦";
-      @apply mb-3 block text-xl text-copper;
+    & > h2::before,
+    & > h2::after {
+      content: "";
+      @apply h-px flex-1 bg-line-strong;
+    }
+
+    & > p {
+      @apply py-8 text-muted;
+    }
+
+    & > ul {
+      @apply m-0 mb-8 grid w-full list-none grid-cols-4 gap-5 p-0 max-lg:grid-cols-2 max-sm:gap-3;
+    }
+
+    & > ul > li {
+      @apply relative flex flex-col items-center overflow-hidden rounded-[20px] border border-line bg-white pb-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lift;
+    }
+
+    & li > img {
+      @apply mb-4 aspect-square w-full bg-photo object-cover;
+    }
+
+    /* תגית "בעיצוב אישי" */
+    & li > span {
+      @apply absolute top-3 right-3 rounded-full bg-white/90 px-3 py-0.5 text-xs font-medium text-copper-dark;
     }
 
     & li > h3 {
-      @apply mb-1.5 text-xl;
+      @apply mb-1 px-3 text-base font-medium max-sm:text-[0.95rem];
     }
 
-    & li > p {
-      @apply text-muted;
+    & li > strong {
+      @apply mb-4 font-serif text-xl font-bold text-copper-dark;
     }
 
-    /* ---------- פס סיום ---------- */
-    & > section:last-child {
-      @apply rounded-3xl bg-linear-135 from-[#d9a088] via-copper to-copper-dark px-6 py-14 text-center text-white shadow-lift sm:py-20;
+    & li > a {
+      @apply mt-auto rounded-full bg-copper-tint px-5 py-2 text-sm font-medium text-copper-dark transition hover:bg-copper hover:text-white max-sm:px-3 max-sm:text-[0.8rem];
+    }
 
-      & > h2 {
-        @apply mb-3 text-white;
-      }
+    & > a {
+      @apply bg-transparent text-copper-dark shadow-none ring-[1.5px] ring-copper-light hover:bg-copper-tint hover:text-copper-dark;
+    }
+  }
 
-      & > h2::after {
-        @apply mx-auto bg-white/70;
-      }
+  /* ---------- באנר המותג (המודעה) ---------- */
+  #story {
+    margin-inline: calc(50% - 50vw);
 
-      & > p {
-        @apply mb-8 text-[1.1rem] opacity-90;
-      }
+    & > img {
+      @apply h-[clamp(240px,34vw,480px)] w-full object-cover max-sm:h-auto;
+    }
 
-      & > a {
-        @apply inline-flex min-h-12 items-center rounded-full bg-white px-8 py-3 font-bold text-copper-dark shadow-lg transition hover:-translate-y-px hover:text-copper-dark;
-      }
+    & > p {
+      @apply mx-auto max-w-[46ch] px-5 pt-8 text-center text-[clamp(1.15rem,1rem+0.6vw,1.5rem)] font-light text-ink;
+    }
+  }
+
+  /* ---------- למה NAMEING ---------- */
+  #about {
+    @apply grid scroll-mt-28 items-center gap-10 md:grid-cols-[1.25fr_1fr];
+
+    & > img {
+      @apply w-full rounded-[28px] shadow-card md:order-2;
+    }
+
+    & h2 {
+      @apply mb-5 flex items-center justify-start gap-3 text-start;
+    }
+
+    & h2 > img {
+      @apply h-10 w-auto;
+    }
+
+    & h2 > span {
+      @apply font-serif font-semibold tracking-[0.1em] text-copper-dark;
+    }
+
+    & > div > p {
+      @apply mb-8 max-w-[58ch] text-[1.05rem] leading-loose;
+    }
+
+    & ul {
+      @apply m-0 grid list-none grid-cols-3 p-0 max-sm:grid-cols-1 max-sm:gap-4;
+    }
+
+    & li {
+      @apply flex flex-col items-center gap-1 px-3 text-center not-last:border-l not-last:border-line-strong max-sm:not-last:border-l-0;
+    }
+
+    & li > svg {
+      @apply mb-2 size-9 text-copper-dark;
+    }
+
+    & li > strong {
+      @apply font-medium text-ink;
+    }
+
+    & li > span {
+      @apply text-sm text-muted;
     }
   }
 }
