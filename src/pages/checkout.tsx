@@ -20,7 +20,7 @@ const Checkout = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<CheckoutForm>();
 
   const { token } = useUser();
@@ -112,7 +112,10 @@ const Checkout = () => {
         {...register("notes")}
       />
 
-      <button type="submit" className="mt-2 w-full">אישור הזמנה</button>
+      {/* בזמן שליחת ההזמנה הכפתור נעול — כך אי אפשר ללחוץ שוב וליצור הזמנה כפולה */}
+      <button type="submit" disabled={isSubmitting} className="mt-2 w-full">
+        {isSubmitting ? "שולחת הזמנה…" : "אישור הזמנה"}
+      </button>
     </form>
   );
 };
