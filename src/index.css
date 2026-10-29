@@ -18,10 +18,10 @@
 
   --color-ink: #4a2a20;
   --color-body: #644236;
-  --color-muted: #9c7d72;
+  --color-muted: #85675c; /* כהה יותר מקודם, לניגודיות טובה (AA) על רקע לבן ושמנת */
 
-  --color-copper: #b87660;
-  --color-copper-dark: #9a5238;
+  --color-copper: #a5624c; /* טקסט לבן על כפתור נחושת עומד בניגודיות AA */
+  --color-copper-dark: #8a4630;
   --color-copper-light: #ddb0a0;
   --color-copper-tint: #f6e2db;
 
@@ -153,5 +153,16 @@
     animation: fade-up linear both;
     animation-timeline: view();
     animation-range: entry 0% cover 22%;
+  }
+}
+
+/* מי שביקשה פחות תנועה במכשיר: מבטלים אנימציות (הבקבוק הצף, הסמן והכניסה בגלילה) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

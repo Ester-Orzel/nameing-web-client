@@ -173,12 +173,12 @@ function ProductDetails() {
         </div>
       )}
 
-      <button onClick={handleAddToCart} className="justify-self-start md:col-start-2">
+      <button onClick={handleAddToCart} className="min-h-12 justify-self-start px-8 text-lg max-sm:w-full md:col-start-2">
         הוספה לסל
       </button>
 
       {added && (
-        <p className="justify-self-start rounded-[10px] bg-[#e6f2ea] px-4 py-2 font-semibold text-[#3f7d5a] md:col-start-2">
+        <p role="status" className="justify-self-start rounded-[10px] bg-[#e6f2ea] px-4 py-2 font-semibold text-[#2f6b4a] md:col-start-2">
           המוצר נוסף לסל!
         </p>
       )}
