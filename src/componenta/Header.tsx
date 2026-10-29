@@ -77,6 +77,13 @@ function Header() {
           </NavLink>
         )}
 
+        {!user && (
+          <NavLink to="/register">
+            <Icon name="userPlus" />
+            <span>הרשמה</span>
+          </NavLink>
+        )}
+
         {user && (
           <button onClick={logout}>
             <Icon name="logout" />

@@ -7,16 +7,15 @@ import { addToCart } from "../cartStorage";
 import { useTypewriter } from "../hooks/useTypewriter";
 import Icon from "../componenta/Icon";
 import bottleImage from "../assets/bottle.webp";
-import adImage from "../assets/banner.webp";
+import bannerImage from "../assets/brand-banner.webp";
 import giftBoxImage from "../assets/gift-box.webp";
-import nMark from "../assets/n-mark.png";
 import { brand } from "../data/siteContent";
 import {
   hero,
   categoriesTitle,
   categories,
   benefits,
-  collection,
+  story,
   personalize,
   stepsTitle,
   steps,
@@ -72,21 +71,11 @@ const Home = () => {
     <main>
       <section id="hero">
         <div>
-          <img src={nMark} alt="" />
           <h1>
             {hero.title} <em>{hero.titleAccent}</em>
           </h1>
           <p>{hero.text}</p>
           <Link to="/products">{hero.button}</Link>
-        </div>
-      </section>
-
-      <section id="collection">
-        <img src={adImage} alt={collection.imageAlt} />
-        <div>
-          <span>{collection.eyebrow}</span>
-          <h2>{collection.title}</h2>
-          <p>{collection.text}</p>
         </div>
       </section>
 
@@ -122,20 +111,16 @@ const Home = () => {
               <li key={product.id}>
                 <Link to={`/products/${product.id}`}>
                   <img src={product.imageUrl} alt={product.name} loading="lazy" />
-                  <span>{featured.badge}</span>
                   <h3>{product.name}</h3>
                 </Link>
-                <strong>₪{product.price}</strong>
+                <strong>{product.price} ₪</strong>
                 <button onClick={() => addProduct(product)}>
                   {addedId === product.id ? featured.added : featured.button}
                 </button>
-                <Link to={`/products/${product.id}`}>{featured.personalizeLink}</Link>
               </li>
             ))}
           </ul>
         )}
-
-        <Link to="/products">{featured.allButton}</Link>
       </section>
 
       <section id="personalize">
@@ -170,6 +155,10 @@ const Home = () => {
             ))}
           </ol>
         </div>
+      </section>
+
+      <section id="story">
+        <img src={bannerImage} alt={story.imageAlt} />
       </section>
 
       <section id="about">

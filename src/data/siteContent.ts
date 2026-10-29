@@ -10,8 +10,7 @@ export const brand = {
 export const contact = {
   phone: "053-4166140",
   phoneLink: "tel:0534166140",
-  whatsappLink: "https://wa.me/972534166140",
-  // להשלמה: אפשר להוסיף כאן אימייל וכתובת כשיהיו
+  email: "e0534166140@gmail.com",
 };
 
 // עמודי שירות לקוחות — עדיין אין עמודים נפרדים, לכן מוצג רק טקסט

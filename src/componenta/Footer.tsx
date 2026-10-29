@@ -47,9 +47,9 @@ function Footer() {
             <Icon name="phone" />
             {contact.phone}
           </a>
-          <a href={contact.whatsappLink} target="_blank" rel="noreferrer">
-            <Icon name="whatsapp" />
-            וואטסאפ
+          <a href={`mailto:${contact.email}`}>
+            <Icon name="mail" />
+            {contact.email}
           </a>
         </section>
       </div>
