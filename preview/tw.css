@@ -284,11 +284,11 @@
   .mt-3 {
     margin-top: calc(var(--spacing) * 3);
   }
-  .mt-10 {
-    margin-top: calc(var(--spacing) * 10);
-  }
   .mt-auto {
     margin-top: auto;
+  }
+  .-mb-16 {
+    margin-bottom: calc(var(--spacing) * -16);
   }
   .mb-0 {
     margin-bottom: 0px;
@@ -648,6 +648,10 @@
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
+  }
+  .border-t-2 {
+    border-top-style: var(--tw-border-style);
+    border-top-width: 2px;
   }
   .border-b {
     border-bottom-style: var(--tw-border-style);
@@ -1429,8 +1433,8 @@
     .max-sm\:mx-2\.5 {
       margin-inline: calc(var(--spacing) * 2.5);
     }
-    .max-sm\:mt-6 {
-      margin-top: calc(var(--spacing) * 6);
+    .max-sm\:-mb-12 {
+      margin-bottom: calc(var(--spacing) * -12);
     }
     .max-sm\:mb-3 {
       margin-bottom: calc(var(--spacing) * 3);

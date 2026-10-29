@@ -62,65 +62,178 @@ React 19 · TypeScript · Vite · React Router · React Query · React Hook Form
 5. הטפסים בנויים עם **React Hook Form**, כולל ולידציה בצד הלקוח (תואמת לכללי השרת) והצגת הודעות שגיאה מהשרת.
 6. בהזמנה, הכפתור "אישור הזמנה" ננעל בזמן השליחה, כדי שלחיצה כפולה לא תיצור שתי הזמנות. אחרי הזמנה מוצלחת הסל מתרוקן, ואפשר לבצע הזמנה חדשה. כל הזמנה נשמרת בנפרד.
 
+---
+
 ## מבנה הפרויקט
 
 ```
-src/
-├── api.tsx            כל הקריאות לשרת, הטיפוסים והודעות השגיאה (Axios)
-├── cartStorage.ts     קריאה, שמירה והוספה לסל ב־localStorage
-├── context/           UserContext: המשתמשת המחוברת והטוקן
-├── pages/             עמודי האתר
-├── componenta/        קומפוננטות משותפות: Header, Footer, Icon, ProductCard, AddProduct, AllOrders...
-├── data/              טקסטים ותוכן קבוע (siteContent, homeContent), כדי לא לערבב אותם עם הקוד
-├── hooks/             useTypewriter: אפקט הקלדת השם בדף הבית
-├── assets/            לוגו ותמונות של האתר
-└── index.css          ערכת הנושא של Tailwind (צבעים, גופנים, אנימציות) ועיצוב בסיס
-public/images/products/  תמונות המוצרים
-docs/api-guide.md        מדריך לבקשות ולתשובות של השרת
+nameing-web-client/
+├── index.html             עמוד ה־HTML (עברית, RTL, גופנים מ־Google Fonts)
+├── vite.config.ts         Vite, תוסף Tailwind ו־proxy ל־/api בפיתוח
+├── render.yaml            הגדרות פריסה ל־Render
+├── public/
+│   └── images/products/   תמונות המוצרים (השרת מפנה אליהן ב־imageUrl)
+├── docs/
+│   └── api-guide.md       מדריך הבקשות והתשובות של השרת
+└── src/
+    ├── main.tsx           נקודת הכניסה: Router, React Query ו־UserProvider
+    ├── App.tsx            Header, Footer וטבלת הנתיבים
+    ├── api.tsx            כל הקריאות לשרת, הטיפוסים והודעות השגיאה (Axios)
+    ├── cartStorage.ts     קריאה, שמירה והוספה לסל ב־localStorage
+    ├── index.css          ערכת הנושא של Tailwind ועיצוב בסיס
+    ├── context/
+    │   └── UserContext.tsx    המשתמשת המחוברת והטוקן
+    ├── pages/             עמוד לכל נתיב (ראי טבלת העמודים)
+    ├── componenta/        קומפוננטות משותפות
+    │   ├── Header.tsx         תפריט, לוגו, אייקונים ומונה הסל
+    │   ├── Footer.tsx         ניווט, שירות לקוחות ויצירת קשר
+    │   ├── Icon.tsx           אייקוני SVG
+    │   ├── ProductCard.tsx    כרטיס מוצר ברשימה
+    │   ├── AddProduct.tsx     טופס הוספת מוצר (מנהלת)
+    │   ├── AllOrders.tsx      כל ההזמנות (מנהלת)
+    │   └── UpdateOrderStatus.tsx  עדכון סטטוס הזמנה (מנהלת)
+    ├── data/              טקסטים ותוכן קבוע: siteContent (מותג וקשר), homeContent (דף הבית)
+    ├── hooks/
+    │   └── useTypewriter.ts   אפקט הקלדת השם בדף הבית
+    └── assets/            לוגו, באנרים ותמונות קטגוריות
 ```
+
+---
+
+## קומפוננטות עיקריות
+
+| קומפוננטה | תפקיד |
+|---|---|
+| `Header` | תפריט ניווט (בטלפון נפתח בכפתור), לוגו, חיפוש, התחברות או אזור אישי, הרשמה, יציאה וסל עם מונה פריטים. הקישור "ניהול" מופיע רק למנהלת. |
+| `Footer` | קישורי ניווט, חשבון, שירות לקוחות, טלפון ואימייל. |
+| `ProductCard` | תמונה, שם, תיאור ומחיר של מוצר, עם קישור לעמוד המוצר. |
+| `AddProduct` | טופס הוספת מוצר עם קטגוריה, מחיר ותמונה. אחרי שמירה רשימת המוצרים מתרעננת. |
+| `AllOrders` | כל ההזמנות של כל הלקוחות, עם עדכון סטטוס דרך `UpdateOrderStatus`. |
+
+## ניהול מצב (State)
+
+| מה | איפה נשמר | למה |
+|---|---|---|
+| משתמשת מחוברת וטוקן | `UserContext` + `localStorage` | נדרשים בהרבה עמודים, ושרדים רענון |
+| סל קניות | `localStorage` (`cartStorage.ts`) | הסל קיים גם לאורחת, והמונה ב־Header מתעדכן באירוע `cart-change` |
+| מוצרים, קטגוריות, צבעים, גופנים, הזמנות | React Query | טעינה, מטמון ורענון אחרי שינוי |
+| ערכי טפסים ושגיאות | React Hook Form | ולידציה והודעות |
+
+## קריאות לשרת (`src/api.tsx`)
+
+| פונקציה | Method ו־URL | הרשאה |
+|---|---|---|
+| `registerUser` | `POST /api/auth/register` | ציבורי |
+| `loginUser` | `POST /api/auth/login` | ציבורי |
+| `getProducts` | `GET /api/products` | ציבורי (חיפוש, סינון, מיון) |
+| `getCategories` | `GET /api/categories` | ציבורי |
+| `getColors` | `GET /api/colors` | ציבורי |
+| `getFonts` | `GET /api/fonts` | ציבורי |
+| `createOrder` | `POST /api/orders` | לקוחה |
+| `getMyOrders` | `GET /api/orders/my` | לקוחה |
+| `addProduct` | `POST /api/products` | מנהלת |
+| `updateProduct` | `PATCH /api/products/:id` | מנהלת |
+| `getAllOrders` | `GET /api/orders` | מנהלת |
+| `updateOrderStatus` | `PATCH /api/orders/:id/status` | מנהלת |
+
+פירוט מלא של כל בקשה ותשובה נמצא ב־[`docs/api-guide.md`](docs/api-guide.md), ואפשר לנסות אותן ב־[Swagger](https://ameing-gifts-api.onrender.com/api-docs).
+
+## ולידציה בטפסים
+
+| טופס | כללים |
+|---|---|
+| הרשמה | שם מלא, אימייל תקין, טלפון ישראלי (`0` ואז 8 או 9 ספרות, רווחים ומקפים מותרים), סיסמה של 8 תווים לפחות עם אות וספרה |
+| התחברות | אימייל וסיסמה |
+| פרטי משלוח | שם מלא, טלפון וכתובת הם חובה. הערות הן אופציונליות |
+| התאמה אישית | טקסט, צבע וגופן. מוצר מסוג `INITIAL_ONLY` מאפשר אות אחת בלבד |
+
+הכללים זהים לאלה של השרת. אם השרת דוחה בקשה, ההודעה שלו מוצגת למשתמשת בעברית.
+
+---
 
 ## עיצוב (Tailwind)
 
 העיצוב כתוב בקלאסים של Tailwind בתוך הקומפוננטות עצמן. ב־`src/index.css` נמצאים רק הדברים המשותפים לכל האתר:
 
-- **`@theme`:** צבעי המותג (ורוד פודרה, נחושת, חום שוקולד, שמנת), גופנים, צללים ואנימציות. אפשר להשתמש בהם ישירות, למשל `bg-blush`, `text-copper-dark`, `font-serif`.
+- **`@theme`:** צבעי המותג, גופנים, צללים ואנימציות. אפשר להשתמש בהם ישירות, למשל `bg-blush` או `text-copper-dark`.
 - **`@layer base`:** עיצוב ברירת מחדל לכפתורים, שדות, כותרות וקישורים.
 - האתר בעברית וב־RTL (`<html lang="he" dir="rtl">`), ומותאם לטלפון.
 
+| צבע | שימוש |
+|---|---|
+| `blush`, `blush-deep` | רקעי האתר (שמנת וורוד פודרה) |
+| `copper`, `copper-dark`, `copper-light`, `copper-tint` | כפתורים, קישורים, קווים והדגשות |
+| `ink`, `body`, `muted` | כותרות, טקסט וטקסט משני (חום שוקולד) |
+| `line`, `line-strong` | מסגרות וקווים |
+
+| גופן | שימוש |
+|---|---|
+| Heebo (`font-sans`) | טקסט האתר בעברית |
+| Cormorant Garamond (`font-serif`) | כותרות, מחירים ולוגו |
+| Dancing Script (`font-script`) | השם שמוקלד על המוצר בהדגמה |
+
+---
+
 ## הרצה מקומית
+
+### דרישות
+Node.js 22 (LTS). לעבודה מלאה צריך גם את [השרת](https://github.com/Ester-Orzel/ameing-gifts-backend) רץ בכתובת `http://localhost:3000`.
+
+### התקנה והפעלה
 
 ```bash
 npm install
 npm run dev
 ```
 
-בפיתוח, בקשות ל־`/api` מועברות לשרת המקומי בכתובת `http://localhost:3000` (מוגדר ב־`vite.config.ts`), ולכן צריך להפעיל גם את [השרת](https://github.com/Ester-Orzel/ameing-gifts-backend).
-
-בפרודקשן כתובת השרת נקבעת במשתנה הסביבה:
+בפיתוח, בקשות ל־`/api` מועברות לשרת המקומי (מוגדר ב־`vite.config.ts`). בפרודקשן כתובת השרת נקבעת במשתנה הסביבה:
 
 ```
 VITE_API_URL=https://ameing-gifts-api.onrender.com
 ```
 
+### פקודות
+
 | פקודה | מה היא עושה |
 |---|---|
-| `npm run dev` | שרת פיתוח |
+| `npm run dev` | שרת פיתוח שמתעדכן בשמירה |
 | `npm run build` | בדיקת טיפוסים ובנייה לתיקייה `dist` |
 | `npm run lint` | בדיקת קוד |
 | `npm run preview` | תצוגה מקדימה של הגרסה הבנויה |
 
+---
+
 ## העלאה ל־Render
 
-אתר סטטי (Static Site). ההגדרות בקובץ `render.yaml`:
+אתר סטטי (Static Site) שמחובר לענף `design/ui-refresh` ב־GitHub. כל דחיפה מפעילה בנייה חדשה אוטומטית. ההגדרות בקובץ `render.yaml`:
 
-- פקודת בנייה: `npm install && npm run build`
-- תיקיית פרסום: `dist`
-- משתנה סביבה: `VITE_API_URL`
-- כלל Rewrite מכל נתיב (`/*`) ל־`/index.html`, כדי שרענון בעמוד פנימי יעבוד. את הכלל מוסיפים ב־Render תחת Redirects/Rewrites.
+| הגדרה | ערך |
+|---|---|
+| פקודת בנייה | `npm install && npm run build` |
+| תיקיית פרסום | `dist` |
+| משתנה סביבה | `VITE_API_URL` (כתובת השרת) |
+| Rewrite | `/*` → `/index.html`, כדי שרענון בעמוד פנימי יעבוד. מוסיפים ב־Render תחת Redirects/Rewrites |
 
-בשרת צריך להגדיר ב־`CORS_ORIGINS` את כתובת האתר.
+בשרת צריך להגדיר ב־`CORS_ORIGINS` את כתובת האתר, אחרת הדפדפן יחסום את הבקשות.
+
+---
+
+## בדיקה ידנית
+
+| בדיקה | תוצאה צפויה |
+|---|---|
+| כניסה לדף הבית | רואים קטגוריות ומוצרים נבחרים. הקלדת שם בהדגמה מופיעה על המוצר |
+| `/products` | חיפוש, סינון לפי קטגוריה ומיון משנים את הרשימה |
+| הוספה לסל מעמוד מוצר | המונה ב־Header עולה, ובסל יש שורה עם כמות |
+| הרשמה עם סיסמה קצרה | מוצגת הודעת שגיאה בעברית |
+| הזמנה בלי התחברות | מועברים להתחברות ואז חוזרים |
+| הזמנה מוצלחת | הסל מתרוקן, ההזמנה מופיעה ב־`/my-account` |
+| כניסה כמנהלת | מופיע הקישור "ניהול", ובו רואים את כל ההזמנות ואפשר לעדכן סטטוס |
+| רענון בעמוד פנימי | העמוד נטען (דורש את כלל ה־Rewrite) |
+
+---
 
 ## קישורים
 
-- [מדריך ה-API](docs/api-guide.md): איזו בקשה לשלוח לשרת ומה חוזר ממנו.
-- [קוד השרת ו־README שלו](https://github.com/Ester-Orzel/ameing-gifts-backend).
+- [מדריך ה-API](docs/api-guide.md)
+- [קוד השרת וה־README שלו](https://github.com/Ester-Orzel/ameing-gifts-backend)

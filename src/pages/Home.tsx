@@ -75,7 +75,7 @@ const Home = () => {
   }, [location.hash]);
 
   return (
-    <main className="mt-0 flex flex-col gap-16 max-sm:gap-12">
+    <main className="mt-0 mb-0 flex flex-col gap-16 max-sm:gap-12">
       {/* פתיחה: תמונה רחבה, והטקסט בצד שמאל שלה */}
       <section
         id="hero"
@@ -212,14 +212,14 @@ const Home = () => {
       </section>
 
       {/* באנר המותג */}
-      <section className="mx-[calc(50%-50vw)]">
+      <section className="mx-[calc(50%-50vw)] -mb-16 max-sm:-mb-12">
         <img src={bannerImage} alt={story.imageAlt} className="w-full" />
       </section>
 
       {/* למה NAMEING: יתרונות · טקסט · תמונה */}
       <section
         id="about"
-        className={`mt-10 grid scroll-mt-28 items-center gap-10 bg-blush-deep/40 max-sm:mt-6 lg:grid-cols-[1.15fr_1.2fr_1fr] ${fullWidth}`}
+        className={`grid scroll-mt-28 items-center gap-10 border-t-2 border-copper-light bg-blush-deep/40 lg:grid-cols-[1.15fr_1.2fr_1fr] ${fullWidth}`}
       >
         <img
           src={giftBoxImage}
