@@ -36,10 +36,10 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>התחברות</h1>
+    <div className="mx-auto w-full max-w-[460px] rounded-2xl border border-line bg-white p-8 shadow-card max-sm:p-5">
+      <h1 className="text-center text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)]">התחברות</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3.5">
         <input
           type="email"
           placeholder="אימייל"
@@ -52,10 +52,10 @@ const Login = () => {
           {...register("password", { required: "יש להזין סיסמה" })}
         />
 
-        <button type="submit">התחברות</button>
+        <button type="submit" className="mt-2 w-full">התחברות</button>
       </form>
 
-      {error && <p>{error}</p>}
+      {error && <p className="mt-3 rounded-[10px] bg-bad-bg px-4 py-3 font-semibold text-bad">{error}</p>}
     </div>
   );
 };

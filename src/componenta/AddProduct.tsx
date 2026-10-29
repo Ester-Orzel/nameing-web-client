@@ -53,10 +53,11 @@ const AddProduct = ({ product }: Props) => {
   };
 
   return (
-    <div>
-      <h2>{product ? "עריכת מוצר" : "הוספת מוצר חדש"}</h2>
+    <div className="rounded-2xl border border-line bg-white p-8 shadow-card max-sm:p-5">
+      <h2 className="mb-5">{product ? "עריכת מוצר" : "הוספת מוצר חדש"}</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {/* תווית ושדה באותה שורה */}
+      <form onSubmit={handleSubmit(onSubmit)} className="grid items-center gap-x-5 gap-y-3.5 sm:grid-cols-[180px_1fr]">
         <label>שם המוצר</label>
         <input
           type="text"
@@ -107,7 +108,7 @@ const AddProduct = ({ product }: Props) => {
           ))}
         </select>
 
-        <button type="submit">
+        <button type="submit" className="mt-2 justify-self-start max-sm:w-full sm:col-start-2">
           {product ? "שמור שינויים" : "הוסף מוצר"}
         </button>
       </form>

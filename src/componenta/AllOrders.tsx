@@ -25,17 +25,20 @@ const AllOrders = () => {
   }
 
   return (
-    <div>
-      <h2>כל ההזמנות</h2>
+    <div className="rounded-2xl border border-line bg-white p-8 shadow-card max-sm:p-5">
+      <h2 className="mb-5">כל ההזמנות</h2>
 
       {orders.length === 0 && <p>אין הזמנות כרגע</p>}
 
       {orders.map((order) => (
-        <div key={order.id}>
-          <p>מספר הזמנה: {order.id}</p>
+        <div
+          key={order.id}
+          className="flex flex-wrap gap-x-8 gap-y-1 border-b border-line py-3 text-[0.95rem] last:border-b-0"
+        >
+          <p className="font-bold text-ink">מספר הזמנה: {order.id}</p>
           <p>שם לקוח: {order.contactName}</p>
           <p>מחיר: {order.totalPrice} ₪</p>
-          <p>סטטוס: {order.status}</p>
+          <p className="rounded-full bg-copper-tint px-3 text-sm font-semibold text-copper-dark">סטטוס: {order.status}</p>
           <hr />
         </div>
       ))}

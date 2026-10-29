@@ -47,17 +47,24 @@ function Products() {
     navigate(`/products/${product.id}`);
   };
 
-  return (
-    <div>
-      <h1>המוצרים שלנו</h1>
+  // עיצוב משותף
+  const pillLink = "justify-self-start rounded-full border-[1.5px] border-copper-light bg-white px-4 py-1.5 text-[0.95rem] font-bold hover:bg-copper-tint";
+  const filterBox = "flex flex-col gap-1.5 rounded-2xl border border-line bg-white p-4 shadow-sm";
+  const filterLabel = "text-sm text-muted";
+  const message = "col-span-full";
 
-      {token && <Link to="/my-account">האזור האישי שלי</Link>}
+  return (
+    <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+      <h1 className="col-span-full mb-0">המוצרים שלנו</h1>
+
+      {token && <Link to="/my-account" className={pillLink}>האזור האישי שלי</Link>}
       {user?.role === "ADMIN" && (
-  <Link to="/admin">כניסה לניהול</Link>
+  <Link to="/admin" className={pillLink}>כניסה לניהול</Link>
 )}
 
-      <div>
-        <label >חיפוש מוצר:</label>
+      {/* שדה החיפוש תמיד מתחיל שורה חדשה */}
+      <div className={`${filterBox} col-span-2 col-start-1`}>
+        <label className={filterLabel}>חיפוש מוצר:</label>
         <input
           type="text"
           placeholder="חפשי מוצר..."
@@ -66,8 +73,8 @@ function Products() {
         />
       </div>
 
-      <div>
-        <label >קטגוריה:</label>
+      <div className={filterBox}>
+        <label className={filterLabel}>קטגוריה:</label>
         <select
           
           value={categoryId ?? ""}
@@ -86,8 +93,8 @@ function Products() {
         </select>
       </div>
 
-      <div>
-        <label >מיון לפי:</label>
+      <div className={filterBox}>
+        <label className={filterLabel}>מיון לפי:</label>
         <select
           
           value={sort}
@@ -103,17 +110,23 @@ function Products() {
       </div>
 
       {isLoading ? (
-        <p>טוען מוצרים...</p>
+        <p className={message}>טוען מוצרים...</p>
       ) : error ? (
-        <p>שגיאה בטעינת המוצרים</p>
+        <p className={message}>שגיאה בטעינת המוצרים</p>
       ) : products.length === 0 ? (
-        <p>לא נמצאו מוצרים מתאימים</p>
+        <p className={message}>לא נמצאו מוצרים מתאימים</p>
       ) : (
         products.map((product) => (
-          <div key={product.id}>
+          <div
+            key={product.id}
+            className="flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lift"
+          >
             <ProductCard product={product} onAddToCart={addToCart} />
 
-            <button onClick={() => navigate(`/products/${product.id}`)}>
+            <button
+              onClick={() => navigate(`/products/${product.id}`)}
+              className="mx-4 mb-4 max-sm:mx-2.5 max-sm:mb-3 max-sm:px-2 max-sm:text-sm"
+            >
               לפרטי המוצר
             </button>
           </div>

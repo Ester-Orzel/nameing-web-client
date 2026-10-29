@@ -7,18 +7,19 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {  return (
-    <div>
+    <div className="flex flex-1 flex-col pb-3">
       <img
         src={product.imageUrl}
         alt={product.name}
         width="200"
+        className="mb-3 aspect-square w-full bg-soft object-cover"
       />
 
-      <h2>{product.name}</h2>
+      <h2 className="mb-1 px-4 text-lg max-sm:px-3 max-sm:text-base">{product.name}</h2>
 
-      <p>{product.description}</p>
+      <p className="line-clamp-2 flex-1 px-4 text-sm text-muted max-sm:px-3">{product.description}</p>
 
-      <p>{product.price} ₪</p>
+      <p className="mt-1.5 px-4 font-serif text-xl font-bold text-copper-dark max-sm:px-3 max-sm:text-lg">{product.price} ₪</p>
 
       
     </div>

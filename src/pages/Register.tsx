@@ -12,6 +12,9 @@ interface RegisterForm {
   password: string;
 }
 
+// הודעת שגיאה מתחת לשדה
+const fieldError = "-mt-1 text-sm font-semibold text-bad";
+
 const Register = () => {
   const { setUser, setToken } = useUser();
   const navigate = useNavigate();
@@ -43,17 +46,17 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1>הרשמה</h1>
+    <div className="mx-auto w-full max-w-[460px] rounded-2xl border border-line bg-white p-8 shadow-card max-sm:p-5">
+      <h1 className="text-center text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)]">הרשמה</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3.5">
         <input
           placeholder="שם מלא"
           {...register("fullName", {
             required: "יש להזין שם מלא",
           })}
         />
-        {errors.fullName && <p>{errors.fullName.message}</p>}
+        {errors.fullName && <p className={fieldError}>{errors.fullName.message}</p>}
 
         <input
           placeholder="אימייל"
@@ -65,7 +68,7 @@ const Register = () => {
             },
           })}
         />
-        {errors.email && <p>{errors.email.message}</p>}
+        {errors.email && <p className={fieldError}>{errors.email.message}</p>}
 
         <input
           placeholder="טלפון"
@@ -77,7 +80,7 @@ const Register = () => {
               "מספר טלפון לא תקין (למשל 0501234567)",
           })}
         />
-        {errors.phone && <p>{errors.phone.message}</p>}
+        {errors.phone && <p className={fieldError}>{errors.phone.message}</p>}
 
         <input
           type="password"
@@ -94,13 +97,13 @@ const Register = () => {
               "הסיסמה חייבת להכיל לפחות אות אחת וספרה אחת",
           })}
         />
-        {errors.password && <p>{errors.password.message}</p>}
+        {errors.password && <p className={fieldError}>{errors.password.message}</p>}
 
-        <button type="submit" disabled={mutation.isPending}>
+        <button type="submit" disabled={mutation.isPending} className="mt-2 w-full">
           {mutation.isPending ? "נרשמת..." : "הרשמה"}
         </button>
 
-        {mutation.isError && <p>{getErrorMessage(mutation.error)}</p>}
+        {mutation.isError && <p className="mt-3 rounded-[10px] bg-bad-bg px-4 py-3 font-semibold text-bad">{getErrorMessage(mutation.error)}</p>}
       </form>
     </div>
   );

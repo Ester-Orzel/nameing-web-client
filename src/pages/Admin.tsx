@@ -4,6 +4,9 @@ import { useUser } from "../context/UserContext";
 import AddProduct from "../componenta/AddProduct";
 import AllOrders from "../componenta/AllOrders";
 
+// כפתורי המעבר בין "הוספת מוצר" ו"צפייה בהזמנות"
+const tab = "mb-5 ml-2 border-[1.5px] border-copper-light bg-white bg-none text-copper-dark shadow-none hover:bg-copper-tint max-sm:mb-3";
+
 const Admin = () => {
   const { user } = useUser();
 
@@ -15,13 +18,13 @@ const Admin = () => {
 
   return (
     <div>
-      <h1>מערכת ניהול</h1>
+      <h1 className="mb-4">מערכת ניהול</h1>
 
-      <button onClick={() => setPage("products")}>
+      <button onClick={() => setPage("products")} className={tab}>
         הוספת מוצר
       </button>
 
-      <button onClick={() => setPage("orders")}>
+      <button onClick={() => setPage("orders")} className={tab}>
         צפייה בהזמנות
       </button>
 

@@ -13,6 +13,9 @@ interface CheckoutForm {
   notes: string;
 }
 
+// הודעת שגיאה מתחת לשדה
+const fieldError = "-mt-1 text-sm font-semibold text-bad";
+
 const Checkout = () => {
   const {
     register,
@@ -72,14 +75,19 @@ const Checkout = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mx-auto flex w-full max-w-[620px] flex-col gap-3.5 rounded-2xl border border-line bg-white p-8 shadow-card max-sm:p-5"
+    >
+      <h1 className="mb-2 text-center font-serif text-[clamp(1.6rem,1.2rem+1.4vw,2.1rem)] leading-relaxed font-semibold">פרטי משלוח</h1>
+
       <input
         placeholder="שם מלא"
         {...register("contactName", {
           required: "יש להזין שם מלא",
         })}
       />
-      {errors.contactName && <p>{errors.contactName.message}</p>}
+      {errors.contactName && <p className={fieldError}>{errors.contactName.message}</p>}
 
       <input
         placeholder="טלפון"
@@ -87,7 +95,7 @@ const Checkout = () => {
           required: "יש להזין טלפון",
         })}
       />
-      {errors.contactPhone && <p>{errors.contactPhone.message}</p>}
+      {errors.contactPhone && <p className={fieldError}>{errors.contactPhone.message}</p>}
 
       <input
         placeholder="כתובת למשלוח"
@@ -96,7 +104,7 @@ const Checkout = () => {
         })}
       />
       {errors.deliveryAddress && (
-        <p>{errors.deliveryAddress.message}</p>
+        <p className={fieldError}>{errors.deliveryAddress.message}</p>
       )}
 
       <textarea
@@ -104,7 +112,7 @@ const Checkout = () => {
         {...register("notes")}
       />
 
-      <button type="submit">אישור הזמנה</button>
+      <button type="submit" className="mt-2 w-full">אישור הזמנה</button>
     </form>
   );
 };

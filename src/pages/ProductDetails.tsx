@@ -87,20 +87,22 @@ function ProductDetails() {
     setAdded(true);
   };
 
+  // בעמוד הזה: התמונה בצד אחד, וכל השאר בעמודה השנייה (md:col-start-2)
   return (
-    <div>
-      <h1>{product.name}</h1>
+    <div className="grid items-start gap-x-14 gap-y-4 max-md:grid-cols-1 md:grid-cols-2 md:grid-rows-[repeat(9,auto)_1fr]">
+      <h1 className="mb-0 md:col-start-2">{product.name}</h1>
 
       <img
         src={product.imageUrl}
         alt={product.name}
         width="200"
+        className="aspect-square w-full rounded-3xl border border-line bg-white object-cover shadow-card md:col-start-1 md:row-span-full md:row-start-1"
       />
 
-      <p>{product.description}</p>
-      <p>{product.price} ₪</p>
+      <p className="md:col-start-2">{product.description}</p>
+      <p className="font-serif text-3xl font-bold text-copper-dark md:col-start-2">{product.price} ₪</p>
 
-      <label>
+      <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-line bg-white px-5 py-4 text-[1.05rem] shadow-sm md:col-start-2">
         <input
           type="checkbox"
           checked={personalization}
@@ -113,7 +115,7 @@ function ProductDetails() {
       </label>
 
       {personalization && (
-        <div>
+        <div className="grid gap-4 rounded-2xl border border-dashed border-line-strong bg-white px-5 py-4 md:col-start-2 [&>label]:flex [&>label]:flex-col [&>label]:gap-1.5">
           <label>
             צבע:
             <select
@@ -171,11 +173,15 @@ function ProductDetails() {
         </div>
       )}
 
-      <button onClick={handleAddToCart}>
+      <button onClick={handleAddToCart} className="justify-self-start md:col-start-2">
         הוספה לסל
       </button>
 
-      {added && <p>המוצר נוסף לסל!</p>}
+      {added && (
+        <p className="justify-self-start rounded-[10px] bg-[#e6f2ea] px-4 py-2 font-semibold text-[#3f7d5a] md:col-start-2">
+          המוצר נוסף לסל!
+        </p>
+      )}
     </div>
   );
 }
