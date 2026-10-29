@@ -219,7 +219,7 @@ const Home = () => {
       {/* למה NAMEING: יתרונות · טקסט · תמונה */}
       <section
         id="about"
-        className={`-mt-10 grid scroll-mt-28 items-center gap-10 bg-blush-deep/40 max-sm:-mt-8 lg:grid-cols-[1.15fr_1.2fr_1fr] ${fullWidth}`}
+        className={`mt-10 grid scroll-mt-28 items-center gap-10 bg-blush-deep/40 max-sm:mt-6 lg:grid-cols-[1.15fr_1.2fr_1fr] ${fullWidth}`}
       >
         <img
           src={giftBoxImage}
