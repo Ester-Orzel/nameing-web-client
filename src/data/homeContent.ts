@@ -24,8 +24,8 @@ export interface Category {
 }
 
 export const hero = {
-  title: "מתנה אישית",
-  titleAccent: "שרושם שנשאר.",
+  title: "מתנה אישית.",
+  titleAccent: "רושם שנשאר.",
   text: "מגוון מתנות מעוצבות בהתאמה אישית לכל רגע מיוחד בחיים",
   button: "לגלות את הקולקציה ←",
   imageAlt: "תיק איפור, מגבת, בקבוק וקופסת תכשיטים עם שמות מודפסים",
@@ -55,6 +55,7 @@ export const personalize = {
   text: "מיתוג אישי הוא הדפסה של שם, אות או מילה על מוצר שימושי. המוצר נשאר אותו מוצר — אבל ברגע שמופיע עליו השם, הוא הופך למתנה שאי אפשר לטעות למי היא שייכת.",
   inputLabel: "כתבו שם להדגמה",
   inputPlaceholder: "למשל: Miriam",
+  maxLength: 8,
   bottleAlt: "תרמוס צבעוני עם שם מודפס",
   // השמות שמוקלדים על הבקבוק כשלא כתבו שם
   demoNames: ["Miriam", "Esty", "Chani", "Brachi", "Dvory"],
@@ -72,16 +73,21 @@ export const steps: InfoItem[] = [
 export const featured = {
   title: "מוצרים נבחרים",
   badge: "בעיצוב אישי",
-  button: "לעיצוב והוספה לסל",
+  button: "הוספה לסל",
+  added: "נוסף לסל ✓",
+  personalizeLink: "להוספת שם",
   allButton: "לכל המוצרים",
   loading: "טוען מוצרים...",
   error: "לא הצלחנו לטעון את המוצרים",
   count: 4,
 };
 
-export const story = {
-  text: "כל מתנה מספרת סיפור. אנחנו מדפיסים עליה את השם — ואתם נותנים לה את המשמעות.",
-  imageAlt: "מבחר המוצרים של NAMEING עם הלוגו",
+// תמונת המוצרים (המודעה) — מוצגת מיד אחרי הפתיחה
+export const collection = {
+  eyebrow: "הקולקציה שלנו",
+  title: "כל מתנה מספרת סיפור",
+  text: "בקבוקים, תיקים, מגבות, קופסאות תכשיטים ועוד — כל אחד מהם יכול לשאת את השם של מי שמקבל אותו.",
+  imageAlt: "מבחר המוצרים של NAMEING עם שמות מודפסים",
 };
 
 export const about = {

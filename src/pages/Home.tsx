@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../api";
+import type { Product } from "../api";
+import { addToCart } from "../cartStorage";
 import { useTypewriter } from "../hooks/useTypewriter";
 import Icon from "../componenta/Icon";
-import heroImage from "../assets/hero.webp";
 import bottleImage from "../assets/bottle.webp";
-import bannerImage from "../assets/brand-banner.webp";
+import adImage from "../assets/banner.webp";
 import giftBoxImage from "../assets/gift-box.webp";
 import nMark from "../assets/n-mark.png";
 import { brand } from "../data/siteContent";
@@ -15,11 +16,11 @@ import {
   categoriesTitle,
   categories,
   benefits,
+  collection,
   personalize,
   stepsTitle,
   steps,
   featured,
-  story,
   about,
   aboutPoints,
 } from "../data/homeContent";
@@ -41,6 +42,26 @@ const Home = () => {
 
   const featuredProducts = products.slice(0, featured.count);
 
+  // המוצר שנוסף עכשיו לסל — כדי להציג "נוסף לסל ✓" לרגע
+  const [addedId, setAddedId] = useState<number | null>(null);
+
+  const addProduct = (product: Product) => {
+    addToCart({
+      product,
+      personalization: false,
+      customText: "",
+      selectedColor: null,
+      selectedFont: null,
+    });
+    setAddedId(product.id);
+  };
+
+  useEffect(() => {
+    if (addedId === null) return;
+    const timer = setTimeout(() => setAddedId(null), 1800);
+    return () => clearTimeout(timer);
+  }, [addedId]);
+
   // קישורים כמו "/#about" — גוללים לחלק המתאים בעמוד
   useEffect(() => {
     if (!location.hash) return;
@@ -51,13 +72,22 @@ const Home = () => {
     <main>
       <section id="hero">
         <div>
+          <img src={nMark} alt="" />
           <h1>
             {hero.title} <em>{hero.titleAccent}</em>
           </h1>
           <p>{hero.text}</p>
           <Link to="/products">{hero.button}</Link>
         </div>
-        <img src={heroImage} alt={hero.imageAlt} />
+      </section>
+
+      <section id="collection">
+        <img src={adImage} alt={collection.imageAlt} />
+        <div>
+          <span>{collection.eyebrow}</span>
+          <h2>{collection.title}</h2>
+          <p>{collection.text}</p>
+        </div>
       </section>
 
       <section id="categories" aria-label={categoriesTitle}>
@@ -79,6 +109,35 @@ const Home = () => {
         ))}
       </ul>
 
+      <section id="featured">
+        <h2>{featured.title}</h2>
+
+        {isLoading ? (
+          <p>{featured.loading}</p>
+        ) : isError ? (
+          <p>{featured.error}</p>
+        ) : (
+          <ul>
+            {featuredProducts.map((product) => (
+              <li key={product.id}>
+                <Link to={`/products/${product.id}`}>
+                  <img src={product.imageUrl} alt={product.name} loading="lazy" />
+                  <span>{featured.badge}</span>
+                  <h3>{product.name}</h3>
+                </Link>
+                <strong>₪{product.price}</strong>
+                <button onClick={() => addProduct(product)}>
+                  {addedId === product.id ? featured.added : featured.button}
+                </button>
+                <Link to={`/products/${product.id}`}>{featured.personalizeLink}</Link>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <Link to="/products">{featured.allButton}</Link>
+      </section>
+
       <section id="personalize">
         <figure>
           <img src={bottleImage} alt={personalize.bottleAlt} />
@@ -94,7 +153,7 @@ const Home = () => {
             {personalize.inputLabel}
             <input
               type="text"
-              maxLength={10}
+              maxLength={personalize.maxLength}
               value={customName}
               placeholder={personalize.inputPlaceholder}
               onChange={(e) => setCustomName(e.target.value)}
@@ -113,53 +172,23 @@ const Home = () => {
         </div>
       </section>
 
-      <section id="featured">
-        <h2>{featured.title}</h2>
-
-        {isLoading ? (
-          <p>{featured.loading}</p>
-        ) : isError ? (
-          <p>{featured.error}</p>
-        ) : (
-          <ul>
-            {featuredProducts.map((product) => (
-              <li key={product.id}>
-                <img src={product.imageUrl} alt={product.name} loading="lazy" />
-                <span>{featured.badge}</span>
-                <h3>{product.name}</h3>
-                <strong>₪{product.price}</strong>
-                <Link to={`/products/${product.id}`}>{featured.button}</Link>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <Link to="/products">{featured.allButton}</Link>
-      </section>
-
-      <section id="story">
-        <img src={bannerImage} alt={story.imageAlt} />
-        <p>{story.text}</p>
-      </section>
-
       <section id="about">
         <img src={giftBoxImage} alt={about.imageAlt} />
         <div>
           <h2>
-            <img src={nMark} alt="" />
             {about.titleStart} <span>{brand.name}?</span>
           </h2>
           <p>{about.text}</p>
-          <ul>
-            {aboutPoints.map((point) => (
-              <li key={point.title}>
-                <Icon name={point.icon} />
-                <strong>{point.title}</strong>
-                <span>{point.text}</span>
-              </li>
-            ))}
-          </ul>
         </div>
+        <ul>
+          {aboutPoints.map((point) => (
+            <li key={point.title}>
+              <Icon name={point.icon} />
+              <strong>{point.title}</strong>
+              <span>{point.text}</span>
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   );

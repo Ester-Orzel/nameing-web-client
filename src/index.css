@@ -7,22 +7,22 @@
    ============================================================ */
 
 @theme {
-  /* צבעי המותג: שנהב חם, ורוד עדין, ורוד מעושן וטרקוטה */
-  --color-blush: #fff8f3;
-  --color-blush-deep: #f5dfd7;
+  /* צבעי המותג: שמנת, ורוד פודרה, רוז־גולד, נחושת וחום שוקולד */
+  --color-blush: #fcf5f1;
+  --color-blush-deep: #f4ddd6;
   --color-photo: #f0e5e3; /* צבע הרקע של תמונות המוצרים */
   --color-soft: #fbf1ec;
-  --color-line: #efddd4;
-  --color-line-strong: #e2c6b9;
+  --color-line: #eedbd2;
+  --color-line-strong: #e0c3b6;
 
-  --color-ink: #45251b;
-  --color-body: #5e3e33;
-  --color-muted: #9a7b70;
+  --color-ink: #4a2a20;
+  --color-body: #644236;
+  --color-muted: #9c7d72;
 
-  --color-copper: #b5735d;
-  --color-copper-dark: #93503b;
-  --color-copper-light: #d7a18d;
-  --color-copper-tint: #f5dfd7;
+  --color-copper: #b87660;
+  --color-copper-dark: #9a5238;
+  --color-copper-light: #ddb0a0;
+  --color-copper-tint: #f6e2db;
 
   --color-bad: #b2433a;
   --color-bad-bg: #fbe9e7;
@@ -662,33 +662,67 @@
     }
   }
 
-  /* כפתור ראשי ומשני בעמוד הבית */
-  #hero > div > a,
+  /* כפתור ראשי בעמוד הבית */
+  #hero a,
   #featured > a {
     @apply inline-flex min-h-12 items-center justify-center rounded-full bg-copper px-8 py-3 font-medium text-white shadow-copper transition hover:-translate-y-px hover:bg-copper-dark hover:text-white;
   }
 
-  /* ---------- פתיחה ---------- */
+  /* כותרת משנה קטנה מעל כותרות */
+  #collection span,
+  #personalize > div > span {
+    @apply mb-3 inline-block rounded-full bg-copper-tint px-4 py-1 text-sm font-medium text-copper-dark;
+  }
+
+  /* ---------- פתיחה: תמונה רחבה והטקסט מעליה ---------- */
   #hero {
-    @apply grid items-center gap-8 bg-linear-to-l from-blush-deep/70 via-blush to-blush py-14 md:grid-cols-[0.85fr_1.15fr] max-md:py-8;
+    @apply grid min-h-[clamp(420px,40vw,600px)] items-center bg-cover bg-center bg-no-repeat max-md:min-h-0 max-md:items-end max-md:bg-[length:auto_68vw] max-md:bg-[position:88%_top] max-md:pt-[56vw];
+    background-image: url("./assets/hero-wide.webp");
+    background-color: var(--color-blush-deep);
     margin-inline: calc(50% - 50vw);
     padding-inline: max(20px, calc((100vw - 1240px) / 2 + 20px));
     animation: fade-up 0.8s ease-out both;
 
+    /* הטקסט — בצד שמאל, כמו בתמונת ההשראה */
+    & > div {
+      @apply flex max-w-[480px] flex-col items-center justify-self-end py-10 text-center max-md:max-w-none max-md:justify-self-stretch max-md:bg-linear-to-b max-md:from-transparent max-md:via-blush/90 max-md:to-blush max-md:-mx-5 max-md:px-5 max-md:pt-16 max-md:pb-8;
+    }
+
+    & img {
+      @apply mb-4 h-16 w-auto drop-shadow-sm;
+    }
+
     & h1 {
-      @apply mb-5 text-[clamp(2.5rem,1.4rem+3.8vw,4.3rem)] leading-[1.1] font-light tracking-tight;
+      @apply mb-4 text-[clamp(2.4rem,1.3rem+3.6vw,4.2rem)] leading-[1.1] font-light tracking-tight text-ink;
     }
 
     & h1 > em {
-      @apply block font-normal text-copper not-italic;
+      @apply block font-normal text-copper-dark not-italic;
     }
 
-    & > div > p {
-      @apply mb-8 max-w-[30ch] text-[1.2rem] text-body;
+    & p {
+      @apply mb-7 max-w-[28ch] text-[1.2rem] text-body;
     }
+  }
+
+  /* ---------- תמונת המוצרים (המודעה) ---------- */
+  #collection {
+    @apply grid items-center gap-10 md:grid-cols-[1.35fr_1fr];
 
     & > img {
-      @apply aspect-[539/368] w-full rounded-[28px] object-cover shadow-lift max-md:order-first;
+      @apply w-full rounded-[28px] border border-line shadow-lift md:order-2;
+    }
+
+    & > div {
+      @apply text-center md:text-start;
+    }
+
+    & h2 {
+      @apply mb-4 md:text-start;
+    }
+
+    & p {
+      @apply mx-auto max-w-[38ch] text-[1.1rem] leading-relaxed md:mx-0;
     }
   }
 
@@ -734,13 +768,75 @@
     }
   }
 
+  /* ---------- מוצרים נבחרים ---------- */
+  #featured {
+    @apply flex flex-col items-center;
+
+    /* כותרת עם קווים דקים משני הצדדים */
+    & > h2 {
+      @apply mb-8 flex w-full items-center gap-5;
+    }
+
+    & > h2::before,
+    & > h2::after {
+      content: "";
+      @apply h-px flex-1 bg-line-strong;
+    }
+
+    & > p {
+      @apply py-8 text-muted;
+    }
+
+    & > ul {
+      @apply m-0 mb-8 grid w-full list-none grid-cols-4 gap-5 p-0 max-lg:grid-cols-2 max-sm:gap-3;
+    }
+
+    & > ul > li {
+      @apply flex flex-col items-center overflow-hidden rounded-[20px] border border-line bg-white pb-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lift;
+    }
+
+    & li > a:first-child {
+      @apply relative flex w-full flex-col items-center text-ink hover:text-copper-dark;
+    }
+
+    & li img {
+      @apply mb-4 aspect-square w-full bg-photo object-cover;
+    }
+
+    /* תגית "בעיצוב אישי" */
+    & li > a > span {
+      @apply absolute top-3 right-3 rounded-full bg-white/90 px-3 py-0.5 text-xs font-medium text-copper-dark;
+    }
+
+    & li h3 {
+      @apply mb-1 px-3 text-base font-medium max-sm:text-[0.95rem];
+    }
+
+    & li > strong {
+      @apply mb-4 font-serif text-xl font-bold text-copper-dark;
+    }
+
+    & li > button {
+      @apply mt-auto min-h-10 px-7 py-1.5 text-sm font-medium max-sm:px-4;
+    }
+
+    /* "להוספת שם" */
+    & li > a:last-child {
+      @apply mt-2 text-sm text-muted underline-offset-4 hover:text-copper-dark hover:underline;
+    }
+
+    & > a {
+      @apply bg-transparent text-copper-dark shadow-none ring-[1.5px] ring-copper-light hover:bg-copper-tint hover:text-copper-dark;
+    }
+  }
+
   /* ---------- נסו בעצמכם: בקבוק עם השם ---------- */
   #personalize {
-    @apply grid items-center gap-12 md:grid-cols-[0.8fr_1.2fr];
+    @apply grid items-center gap-12 rounded-[28px] bg-blush-deep/40 p-10 md:grid-cols-[0.8fr_1.2fr] max-md:p-5;
 
-    /* הבקבוק — תמונה אמיתית של המוצר, והשם מוצב מעליו */
+    /* הבקבוק — תמונה אמיתית של המוצר, והשם מוצב עליו */
     & > figure {
-      @apply relative m-0 w-full overflow-hidden rounded-[28px] bg-photo shadow-card max-md:mx-auto max-md:max-w-[300px];
+      @apply relative m-0 w-full overflow-hidden rounded-[24px] bg-photo shadow-card max-md:mx-auto max-md:max-w-[320px];
       container-type: inline-size;
       animation: float 6s ease-in-out infinite;
     }
@@ -750,8 +846,8 @@
     }
 
     & > figure > span {
-      @apply absolute top-[41%] left-[79%] font-script text-[14cqw] leading-none font-bold whitespace-nowrap text-[#1f1a1a];
-      transform: translate(-50%, -50%) rotate(-69deg);
+      @apply absolute top-[55%] left-1/2 font-script text-[16cqw] leading-none font-bold whitespace-nowrap text-[#1f1a1a];
+      transform: translate(-50%, -50%) rotate(-90deg);
     }
 
     /* סמן ההקלדה המהבהב */
@@ -759,10 +855,6 @@
       content: "";
       @apply ml-1 inline-block h-[0.8em] w-[2px] bg-current;
       animation: caret 1s steps(1) infinite;
-    }
-
-    & > div > span {
-      @apply mb-3 inline-block rounded-full bg-copper-tint px-4 py-1 text-sm font-medium text-copper-dark;
     }
 
     & h2 {
@@ -805,102 +897,32 @@
     }
   }
 
-  /* ---------- מוצרים נבחרים ---------- */
-  #featured {
-    @apply flex flex-col items-center;
-
-    /* כותרת עם קווים דקים משני הצדדים */
-    & > h2 {
-      @apply mb-8 flex w-full items-center gap-5;
-    }
-
-    & > h2::before,
-    & > h2::after {
-      content: "";
-      @apply h-px flex-1 bg-line-strong;
-    }
-
-    & > p {
-      @apply py-8 text-muted;
-    }
-
-    & > ul {
-      @apply m-0 mb-8 grid w-full list-none grid-cols-4 gap-5 p-0 max-lg:grid-cols-2 max-sm:gap-3;
-    }
-
-    & > ul > li {
-      @apply relative flex flex-col items-center overflow-hidden rounded-[20px] border border-line bg-white pb-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lift;
-    }
-
-    & li > img {
-      @apply mb-4 aspect-square w-full bg-photo object-cover;
-    }
-
-    /* תגית "בעיצוב אישי" */
-    & li > span {
-      @apply absolute top-3 right-3 rounded-full bg-white/90 px-3 py-0.5 text-xs font-medium text-copper-dark;
-    }
-
-    & li > h3 {
-      @apply mb-1 px-3 text-base font-medium max-sm:text-[0.95rem];
-    }
-
-    & li > strong {
-      @apply mb-4 font-serif text-xl font-bold text-copper-dark;
-    }
-
-    & li > a {
-      @apply mt-auto rounded-full bg-copper-tint px-5 py-2 text-sm font-medium text-copper-dark transition hover:bg-copper hover:text-white max-sm:px-3 max-sm:text-[0.8rem];
-    }
-
-    & > a {
-      @apply bg-transparent text-copper-dark shadow-none ring-[1.5px] ring-copper-light hover:bg-copper-tint hover:text-copper-dark;
-    }
-  }
-
-  /* ---------- באנר המותג (המודעה) ---------- */
-  #story {
-    margin-inline: calc(50% - 50vw);
-
-    & > img {
-      @apply h-[clamp(240px,34vw,480px)] w-full object-cover max-sm:h-auto;
-    }
-
-    & > p {
-      @apply mx-auto max-w-[46ch] px-5 pt-8 text-center text-[clamp(1.15rem,1rem+0.6vw,1.5rem)] font-light text-ink;
-    }
-  }
-
-  /* ---------- למה NAMEING ---------- */
+  /* ---------- למה NAMEING: תמונה · טקסט · יתרונות ---------- */
   #about {
-    @apply grid scroll-mt-28 items-center gap-10 md:grid-cols-[1.25fr_1fr];
+    @apply grid scroll-mt-28 items-center gap-10 rounded-[28px] border border-line bg-white p-8 lg:grid-cols-[1.2fr_1.3fr_1fr] max-md:p-5;
 
     & > img {
-      @apply w-full rounded-[28px] shadow-card md:order-2;
+      @apply w-full rounded-[20px] lg:order-3;
     }
 
     & h2 {
-      @apply mb-5 flex items-center justify-start gap-3 text-start;
-    }
-
-    & h2 > img {
-      @apply h-10 w-auto;
+      @apply mb-4;
     }
 
     & h2 > span {
-      @apply font-serif font-semibold tracking-[0.1em] text-copper-dark;
+      @apply font-serif font-semibold tracking-[0.08em] text-copper-dark;
     }
 
     & > div > p {
-      @apply mb-8 max-w-[58ch] text-[1.05rem] leading-loose;
+      @apply text-center text-[1.02rem] leading-loose;
     }
 
-    & ul {
-      @apply m-0 grid list-none grid-cols-3 p-0 max-sm:grid-cols-1 max-sm:gap-4;
+    & > ul {
+      @apply m-0 grid list-none grid-cols-3 gap-2 p-0 lg:order-first;
     }
 
     & li {
-      @apply flex flex-col items-center gap-1 px-3 text-center not-last:border-l not-last:border-line-strong max-sm:not-last:border-l-0;
+      @apply flex flex-col items-center gap-1 px-2 text-center not-last:border-l not-last:border-line-strong max-sm:text-sm;
     }
 
     & li > svg {
