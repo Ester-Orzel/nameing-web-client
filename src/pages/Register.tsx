@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser, getErrorMessage } from "../api";
 import { useUser } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface RegisterForm {
   fullName: string;
@@ -105,6 +105,10 @@ const Register = () => {
 
         {mutation.isError && <p className="mt-3 rounded-[10px] bg-bad-bg px-4 py-3 font-semibold text-bad">{getErrorMessage(mutation.error)}</p>}
       </form>
+
+      <p className="mt-5 border-t border-line pt-4 text-center">
+        כבר יש לך חשבון? <Link to="/login" className="font-bold underline underline-offset-4">להתחברות</Link>
+      </p>
     </div>
   );
 };

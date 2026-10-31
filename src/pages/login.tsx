@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { loginUser, getErrorMessage } from "../api";
 import { useUser } from "../context/UserContext";
 
@@ -56,6 +56,10 @@ const Login = () => {
       </form>
 
       {error && <p className="mt-3 rounded-[10px] bg-bad-bg px-4 py-3 font-semibold text-bad">{error}</p>}
+
+      <p className="mt-5 border-t border-line pt-4 text-center">
+        עוד אין לך חשבון? <Link to="/register" className="font-bold underline underline-offset-4">להרשמה</Link>
+      </p>
     </div>
   );
 };
