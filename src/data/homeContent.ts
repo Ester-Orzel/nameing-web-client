@@ -81,7 +81,7 @@ export const featured = {
 
 // באנר המותג (מתוך תמונת ההשראה)
 export const story = {
-  imageAlt: "NAMEING — מתנות במיתוג אישי, 053-4166140",
+  imageAlt: "NAMING — מתנות במיתוג אישי, 053-4166140",
 };
 
 export const about = {

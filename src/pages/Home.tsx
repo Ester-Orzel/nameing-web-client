@@ -216,7 +216,7 @@ const Home = () => {
         <img src={bannerImage} alt={story.imageAlt} className="w-full" />
       </section>
 
-      {/* למה NAMEING: יתרונות · טקסט · תמונה */}
+      {/* למה NAMING: יתרונות · טקסט · תמונה */}
       <section
         id="about"
         className={`grid scroll-mt-28 items-center gap-10 border-t-2 border-copper-light bg-blush-deep/40 lg:grid-cols-[1.15fr_1.2fr_1fr] ${fullWidth}`}
