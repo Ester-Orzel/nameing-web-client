@@ -4,7 +4,7 @@ import { useUser } from "../context/UserContext";
 import { brand } from "../data/siteContent";
 import Icon from "./Icon";
 import nMark from "../assets/n-mark.png";
-import { getCart, CART_CHANGE_EVENT } from "../cartStorage";
+import { getCart, saveCart, CART_CHANGE_EVENT } from "../cartStorage";
 
 // קישור בתפריט: קו נחושת מתחת לעמוד הנוכחי
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -45,6 +45,7 @@ function Header() {
   const logout = () => {
     setUser(null);
     setToken(null);
+    saveCart([]); // מרוקן את הסל ביציאה מהחשבון
     navigate("/");
   };
 
