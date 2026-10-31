@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllOrders } from "../api";
 import { useUser } from "../context/UserContext";
 import UpdateOrderStatus from "./UpdateOrderStatus";
+import OrderDetails from "./OrderDetails";
 
 const AllOrders = () => {
   const { token } = useUser();
@@ -43,6 +44,7 @@ const AllOrders = () => {
           <div className="w-full">
             <UpdateOrderStatus order={order} />
           </div>
+          <OrderDetails order={order} />
           <hr />
         </div>
       ))}

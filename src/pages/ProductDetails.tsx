@@ -5,9 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getProducts, getColors, getFonts } from "../api";
 import type { CartItem } from "../api";
 import { addToCart } from "../cartStorage";
+import { useUser } from "../context/UserContext";
+import AddProduct from "../componenta/AddProduct";
 
 function ProductDetails() {
   const { id } = useParams();
+  const { user } = useUser();
+  const [editing, setEditing] = useState(false);
 
   const {
     data: products,
@@ -181,6 +185,21 @@ function ProductDetails() {
         <p role="status" className="justify-self-start rounded-[10px] bg-[#e6f2ea] px-4 py-2 font-semibold text-[#2f6b4a] md:col-start-2">
           המוצר נוסף לסל!
         </p>
+      )}
+
+      {user?.role === "ADMIN" && (
+        <button
+          onClick={() => setEditing(!editing)}
+          className="min-h-11 justify-self-start border-[1.5px] border-copper-light bg-white bg-none text-copper-dark shadow-none hover:bg-copper-tint md:col-start-2"
+        >
+          {editing ? "סגירת העריכה" : "עריכת מוצר"}
+        </button>
+      )}
+
+      {editing && (
+        <div className="md:col-span-2">
+          <AddProduct key={product.id} product={product} />
+        </div>
       )}
     </div>
   );
