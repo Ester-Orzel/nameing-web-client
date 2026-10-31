@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useUser } from "../context/UserContext";
 import AddProduct from "../componenta/AddProduct";
 import AllOrders from "../componenta/AllOrders";
+import EditProducts from "../componenta/EditProducts";
 
 // כפתורי המעבר בין "הוספת מוצר" ו"צפייה בהזמנות"
 const tab = "mb-5 ml-2 border-[1.5px] border-copper-light bg-white bg-none text-copper-dark shadow-none hover:bg-copper-tint max-sm:mb-3";
@@ -24,11 +25,17 @@ const Admin = () => {
         הוספת מוצר
       </button>
 
+      <button onClick={() => setPage("edit")} className={tab}>
+        עריכת מוצרים
+      </button>
+
       <button onClick={() => setPage("orders")} className={tab}>
         צפייה בהזמנות
       </button>
 
       {page === "products" && <AddProduct />}
+
+      {page === "edit" && <EditProducts />}
 
       {page === "orders" && <AllOrders />}
     </div>

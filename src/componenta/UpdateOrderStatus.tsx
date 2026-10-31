@@ -44,16 +44,17 @@ const UpdateOrderStatus = ({ order }: Props) => {
   };
 
   if (isFinal) {
-    return <p>ההזמנה הסתיימה</p>;
+    return <p className="text-sm text-muted">ההזמנה הסתיימה</p>;
   }
 
   return (
-    <div>
+    <div className="mt-1 flex flex-wrap gap-2">
       {(order.status === "RECEIVED" ||
         order.status === "IN_PROGRESS") && (
         <button
           disabled={isUpdating}
           onClick={() => changeStatus(nextStatus)}
+          className="min-h-9 px-4 py-1 text-sm"
         >
           {order.status === "RECEIVED"
             ? "העבר לטיפול"
@@ -63,6 +64,7 @@ const UpdateOrderStatus = ({ order }: Props) => {
 
       <button
         disabled={isUpdating}
+        className="min-h-9 border-[1.5px] border-copper-light bg-white bg-none px-4 py-1 text-sm text-copper-dark shadow-none hover:bg-copper-tint"
         onClick={() => {
           if (window.confirm("האם לבטל את ההזמנה?")) {
             changeStatus("CANCELLED");

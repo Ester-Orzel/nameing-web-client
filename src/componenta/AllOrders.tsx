@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllOrders } from "../api";
 import { useUser } from "../context/UserContext";
+import UpdateOrderStatus from "./UpdateOrderStatus";
 
 const AllOrders = () => {
   const { token } = useUser();
@@ -39,6 +40,9 @@ const AllOrders = () => {
           <p>שם לקוח: {order.contactName}</p>
           <p>מחיר: {order.totalPrice} ₪</p>
           <p className="rounded-full bg-copper-tint px-3 text-sm font-semibold text-copper-dark">סטטוס: {order.status}</p>
+          <div className="w-full">
+            <UpdateOrderStatus order={order} />
+          </div>
           <hr />
         </div>
       ))}
