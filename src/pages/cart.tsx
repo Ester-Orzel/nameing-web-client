@@ -4,6 +4,7 @@ import type { CartItem } from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { getCart, saveCart, cartItemKey } from "../cartStorage";
+import { formatPrice } from "../formatPrice";
 
 // שורה בסל: פריט אחד והכמות שלו (פריטים זהים מאוחדים לשורה אחת)
 interface CartLine {
@@ -94,7 +95,7 @@ const Cart = () => {
 
             <div>
               <h2 className="mb-0.5 text-lg">{line.item.product.name}</h2>
-              <p className="text-sm text-muted">{line.item.product.price} ₪ ליחידה</p>
+              <p className="text-sm text-muted">{formatPrice(line.item.product.price)} ₪ ליחידה</p>
 
               {line.item.personalization && (
                 <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -116,7 +117,7 @@ const Cart = () => {
             </div>
 
             <strong className="min-w-16 text-center font-serif text-xl text-copper-dark max-sm:col-start-3 max-sm:row-start-1">
-              {Number(line.item.product.price) * line.quantity} ₪
+              {formatPrice(Number(line.item.product.price) * line.quantity)} ₪
             </strong>
 
             <button
@@ -138,7 +139,7 @@ const Cart = () => {
         </p>
         <p className="flex justify-between border-t border-line pt-3 text-lg font-medium text-ink">
           <span>סה״כ לתשלום</span>
-          <strong className="font-serif text-2xl text-copper-dark">{total} ₪</strong>
+          <strong className="font-serif text-2xl text-copper-dark">{formatPrice(total)} ₪</strong>
         </p>
         <button onClick={Checkout} className="mt-2 w-full">סיים הזמנה</button>
       </aside>

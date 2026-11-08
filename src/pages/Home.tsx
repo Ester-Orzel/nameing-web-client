@@ -11,6 +11,7 @@ import bottleImage from "../assets/bottle.webp";
 import bannerImage from "../assets/brand-banner.webp";
 import giftBoxImage from "../assets/gift-box.webp";
 import { brand } from "../data/siteContent";
+import { formatPrice } from "../formatPrice";
 import {
   hero,
   categoriesTitle,
@@ -153,7 +154,7 @@ const Home = () => {
                   />
                   <h3 className="mb-1 px-2 text-[1.05rem] font-medium max-sm:text-[0.95rem]">{product.name}</h3>
                 </Link>
-                <strong className="mb-3 text-lg font-bold text-ink">{product.price} ₪</strong>
+                <strong className="mb-3 text-lg font-bold text-ink">{formatPrice(product.price)} ₪</strong>
                 <button
                   onClick={() => addProduct(product)}
                   className="min-h-10 bg-[#c48d7b] px-9 py-1.5 text-[0.95rem] font-medium shadow-none hover:bg-copper-dark max-sm:px-5"

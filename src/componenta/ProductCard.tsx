@@ -1,5 +1,6 @@
 
 import type { Product } from "../api";
+import { formatPrice } from "../formatPrice";
 
 interface ProductCardProps {
   product: Product;
@@ -19,7 +20,7 @@ const ProductCard = ({ product }: ProductCardProps) => {  return (
 
       <p className="line-clamp-2 flex-1 px-4 text-sm text-muted max-sm:px-3">{product.description}</p>
 
-      <p className="mt-1.5 px-4 font-serif text-xl font-bold text-copper-dark max-sm:px-3 max-sm:text-lg">{product.price} ₪</p>
+      <p className="mt-1.5 px-4 font-serif text-xl font-bold text-copper-dark max-sm:px-3 max-sm:text-lg">{formatPrice(product.price)} ₪</p>
 
       
     </div>

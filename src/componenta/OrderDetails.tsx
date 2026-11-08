@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Order } from "../api";
+import { formatPrice } from "../formatPrice";
 
 // כפתור שפותח ומקפל את פרטי ההזמנה: משלוח, הערות וכל הפריטים
 const OrderDetails = ({ order }: { order: Order }) => {
@@ -25,7 +26,7 @@ const OrderDetails = ({ order }: { order: Order }) => {
             <div key={item.id} className="mt-3 flex items-center gap-3 border-t border-line pt-3">
               <img src={item.productImageUrl} alt="" className="size-12 rounded-lg object-cover" />
               <div>
-                <p className="font-bold text-ink">{item.productName} · {item.unitPrice} ₪</p>
+                <p className="font-bold text-ink">{item.productName} · {formatPrice(item.unitPrice)} ₪</p>
                 {item.personalizationText && <p>טקסט: {item.personalizationText}</p>}
                 {item.color && <p>צבע: {item.color.name}</p>}
                 {item.font && <p>גופן: {item.font.name}</p>}

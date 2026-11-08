@@ -7,6 +7,7 @@ import type { CartItem } from "../api";
 import { addToCart } from "../cartStorage";
 import { useUser } from "../context/UserContext";
 import AddProduct from "../componenta/AddProduct";
+import { formatPrice } from "../formatPrice";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -104,7 +105,7 @@ function ProductDetails() {
       />
 
       <p className="md:col-start-2">{product.description}</p>
-      <p className="font-serif text-3xl font-bold text-copper-dark md:col-start-2">{product.price} ₪</p>
+      <p className="font-serif text-3xl font-bold text-copper-dark md:col-start-2">{formatPrice(product.price)} ₪</p>
 
       <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-line bg-white px-5 py-4 text-[1.05rem] shadow-sm md:col-start-2">
         <input

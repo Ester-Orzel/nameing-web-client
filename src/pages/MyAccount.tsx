@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import { getMyOrders, type Order } from "../api";
+import { formatPrice } from "../formatPrice";
 
 // שורת מידע על הזמנה
 const orderInfo = "inline-block px-5 pt-3 text-[0.95rem] text-muted";
@@ -40,7 +41,7 @@ const MyAccount = () => {
           <div key={order.id} className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
             <h2 className="border-b border-line bg-soft px-5 py-4 text-lg">הזמנה מספר {order.id}</h2>
             <p className="inline-block px-5 pt-3 text-[0.95rem] font-bold text-copper-dark">סטטוס: {order.status}</p>
-            <p className={orderInfo}>סכום: {order.totalPrice} ₪</p>
+            <p className={orderInfo}>סכום: {formatPrice(order.totalPrice)} ₪</p>
             <p className={orderInfo}>מספר פריטים: {order.itemsCount}</p>
 
             {order.items.map((item) => (
@@ -49,7 +50,7 @@ const MyAccount = () => {
                 className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-line px-5 py-3 text-[0.95rem]"
               >
                 <p className="flex-[1_1_160px] font-bold text-ink">{item.productName}</p>
-                <p>מחיר: {item.unitPrice} ₪</p>
+                <p>מחיר: {formatPrice(item.unitPrice)} ₪</p>
                 {item.personalizationText && (
                   <p>טקסט: {item.personalizationText}</p>
                 )}

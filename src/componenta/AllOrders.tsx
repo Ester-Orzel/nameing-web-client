@@ -4,6 +4,7 @@ import { getAllOrders } from "../api";
 import { useUser } from "../context/UserContext";
 import UpdateOrderStatus from "./UpdateOrderStatus";
 import OrderDetails from "./OrderDetails";
+import { formatPrice } from "../formatPrice";
 
 const AllOrders = () => {
   const { token } = useUser();
@@ -39,7 +40,7 @@ const AllOrders = () => {
         >
           <p className="font-bold text-ink">מספר הזמנה: {order.id}</p>
           <p>שם לקוח: {order.contactName}</p>
-          <p>מחיר: {order.totalPrice} ₪</p>
+          <p>מחיר: {formatPrice(order.totalPrice)} ₪</p>
           <p className="rounded-full bg-copper-tint px-3 text-sm font-semibold text-copper-dark">סטטוס: {order.status}</p>
           <div className="w-full">
             <UpdateOrderStatus order={order} />
